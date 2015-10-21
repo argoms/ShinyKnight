@@ -1,0 +1,62 @@
+class MapGeneration : ZilchComponent
+{
+    var Map:Array[Array[MapObject]] = new Array[Array[MapObject]]();
+    
+    var MapHeight:Integer = 32;
+    var MapWidth:Integer = 32;
+    
+    function Initialize(init : CogInitializer)
+    {
+        this.CreateBlankMap();
+        
+        
+        this.Map[3][2] = new MapObject(2);
+        
+        this.GenerateMap();
+        
+        
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    //creates a blank map with border walls:
+    function CreateBlankMap() 
+    {
+        for(var i : Integer = 0; i < this.MapWidth; i += 1)
+        {
+            this.Map.Add(new Array[MapObject]());
+            for(var j : Integer = 0; j < this.MapHeight; j += 1)
+            {
+                this.Map[i].Add(new MapObject(0));
+                
+                if(j == this.MapHeight -1 || i == this.MapWidth -1 || j == 0 || i == 0)
+                {
+                    //creates border walls:
+                    this.Map[i][j] = (new MapObject(1));
+                } else {
+                    //blank space otherwise:
+                    this.Map[i][j] = (new MapObject(0));
+                }
+            }
+        }
+    }
+    
+    function GenerateMap()
+    {
+        for(var i : Integer = 0; i < this.MapWidth; i += 1)
+        {
+            for(var j : Integer = 0; j < this.MapHeight; j += 1)
+            {
+                if(this.Map[i][j].Type == 1)
+                {
+                    this.Space.CreateAtPosition(Archetype.WallTile, Real3(i, j, 0)); 
+                } else if(this.Map[i][j].Type == 2)
+                {
+                    this.Space.CreateAtPosition(Archetype.WeirdWallTile, Real3(i, j, 0)); 
+                }
+            }
+        }
+    }
+}

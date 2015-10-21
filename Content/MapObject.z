@@ -1,0 +1,14 @@
+class MapObject
+{
+    var Type:Integer;
+    /*
+    Types:
+    0: empty space
+    1: basic wall 
+    */
+    
+    constructor(tileType : Integer)
+    {
+        this.Type = tileType;
+    }
+}

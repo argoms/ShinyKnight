@@ -1,0 +1,15 @@
+class EntityMovement : ZilchComponent
+{
+    [Property]
+    var MoveSpeed:Real = 16;
+    
+    function Initialize(init : CogInitializer)
+    {
+        
+    }
+    
+    function Move(movement : Real3, dt : Real)
+    {
+        this.Owner.RigidBody.ApplyLinearVelocity(movement*dt*this.MoveSpeed);
+    }
+}

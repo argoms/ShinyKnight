@@ -1,14 +1,18 @@
 class MapObject
 {
     var Type:Integer;
+    var MetaData:Integer;
     /*
     Types:
     0: empty space
     1: basic wall 
+    2: weird wall
+    3: player spawn position 
     */
     
     constructor(tileType : Integer)
     {
         this.Type = tileType;
     }
+    
 }

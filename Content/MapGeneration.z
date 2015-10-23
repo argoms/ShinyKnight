@@ -4,12 +4,16 @@ class MapGeneration : ZilchComponent
     
     var MapHeight:Integer = 32;
     var MapWidth:Integer = 32;
+    var RNG:Random = new Random();
     
     function Initialize(init : CogInitializer)
     {
+        this.RNG.Seed = 1;
+        
+        
         this.CreateBlankMap();
         
-        
+        this.Map[4][4] = new MapObject(3);
         this.Map[3][2] = new MapObject(2);
         
         this.GenerateMap();
@@ -49,12 +53,17 @@ class MapGeneration : ZilchComponent
         {
             for(var j : Integer = 0; j < this.MapHeight; j += 1)
             {
+                //spawn objects according  to tile map
                 if(this.Map[i][j].Type == 1)
                 {
                     this.Space.CreateAtPosition(Archetype.WallTile, Real3(i, j, 0)); 
                 } else if(this.Map[i][j].Type == 2)
                 {
                     this.Space.CreateAtPosition(Archetype.WeirdWallTile, Real3(i, j, 0)); 
+                } else if(this.Map[i][j].Type == 3)
+                {
+                    var player:Cog = this.Space.CreateAtPosition(Archetype.Player, Real3(i, j, 0)); 
+                    this.LevelSettings.CameraViewport.Camera = player.FindChildByName("Camera");
                 }
             }
         }

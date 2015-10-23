@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "EntityMovement",
+		uint64 ResourceId = 56496b66960bbe12,
+	},
+},

@@ -98,7 +98,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [10, 10, 150],
+			Vec3 Translation = [5.58956909, -8.54179478, 150],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-008, 0, 1],
 		},
@@ -110,7 +110,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 24.4280624,
+			float Size = 30.1194439,
 		},
 		EditorCameraController = 
 		{
@@ -118,7 +118,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [10, 10, 100],
+			Vec3 LookTarget = [5.58956909, -8.54179478, 100],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -128,37 +128,6 @@ Level =
 			bool DrawDebugObjects = true,
 			bool DrawEditorIcons = true,
 			bool Wireframe = false,
-		},
-	},
-	Cog = 
-	{
-		LinkId = 
-		{
-			uint Id = 2,
-		},
-		Named = 
-		{
-			string Name = "Camera",
-		},
-		Transform = 
-		{
-			Vec3 Translation = [10, 10, 50],
-			Vec3 Scale = [1, 1, 1],
-			Quat Rotation = [0, 0, 0, 1],
-		},
-		Camera = 
-		{
-			ProjectionMode ProjectionMode = Orthographic,
-			Facing Facing = NegativeZ,
-			CameraTransparentSort TransparentSort = InheritFromSpace,
-			float FieldOfView = 45,
-			float NearPlane = 0.5,
-			float FarPlane = 200,
-			float Size = 60,
-		},
-		SoundListener = 
-		{
-			bool Active = true,
 		},
 	},
 },

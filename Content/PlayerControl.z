@@ -1,0 +1,39 @@
+class PlayerControl : ZilchComponent
+{
+
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.UpdateMovement(event.Dt);
+    }
+    
+    function UpdateMovement(dt : Real)
+    {
+        var movement:Real3 = Real3(0, 0, 0); //gets movement direction
+        if(Zero.Keyboard.KeyIsDown(Keys.A))
+        {
+            movement += Real3 (-1, 0, 0);
+        }
+        if(Zero.Keyboard.KeyIsDown(Keys.D))
+        {
+            movement += Real3 (1, 0, 0);
+        }
+        if(Zero.Keyboard.KeyIsDown(Keys.W))
+        {
+            movement += Real3 (0, 1, 0);
+        }
+        if(Zero.Keyboard.KeyIsDown(Keys.S))
+        {
+            movement += Real3 (0, -1, 0);
+        }
+        Math.Normalize(movement);
+        this.Owner.EntityMovement.Move(movement, dt);
+
+        
+    }
+}

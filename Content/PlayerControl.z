@@ -11,7 +11,6 @@ class PlayerControl : ZilchComponent
     
     //internal for movement calculations:
     var LastMovement : Real3; //last movement vector of the player
-    var MovementStopTest : Real3; //second to last movement vector of the player
     var FollowMouse : Boolean = false; //whether or not the player looks at the cursor
     var Attacking : Boolean = false; //whether or not the player is currently attacking
     
@@ -62,6 +61,7 @@ class PlayerControl : ZilchComponent
         if(this.UpdateMovement(dt))
         {
             this.FollowMouse =false;
+            Console.WriteLine("potato");
             if(this.Owner.AutoOrientToVelocity == null)
             {
                 
@@ -126,13 +126,11 @@ class PlayerControl : ZilchComponent
         }
         Math.Normalize(movement);
         this.Owner.EntityMovement.Move(movement, dt);
-        if(this.LastMovement != Real3(0,0,0) && movement == Real3(0,0,0))
-        {
-            this.MovementStopTest = Real3(0,0,0);
-        }
+        
+        var wasJustStill : Boolean = this.LastMovement == Real3(0,0,0);
         this.LastMovement = movement;
-        //Console.WriteLine(movement);
-        return movement == Real3(0,0,0) && this.MovementStopTest != Real3(0,0,0);
+        
+        return movement != Real3(0,0,0) && wasJustStill;// && this.MovementStopTest != Real3(0,0,0);
         
     }
     

@@ -1,18 +1,111 @@
+/*
+PlayerControl
+@James/Argoms
+    
+    Player-specific control script
+*/
 class PlayerControl : ZilchComponent
 {
 
+    var MouseWasDown : Boolean = false; //used to check if the player is clicking or holding mouse down
     
+    //internal for movement calculations:
+    var LastMovement : Real3; //last movement vector of the player
+    var MovementStopTest : Real3; //second to last movement vector of the player
+    var FollowMouse : Boolean = false; //whether or not the player looks at the cursor
+    var Attacking : Boolean = false; //whether or not the player is currently attacking
+    
+    var Weapon : EntityAttack;
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        //set up player's camera
+        var camera = this.Space.Create(Archetype.PlayerCamera);
+        camera.PlayerCameraControl.MySprite = this.Owner.FindChildByName("Sprite");
+        camera.PlayerCameraControl.MyPlayer = this.Owner;
+        this.LevelSettings.CameraViewport.Camera = camera;
+        
+        //set up player's attacking:
+        this.Weapon = this.Owner.EntityAttack;
+        this.Weapon.Friendly = true;
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        this.UpdateMovement(event.Dt);
+        
+        
+        //update mouse state:
+        this.UpdateMouseInput();
+        
+        //update player translation:
+        if(!this.Weapon.Attacking)
+        {
+            this.UpdateOrientation(event.Dt);
+        }
     }
     
-    function UpdateMovement(dt : Real)
+    /*
+    UpdateOrientation
+        handles the direction that the player is facing in
+    */
+    function UpdateOrientation(dt : Real)
+    {
+        if(Zero.Mouse.RawMovement != Real2(0,0))
+        {
+            this.FollowMouse = true;
+            if(this.Owner.AutoOrientToVelocity != null)
+            {
+                this.Owner.RemoveComponentByName("AutoOrientToVelocity");
+            }
+        }
+        if(this.UpdateMovement(dt))
+        {
+            this.FollowMouse =false;
+            if(this.Owner.AutoOrientToVelocity == null)
+            {
+                
+                this.Owner.AddComponentByName("AutoOrientToVelocity");
+            }
+        }
+        if(this.FollowMouse)
+        {
+            var cursor:Real2 = Zero.Mouse.ScreenPosition;
+            var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
+            var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
+            this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
+            //Console.WriteLine(this.Owner.Orientation.WorldForward);
+        }
+    }
+    
+    /*
+    UpdateMouseInput
+        handles mouse press/release function calls
+    */
+    function UpdateMouseInput()
+    {
+        if(!this.MouseWasDown)
+        {
+            if(Zero.Mouse.IsButtonDown(MouseButtons.Left))
+            {
+                this.OnMousePressed();
+                this.MouseWasDown = true;
+            }
+        } else {
+            if(!Zero.Mouse.IsButtonDown(MouseButtons.Left))
+            {
+                this.OnMouseReleased();
+                this.MouseWasDown = false;
+            }
+        }
+    }
+    
+    /*
+    UpdateMovement
+        calculates movement vector based on key input, applies to EntityMovement
+        returns whether or not this is the moment where the object just started moving
+    */
+    function UpdateMovement(dt : Real) : Boolean
     {
         var movement:Real3 = Real3(0, 0, 0); //gets movement direction
         if(Zero.Keyboard.KeyIsDown(Keys.A))
@@ -33,7 +126,37 @@ class PlayerControl : ZilchComponent
         }
         Math.Normalize(movement);
         this.Owner.EntityMovement.Move(movement, dt);
-
+        if(this.LastMovement != Real3(0,0,0) && movement == Real3(0,0,0))
+        {
+            this.MovementStopTest = Real3(0,0,0);
+        }
+        this.LastMovement = movement;
+        //Console.WriteLine(movement);
+        return movement == Real3(0,0,0) && this.MovementStopTest != Real3(0,0,0);
         
+    }
+    
+    /*
+    Attack
+        Tells the player's weapon component to attack
+    */
+    function Attack()
+    {
+        var cursor:Real2 = Zero.Mouse.ScreenPosition;
+        var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
+        var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
+        this.Weapon.Attack(aim);
+    }
+    
+    function OnMousePressed()
+    {
+        if(!this.Weapon.Attacking)
+        {
+            this.Attack();
+        }
+    }
+    
+    function OnMouseReleased()
+    {
     }
 }

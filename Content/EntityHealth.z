@@ -1,0 +1,61 @@
+/*
+    EnemyHealth
+    @James/Argoms
+    
+    Component managing health points of enemies.
+*/
+class EntityHealth : ZilchComponent
+{
+    [Property]
+    var Health:Integer = 5; //kills object if health hits 0
+    
+    var RandomGenerator:Random = Random();//random number generator
+    
+    var Important:Boolean = true; //whether or not this enemy adjusts the level's enemy counter
+    
+    //[Property]
+    //var IgnoresProjectiles:Boolean = false; //whether or not object ignores projectiles
+    
+    //MATT
+    
+    //[Dependency]
+    //var AddScore : AddScore; //Needed to add to score on death
+    
+    //END MATT
+    
+    function Initialize(init : CogInitializer)
+    {
+        //this.Health *= this.LevelSettings.LevelBehavior.Difficulty;
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function TakeDamage(damage : Integer) //called when taking damage
+    {
+        this.Health -= damage;
+        
+        if (this.Health < 1)
+        {
+            this.Die();
+            this.Owner.Destroy();
+            //this.AddScore.AddToScore();
+        }
+        
+        //Console.WriteLine(this.Health);
+    }
+    
+    function Die()
+    {
+        //adjust number of enemies left in level:
+        if(this.Important)
+        {
+            //--this.Owner.LevelSettings.LevelBehavior.EnemyCounter;
+            //this.Important = false;
+        }
+        
+        //explosion:
+    }
+}

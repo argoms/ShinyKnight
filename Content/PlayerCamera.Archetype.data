@@ -1,0 +1,41 @@
+Cog = 
+{
+	LinkId = 
+	{
+		uint Id = 1,
+	},
+	Named = 
+	{
+		string Name = "Camera",
+	},
+	Transform = 
+	{
+		Vec3 Translation = [0, 0, 20],
+		Vec3 Scale = [1, 1, 1],
+		Quat Rotation = [0, 0, 0, 1],
+	},
+	Camera = 
+	{
+		ProjectionMode ProjectionMode = Orthographic,
+		Facing Facing = NegativeZ,
+		CameraTransparentSort TransparentSort = InheritFromSpace,
+		float FieldOfView = 45,
+		float NearPlane = 0.5,
+		float FarPlane = 200,
+		float Size = 16,
+	},
+	SoundListener = 
+	{
+		bool Active = true,
+	},
+	PlayerCameraControl = 
+	{
+	},
+	Orientation = 
+	{
+		Vec3 GlobalUp = [0, 1, 0],
+		Vec3 UpVector = [0, 1, 0],
+		Vec3 ForwardVector = [0, 0, 1],
+		OrientationBases DefaultBases = ForwardZUpY,
+	},
+},

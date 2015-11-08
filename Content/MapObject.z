@@ -8,11 +8,14 @@ class MapObject
     1: basic wall 
     2: weird wall
     3: player spawn position 
+    4: enemy spawn
+        1: basic/dummy enemy
     */
     
-    constructor(tileType : Integer)
+    constructor(tileType : Integer, meta : Integer)
     {
         this.Type = tileType;
+        this.MetaData = meta;
     }
     
 }

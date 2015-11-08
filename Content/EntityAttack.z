@@ -1,0 +1,54 @@
+class EntityAttack : ZilchComponent
+{
+    var Attacking : Boolean = false; //whether or not entity is currently attacking
+    
+    var Cooldown : Real = 0; //how long until the entity stops being in the attacking state
+    
+    var Windup : Real = 0; //how long of a delay before the attack starts
+    
+    var Aim : Real3; //attack direction
+    
+    var Friendly : Boolean; //true if it's a friendly, false if it's an enemy attack
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Attacking)
+        {
+            if(this.Windup > 0)
+            {
+                this.Windup -= event.Dt;
+                if(this.Windup < 0)
+                {
+                    //var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim);
+                    var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim);
+                    
+                    if(this.Friendly)
+                    {
+                        tracer.Collider.CollisionGroup = CollisionGroup.FriendlyProjectile;
+                    } else {
+                        tracer.Collider.CollisionGroup = CollisionGroup.EnemyProjectile;
+                    }
+                }
+            } else {
+                this.Cooldown -= event.Dt;
+                if(this.Cooldown < 0)
+                {
+                    this.Attacking = false;
+                }
+            }
+        }
+    }
+    
+    function Attack(aim : Real3)
+    {
+        this.Attacking = true;
+        this.Cooldown = 0.2;
+        this.Windup = 0.1;
+        this.Aim = aim;
+        
+    }
+}

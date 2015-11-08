@@ -1,0 +1,33 @@
+class AttackTracerBehavior : ZilchComponent
+{
+    var LifeTime : Real = 0.25;
+    
+    var Damage : Integer = 1;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnHit);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.LifeTime -= event.Dt;
+        if(this.LifeTime < 0)
+        {
+            this.KillSelf();
+        }
+    }
+    
+    function OnHit(event : CollisionEvent)
+    {
+        if(event.OtherObject.EntityHealth != null)
+        {
+            event.OtherObject.EntityHealth.TakeDamage(this.Damage);
+        }
+    }
+    
+    function KillSelf()
+    {
+        this.Owner.Destroy();
+    }
+}

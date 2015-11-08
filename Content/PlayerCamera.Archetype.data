@@ -8,15 +8,19 @@ Cog =
 	{
 		string Name = "Camera",
 	},
+	Archetyped = 
+	{
+		string Name = "566874b09bef66e3:PlayerCamera",
+	},
 	Transform = 
 	{
-		Vec3 Translation = [0, 0, 20],
+		Vec3 Translation = [0, 0, 0],
 		Vec3 Scale = [1, 1, 1],
-		Quat Rotation = [0, 0, 0, 1],
+		Quat Rotation = [0.0436193869, 0, 0, 0.999048233],
 	},
 	Camera = 
 	{
-		ProjectionMode ProjectionMode = Orthographic,
+		ProjectionMode ProjectionMode = Perspective,
 		Facing Facing = NegativeZ,
 		CameraTransparentSort TransparentSort = InheritFromSpace,
 		float FieldOfView = 45,

@@ -1,0 +1,52 @@
+GeometryContent = 
+{
+	GeneratedArchetype = 
+	{
+		uint64 ResourceId = 56693a6308d0c193,
+	},
+	GeometryImport = 
+	{
+		bool ChangeWinding = false,
+		Vec3 Translation = [0, 0, 0],
+		Quat Rotation = [0, 0, 0, 1],
+		Vec3 Scale = [1, 1, 1],
+	},
+	MeshBuilder = 
+	{
+		Array Meshes = 
+		[
+			{
+				string Name = "mylollipoptest1",
+				uint64 ResourceId = 56693a6208e78f25,
+			},
+		],
+		MeshMode MeshMode = Single,
+		ResourceCompression CompressMesh = None,
+		Generation Normals = Import,
+		Generation Tangents = Import,
+		float SmoothingAngle = 60,
+	},
+	SkeletonBuilder = 
+	{
+		string Name = "mylollipoptest1",
+		uint64 ResourceId = 56693a6308d0c191,
+	},
+	AnimationBuilder = 
+	{
+		string Name = "mylollipoptest1",
+		uint64 ResourceId = 56693a6308d0c18d,
+		bool MakeAnimationSet = false,
+		ResourceCompression CompressAnimation = None,
+		string PreviewArchetype = "",
+		Array Clips = 
+		[
+			{
+				string Name = "All",
+				uint64 ResourceId = 56693a6208e79546,
+				int StartFrame = 0,
+				int EndFrame = 40,
+				LoopingMode LoopingMode = Default,
+			},
+		],
+	},
+},

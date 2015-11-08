@@ -1,0 +1,81 @@
+Cog = 
+{
+	LinkId = 
+	{
+		uint Id = 1,
+	},
+	Named = 
+	{
+		string Name = "lollipoptest2",
+	},
+	Transform = 
+	{
+		Vec3 Translation = [0, 0, 0],
+		Vec3 Scale = [1, 1, 1],
+		Quat Rotation = [0, 0, 0, 1],
+	},
+	Model = 
+	{
+		bool Visible = true,
+		bool VisibilityCulling = true,
+		bool VisibilityEvents = true,
+		bool CastShadows = true,
+		string MaterialName = "5668178c1749bc4f:Material",
+		string MeshName = "566817df1a6b98d0:lollipoptest2",
+		Vec4 Color = [1, 1, 1, 1],
+	},
+	Hierarchy = 
+	{
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 2,
+			},
+			Named = 
+			{
+				string Name = "Cube.001",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [0, 0, 0],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.707106769, 0, 0, 0.707106769],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 3,
+			},
+			Named = 
+			{
+				string Name = "Lamp",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [4.07625008, 5.90386009, -1.00545001],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 4,
+			},
+			Named = 
+			{
+				string Name = "Camera",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [7.48113012, 5.34366989, 6.50763988],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.0892817155, -0.358067065, 0.210611045, 0.905240178],
+			},
+		},
+	},
+},

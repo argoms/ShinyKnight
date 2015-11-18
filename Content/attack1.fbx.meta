@@ -1,0 +1,60 @@
+GeometryContent = 
+{
+	GeneratedArchetype = 
+	{
+		uint64 ResourceId = 561ac7eed0504b7a,
+	},
+	GeometryImport = 
+	{
+		bool ChangeWinding = false,
+		Vec3 Translation = [0, 0, 0],
+		Quat Rotation = [0, 0, 0, 1],
+		Vec3 Scale = [1, 1, 1],
+	},
+	MeshBuilder = 
+	{
+		Array Meshes = 
+		[
+			{
+				string Name = "attack1.Circle.003",
+				uint64 ResourceId = 561ac7eed058e9c5,
+			},
+			{
+				string Name = "attack1.Circle.002",
+				uint64 ResourceId = 561ac7eed058e9ca,
+			},
+			{
+				string Name = "attack1.Circle.001",
+				uint64 ResourceId = 561ac7eed058e9cc,
+			},
+		],
+		MeshMode MeshMode = Multi,
+		ResourceCompression CompressMesh = None,
+		Generation Normals = Import,
+		Generation Tangents = Import,
+		float SmoothingAngle = 60,
+	},
+	SkeletonBuilder = 
+	{
+		string Name = "attack1",
+		uint64 ResourceId = 561ac7eed0504b78,
+	},
+	AnimationBuilder = 
+	{
+		string Name = "attack1",
+		uint64 ResourceId = 561ac7eed0504b73,
+		bool MakeAnimationSet = false,
+		ResourceCompression CompressAnimation = None,
+		string PreviewArchetype = "",
+		Array Clips = 
+		[
+			{
+				string Name = "All",
+				uint64 ResourceId = 561ac7eed058ec0f,
+				int StartFrame = 0,
+				int EndFrame = 7,
+				LoopingMode LoopingMode = Default,
+			},
+		],
+	},
+},

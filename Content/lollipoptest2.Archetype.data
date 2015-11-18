@@ -8,6 +8,10 @@ Cog =
 	{
 		string Name = "lollipoptest2",
 	},
+	Archetyped = 
+	{
+		string Name = "566817df1a5b4d3a:lollipoptest2",
+	},
 	Transform = 
 	{
 		Vec3 Translation = [0, 0, 0],

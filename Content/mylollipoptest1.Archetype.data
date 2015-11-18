@@ -8,6 +8,10 @@ Cog =
 	{
 		string Name = "mylollipoptest1",
 	},
+	Archetyped = 
+	{
+		string Name = "56693a6308d0c193:mylollipoptest1",
+	},
 	Transform = 
 	{
 		Vec3 Translation = [0, 0, 0],
@@ -32,7 +36,7 @@ Cog =
 		AnimPlayMode PlayMode = PlayOnce,
 		float TimeScale = 1,
 		string AnimationName = "4f8ebbde619389d0:DefaultAnimation",
-		uint64 DebugPreviewId = a5a000003daaaaab,
+		uint64 DebugPreviewId = 7275632073692079,
 	},
 	SimpleAnimation = 
 	{

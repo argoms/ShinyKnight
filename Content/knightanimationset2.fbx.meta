@@ -1,0 +1,60 @@
+GeometryContent = 
+{
+	GeneratedArchetype = 
+	{
+		uint64 ResourceId = 561ac71aeebc64b8,
+	},
+	GeometryImport = 
+	{
+		bool ChangeWinding = false,
+		Vec3 Translation = [0, 0, 0],
+		Quat Rotation = [0, 0, 0, 1],
+		Vec3 Scale = [1, 1, 1],
+	},
+	MeshBuilder = 
+	{
+		Array Meshes = 
+		[
+			{
+				string Name = "knightanimationset2.Circle.003",
+				uint64 ResourceId = 561ac71aed460393,
+			},
+			{
+				string Name = "knightanimationset2.Circle.002",
+				uint64 ResourceId = 561ac71aed46039b,
+			},
+			{
+				string Name = "knightanimationset2.Circle.001",
+				uint64 ResourceId = 561ac71aed46039d,
+			},
+		],
+		MeshMode MeshMode = Multi,
+		ResourceCompression CompressMesh = None,
+		Generation Normals = Import,
+		Generation Tangents = Import,
+		float SmoothingAngle = 60,
+	},
+	SkeletonBuilder = 
+	{
+		string Name = "knightanimationset2",
+		uint64 ResourceId = 561ac71aeebc64b6,
+	},
+	AnimationBuilder = 
+	{
+		string Name = "knightanimationset2",
+		uint64 ResourceId = 561ac71aeebc64b1,
+		bool MakeAnimationSet = true,
+		ResourceCompression CompressAnimation = None,
+		string PreviewArchetype = "",
+		Array Clips = 
+		[
+			{
+				string Name = "All",
+				uint64 ResourceId = 561ac71aed460615,
+				int StartFrame = 0,
+				int EndFrame = 28,
+				LoopingMode LoopingMode = Default,
+			},
+		],
+	},
+},

@@ -36,7 +36,7 @@ Cog =
 		AnimPlayMode PlayMode = PlayOnce,
 		float TimeScale = 1,
 		string AnimationName = "4f8ebbde619389d0:DefaultAnimation",
-		uint64 DebugPreviewId = 7275632073692079,
+		uint64 DebugPreviewId = 746f6e20646e6120,
 	},
 	SimpleAnimation = 
 	{

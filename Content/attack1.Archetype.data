@@ -8,6 +8,10 @@ Cog =
 	{
 		string Name = "attack1",
 	},
+	Archetyped = 
+	{
+		string Name = "561ac7eed0504b7a:attack1",
+	},
 	Transform = 
 	{
 		Vec3 Translation = [0, 0, 0],
@@ -20,11 +24,11 @@ Cog =
 		AnimPlayMode PlayMode = PlayOnce,
 		float TimeScale = 1,
 		string AnimationName = "4f8ebbde619389d0:DefaultAnimation",
-		uint64 DebugPreviewId = 3f8000003daaaaab,
+		uint64 DebugPreviewId = 206e6f6974616d69,
 	},
 	SimpleAnimation = 
 	{
-		string AnimationName = "561ac7eed058ec0f:attack1.All",
+		string AnimationName = "561ac7eed058ec0f:KnightAttack1_1.All",
 		AnimPlayMode PlayMode = PlayOnce,
 	},
 	Hierarchy = 

@@ -9,6 +9,8 @@ class EntityAttack : ZilchComponent
     var Aim : Real3; //attack direction
     
     var Friendly : Boolean; //true if it's a friendly, false if it's an enemy attack
+    
+    var AttackCollision : MultiConvexMesh = MultiConvexMesh.KnightAttackTracer1_1; //the collider used for attacks
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -33,6 +35,7 @@ class EntityAttack : ZilchComponent
                     } else {
                         tracer.Collider.CollisionGroup = CollisionGroup.EnemyProjectile;
                     }
+                    tracer.MultiConvexMeshCollider.Mesh = this.AttackCollision;
                 }
             } else {
                 this.Cooldown -= event.Dt;
@@ -48,7 +51,7 @@ class EntityAttack : ZilchComponent
     {
         this.Attacking = true;
         this.Cooldown = 0.2;
-        this.Windup = 0.15;
+        this.Windup = 0.1;
         this.Aim = aim;
         
     }

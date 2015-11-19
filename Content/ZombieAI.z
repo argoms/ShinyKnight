@@ -1,0 +1,12 @@
+class ZombieAI : ZilchComponent
+{
+    var TargetEntity: Cog;
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+}

@@ -6,7 +6,7 @@ Cog =
 		string ProjectOwner = "",
 		string DefaultLevel = "Level",
 		string ProjectSpace = "Space",
-		string ProjectFolder = "C:\DigiPen\Gam100\ShinyKnight",
+		string ProjectFolder = "C:\SandBox\ShinyKnightProject",
 		uint ProjectEngineRevision = 12385,
 		bool AutoTakeProjectScreenshot = true,
 	},

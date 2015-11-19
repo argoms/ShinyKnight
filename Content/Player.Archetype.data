@@ -149,7 +149,7 @@ Cog =
 					{
 						bool Active = true,
 						AnimPlayMode PlayMode = PlayOnce,
-						float TimeScale = 1,
+						float TimeScale = 2,
 						string AnimationName = "4f8ebbde619389d0:DefaultAnimation",
 						uint64 DebugPreviewId = 3f8000003daaaaab,
 					},

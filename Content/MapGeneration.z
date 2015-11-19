@@ -6,6 +6,8 @@ class MapGeneration : ZilchComponent
     var MapWidth:Integer = 32;
     var RNG:Random = new Random();
     
+    var PlayerEntity : Cog;
+    
     function Initialize(init : CogInitializer)
     {
         this.RNG.Seed = 1;
@@ -14,7 +16,7 @@ class MapGeneration : ZilchComponent
         this.CreateBlankMap();
         
         //spawn some random stufF:
-        this.Map[4][4] = new MapObject(3, 0);
+        this.Map[1][1] = new MapObject(3, 0);
         this.Map[3][2] = new MapObject(2, 0);
         this.Map[6][6] = new MapObject(4, 0);
         
@@ -65,10 +67,12 @@ class MapGeneration : ZilchComponent
                 } else if(this.Map[i][j].Type == 3)
                 {
                     var player:Cog = this.Space.CreateAtPosition(Archetype.Player, Real3(i, j, 0)); 
+                    this.PlayerEntity = player;
                     
                 } else if(this.Map[i][j].Type == 4)
                 {
                     var enemy:Cog = this.Space.CreateAtPosition(Archetype.BasicEnemy, Real3(i, j, 0)); 
+                    enemy.ZombieAI.TargetEntity = this.PlayerEntity;
                 }
             }
         }

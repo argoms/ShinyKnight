@@ -1,12 +1,42 @@
 class ZombieAI : ZilchComponent
 {
     var TargetEntity: Cog;
+    var MovementVector:Real3;
+    var Attacking : Boolean = false;
+    [Property]
+    var AttackRange : Real = 4;
+    
     function Initialize(init : CogInitializer)
     {
-        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        if(!this.Attacking)
+        {
+            
+            this.MovementVector =  this.TargetEntity.Transform.Translation - this.Owner.Transform.Translation;
+            if(this.DistanceSQ(this.MovementVector) <= this.AttackRange)
+            {
+                Math.Normalize(this.MovementVector);
+                this.Owner.EntityAttack.Attack(this.MovementVector);
+                this.Attacking = true;
+                Console.WriteLine(this.DistanceSQ(this.MovementVector));
+            } else {
+                Math.Normalize(this.MovementVector);
+            }
+            this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
+        }
+    }
+    
+    /*
+    DistanceSQ
+    
+        Returns the square of the 2D size of a real3
+    */
+    function DistanceSQ(input : Real3): Real
+    {
+        return input.X * input.X + input.Y * input.Y;
     }
 }

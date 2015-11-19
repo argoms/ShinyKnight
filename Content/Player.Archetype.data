@@ -32,10 +32,14 @@ Cog =
 	},
 	PlayerControl = 
 	{
+		string WalkAnimation = "561b9b03fac39e04:KnightWalk",
+		string Attack1_1Animation = "561ac7eed058ec0f:KnightAttack1_1",
+		string IdleAnimation = "561b98ec12388fe4:KnightIdle.All",
+		string BlockAnimation = "561b98e511f194dc:KnightBlock",
 	},
 	EntityMovement = 
 	{
-		float MoveSpeed = 16,
+		float MoveSpeed = 32,
 	},
 	SphereCollider = 
 	{
@@ -66,6 +70,7 @@ Cog =
 	},
 	EntityAttack = 
 	{
+		bool Friendly = false,
 	},
 	Hierarchy = 
 	{

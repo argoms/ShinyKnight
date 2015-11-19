@@ -20,6 +20,16 @@ class PlayerControl : ZilchComponent
     var PlayerAnimationGraph : AnimationGraph; //player animation graph
     
     var ComboProgress : Integer; //how many hits the player is into their combo
+    
+    //animations:
+    [Property]
+    var WalkAnimation : Animation;
+    [Property]
+    var Attack1_1Animation : Animation;
+    [Property]
+    var IdleAnimation  : Animation;
+    [Property]
+    var BlockAnimation : Animation;
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -147,13 +157,13 @@ class PlayerControl : ZilchComponent
         if(this.PlayerAnimation.Animation != Animation.KnightWalk && movement != Real3(0,0,0))
         {
             //this.PlayerAnimation.PlaySingle(Animation.KnightWalk, AnimPlayMode.Loop);
-            this.PlayerAnimation.Animation = Animation.KnightWalk;
+            this.PlayerAnimation.Animation = this.WalkAnimation;
             this.PlayerAnimation.PlayMode = AnimPlayMode.Loop;
         } else {
             //idle stance if not moving
             if(movement == Real3(0,0,0))
             {
-                this.PlayerAnimation.Animation = Animation.KnightBlock;
+                this.PlayerAnimation.Animation = this.IdleAnimation;
             }
         }
         //this.PlayerAnimation.Animation = Animation.KnightIdle;
@@ -173,7 +183,7 @@ class PlayerControl : ZilchComponent
         var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
         this.Weapon.Attack(aim);
         this.PlayerAnimation.Animation = null;
-        this.PlayerAnimation.PlaySingle(Animation.KnightAttack1_1, AnimPlayMode.PlayOnce);
+        this.PlayerAnimation.PlaySingle(this.Attack1_1Animation, AnimPlayMode.PlayOnce);
         //this.PlayerAnimation.PlayMode = AnimPlayMode.PlayOnce;
     }
     

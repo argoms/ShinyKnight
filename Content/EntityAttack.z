@@ -8,6 +8,7 @@ class EntityAttack : ZilchComponent
     
     var Aim : Real3; //attack direction
     
+    [Property]
     var Friendly : Boolean; //true if it's a friendly, false if it's an enemy attack
     
     var AttackCollision : MultiConvexMesh = MultiConvexMesh.KnightAttackTracer1_1; //the collider used for attacks

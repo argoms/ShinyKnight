@@ -41,7 +41,7 @@ GeometryContent =
 	},
 	AnimationBuilder = 
 	{
-		string Name = "attack1",
+		string Name = "KnightAttack1_1",
 		uint64 ResourceId = 561ac7eed0504b73,
 		bool MakeAnimationSet = false,
 		ResourceCompression CompressAnimation = None,

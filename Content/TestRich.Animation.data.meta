@@ -1,9 +1,0 @@
-DataContent = 
-{
-	RichAnimationBuilder = 
-	{
-		string Name = "TestRich",
-		uint64 ResourceId = 561ac4d10d467c0b,
-		string PreviewArchetype = "",
-	},
-},

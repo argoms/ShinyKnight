@@ -1,0 +1,32 @@
+GeometryContent = 
+{
+	GeneratedArchetype = 
+	{
+		uint64 ResourceId = 561b98e511e815a4,
+	},
+	GeometryImport = 
+	{
+		bool ChangeWinding = false,
+		Vec3 Translation = [0, 0, 0],
+		Quat Rotation = [0, 0, 0, 1],
+		Vec3 Scale = [1, 1, 1],
+	},
+	AnimationBuilder = 
+	{
+		string Name = "KnightBlock",
+		uint64 ResourceId = 561b98e511e815a1,
+		bool MakeAnimationSet = false,
+		ResourceCompression CompressAnimation = None,
+		string PreviewArchetype = "",
+		Array Clips = 
+		[
+			{
+				string Name = "All",
+				uint64 ResourceId = 561b98e511f194dc,
+				int StartFrame = 0,
+				int EndFrame = 1,
+				LoopingMode LoopingMode = Default,
+			},
+		],
+	},
+},

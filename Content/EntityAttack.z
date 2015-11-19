@@ -16,6 +16,7 @@ class EntityAttack : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        
         if(this.Attacking)
         {
             if(this.Windup > 0)
@@ -25,7 +26,7 @@ class EntityAttack : ZilchComponent
                 {
                     //var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim);
                     var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim);
-                    
+                    tracer.Transform.Rotation = this.Owner.Transform.Rotation;
                     if(this.Friendly)
                     {
                         tracer.Collider.CollisionGroup = CollisionGroup.FriendlyProjectile;
@@ -47,7 +48,7 @@ class EntityAttack : ZilchComponent
     {
         this.Attacking = true;
         this.Cooldown = 0.2;
-        this.Windup = 0.1;
+        this.Windup = 0.15;
         this.Aim = aim;
         
     }

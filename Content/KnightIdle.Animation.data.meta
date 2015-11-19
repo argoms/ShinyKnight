@@ -1,0 +1,32 @@
+GeometryContent = 
+{
+	GeneratedArchetype = 
+	{
+		uint64 ResourceId = 561b98ec122f1c21,
+	},
+	GeometryImport = 
+	{
+		bool ChangeWinding = false,
+		Vec3 Translation = [0, 0, 0],
+		Quat Rotation = [0, 0, 0, 1],
+		Vec3 Scale = [1, 1, 1],
+	},
+	AnimationBuilder = 
+	{
+		string Name = "KnightIdle",
+		uint64 ResourceId = 561b98ec122f1c1e,
+		bool MakeAnimationSet = false,
+		ResourceCompression CompressAnimation = None,
+		string PreviewArchetype = "",
+		Array Clips = 
+		[
+			{
+				string Name = "All",
+				uint64 ResourceId = 561b98ec12388fe4,
+				int StartFrame = 0,
+				int EndFrame = 28,
+				LoopingMode LoopingMode = Default,
+			},
+		],
+	},
+},

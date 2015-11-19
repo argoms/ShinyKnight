@@ -14,7 +14,11 @@ class PlayerControl : ZilchComponent
     var FollowMouse : Boolean = false; //whether or not the player looks at the cursor
     var Attacking : Boolean = false; //whether or not the player is currently attacking
     
-    var Weapon : EntityAttack;
+    var Weapon : EntityAttack; //contains info for doing damage
+    
+    var PlayerAnimation : SimpleAnimation; //player's animation
+    
+    var ComboProgress : Integer; //how many hits the player is into their combo
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -28,6 +32,8 @@ class PlayerControl : ZilchComponent
         //set up player's attacking:
         this.Weapon = this.Owner.EntityAttack;
         this.Weapon.Friendly = true;
+        this.PlayerAnimation = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").SimpleAnimation;
+        this.PlayerAnimation.Animation = Animation.KnightAttack1_1;
     }
 
     function OnLogicUpdate(event : UpdateEvent)
@@ -60,6 +66,7 @@ class PlayerControl : ZilchComponent
         }
         if(this.UpdateMovement(dt))
         {
+            
             this.FollowMouse =false;
             Console.WriteLine("potato");
             if(this.Owner.AutoOrientToVelocity == null)
@@ -67,7 +74,7 @@ class PlayerControl : ZilchComponent
                 
                 this.Owner.AddComponentByName("AutoOrientToVelocity");
             }
-        }
+        } 
         if(this.FollowMouse)
         {
             var cursor:Real2 = Zero.Mouse.ScreenPosition;
@@ -84,6 +91,7 @@ class PlayerControl : ZilchComponent
     */
     function UpdateMouseInput()
     {
+        
         if(!this.MouseWasDown)
         {
             if(Zero.Mouse.IsButtonDown(MouseButtons.Left))
@@ -130,6 +138,20 @@ class PlayerControl : ZilchComponent
         var wasJustStill : Boolean = this.LastMovement == Real3(0,0,0);
         this.LastMovement = movement;
         
+        //change to walking animation if appropriate:
+        if(this.PlayerAnimation.Animation != Animation.KnightWalk && movement != Real3(0,0,0))
+        {
+            this.PlayerAnimation.Animation = Animation.KnightWalk;
+            this.PlayerAnimation.PlayMode = AnimPlayMode.Loop;
+        } else {
+            //idle stance if not moving
+            if(movement == Real3(0,0,0))
+            {
+                this.PlayerAnimation.Animation = Animation.KnightIdle;
+            }
+        }
+        //this.PlayerAnimation.Animation = Animation.KnightIdle;
+        
         return movement != Real3(0,0,0) && wasJustStill;// && this.MovementStopTest != Real3(0,0,0);
         
     }
@@ -144,6 +166,8 @@ class PlayerControl : ZilchComponent
         var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
         var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
         this.Weapon.Attack(aim);
+        this.PlayerAnimation.Animation = Animation.KnightAttack1_1;
+        this.PlayerAnimation.PlayMode = AnimPlayMode.PlayOnce;
     }
     
     function OnMousePressed()

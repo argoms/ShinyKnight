@@ -105,83 +105,13 @@ Cog =
 			},
 			Hierarchy = 
 			{
-				Cog = 
-				{
-					LinkId = 
-					{
-						uint Id = 3,
-					},
-					Named = 
-					{
-						string Name = "Sprite",
-					},
-					Transform = 
-					{
-						Vec3 Translation = [0.200000003, 0.200000003, 3],
-						Vec3 Scale = [0.100000001, 0.100000001, 1],
-						Quat Rotation = [0, 0, 0, 1],
-					},
-					Sprite = 
-					{
-						bool Visible = true,
-						bool VisibilityCulling = true,
-						bool VisibilityEvents = true,
-						bool CastShadows = false,
-						Vec4 Color = [0, 0, 0, 1],
-						BlendMode BlendMode = Alpha,
-						SpriteGeometryMode GeometryMode = ZPlane,
-						string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-						string SpriteSource = "5275aa4d802dd6dc:Square",
-						bool RenderMask = false,
-						bool FlipX = false,
-						bool FlipY = false,
-						bool AnimationActive = false,
-						float AnimationSpeed = 1,
-						uint StartFrame = 0,
-					},
-				},
-				Cog = 
-				{
-					LinkId = 
-					{
-						uint Id = 4,
-					},
-					Named = 
-					{
-						string Name = "Sprite",
-					},
-					Transform = 
-					{
-						Vec3 Translation = [-0.200000003, 0.200000003, 3],
-						Vec3 Scale = [0.100000001, 0.100000001, 1],
-						Quat Rotation = [0, 0, 0, 1],
-					},
-					Sprite = 
-					{
-						bool Visible = true,
-						bool VisibilityCulling = true,
-						bool VisibilityEvents = true,
-						bool CastShadows = false,
-						Vec4 Color = [0, 0, 0, 1],
-						BlendMode BlendMode = Alpha,
-						SpriteGeometryMode GeometryMode = ZPlane,
-						string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
-						string SpriteSource = "5275aa4d802dd6dc:Square",
-						bool RenderMask = false,
-						bool FlipX = false,
-						bool FlipY = false,
-						bool AnimationActive = false,
-						float AnimationSpeed = 1,
-						uint StartFrame = 0,
-					},
-				},
 			},
 		},
 		Cog = 
 		{
 			LinkId = 
 			{
-				uint Id = 5,
+				uint Id = 3,
 			},
 			Named = 
 			{
@@ -199,11 +129,11 @@ Cog =
 				{
 					LinkId = 
 					{
-						uint Id = 6,
+						uint Id = 4,
 					},
 					Named = 
 					{
-						string Name = "attack1",
+						string Name = "Mesh",
 					},
 					Archetyped = 
 					{
@@ -225,8 +155,8 @@ Cog =
 					},
 					SimpleAnimation = 
 					{
-						string AnimationName = "561ac71aed460615:knightanimationset2.All",
-						AnimPlayMode PlayMode = Loop,
+						string AnimationName = "561b98e511f194dc:KnightBlock",
+						AnimPlayMode PlayMode = PlayOnce,
 					},
 					Hierarchy = 
 					{
@@ -234,7 +164,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 7,
+								uint Id = 5,
 							},
 							Named = 
 							{
@@ -252,7 +182,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 8,
+										uint Id = 6,
 									},
 									Named = 
 									{
@@ -270,7 +200,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 9,
+												uint Id = 7,
 											},
 											Named = 
 											{
@@ -288,7 +218,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 10,
+														uint Id = 8,
 													},
 													Named = 
 													{
@@ -306,7 +236,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 11,
+																uint Id = 9,
 															},
 															Named = 
 															{
@@ -324,7 +254,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 12,
+																		uint Id = 10,
 																	},
 																	Named = 
 																	{
@@ -342,7 +272,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 13,
+																				uint Id = 11,
 																			},
 																			Named = 
 																			{
@@ -354,6 +284,57 @@ Cog =
 																				Vec3 Scale = [1, 1, 1],
 																				Quat Rotation = [-0.0804157779, -0.0636506751, -0.00917622726, 0.994684696],
 																			},
+																			SpriteParticleSystem = 
+																			{
+																				bool Visible = true,
+																				bool VisibilityCulling = true,
+																				bool VisibilityEvents = true,
+																				bool CastShadows = false,
+																				SystemChildMode ChildMode = Independent,
+																				SystemSpace SystemSpace = LocalSpace,
+																				uint DrawOrder = 0,
+																				float WarmUpTime = 0,
+																				ParticleGeometry GeometryMode = Billboarded,
+																				ParticleRenderMode RenderMode = Blended,
+																				ParticleSortMode SortMode = Youngest,
+																				ParticleAnimation ParticleAnimation = Single,
+																				string Texture = "4fab71e8bcb7a8ce:DefaultTexture",
+																				Vec4 Tint = [1, 1, 1, 0.464999974],
+																				float VelocityScale = 1,
+																				float LengthScale = 1,
+																				float MaxParticleSize = 100,
+																				Vec3 SystemSize = [1, 1, 1],
+																			},
+																			SphericalParticleEmitter = 
+																			{
+																				bool Active = true,
+																				uint EmitCount = 0,
+																				float EmitRate = 100,
+																				float EmitVariance = 0,
+																				float Size = 0.25,
+																				float SizeVariance = 0.100000001,
+																				float Lifetime = 0.200000003,
+																				float LifetimeVariance = 0.100000001,
+																				float Spin = 0,
+																				float SpinVariance = 50,
+																				bool RandomSpin = true,
+																				float Fill = 1,
+																				float EmitterVelocityPercent = 0,
+																				Vec3 StartVelocity = [10, 0, 0],
+																				Vec3 RandomVelocity = [0.100000001, 0.100000001, 0.100000001],
+																				Vec3 TangentVelocity = [0, 0, 0],
+																				Vec3 EmitterSize = [0, 0, 0],
+																				bool FastMovingEmitter = true,
+																			},
+																			LinearParticleAnimator = 
+																			{
+																				Vec3 Force = [0, 0, 0],
+																				Vec3 RandomForce = [0, 0, 0],
+																				float Torque = 0,
+																				float Growth = 0,
+																				float Dampening = 0,
+																				Vec3 Twist = [0, 0, 0],
+																			},
 																		},
 																	},
 																},
@@ -361,7 +342,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 14,
+																		uint Id = 12,
 																	},
 																	Named = 
 																	{
@@ -379,7 +360,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 15,
+																				uint Id = 13,
 																			},
 																			Named = 
 																			{
@@ -404,7 +385,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 16,
+												uint Id = 14,
 											},
 											Named = 
 											{
@@ -422,7 +403,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 17,
+														uint Id = 15,
 													},
 													Named = 
 													{
@@ -440,7 +421,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 18,
+																uint Id = 16,
 															},
 															Named = 
 															{
@@ -458,7 +439,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 19,
+																		uint Id = 17,
 																	},
 																	Named = 
 																	{
@@ -476,7 +457,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 20,
+																				uint Id = 18,
 																			},
 																			Named = 
 																			{
@@ -495,7 +476,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 21,
+																		uint Id = 19,
 																	},
 																	Named = 
 																	{
@@ -513,7 +494,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 22,
+																				uint Id = 20,
 																			},
 																			Named = 
 																			{
@@ -538,7 +519,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 23,
+												uint Id = 21,
 											},
 											Named = 
 											{
@@ -556,7 +537,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 24,
+														uint Id = 22,
 													},
 													Named = 
 													{
@@ -574,7 +555,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 25,
+																uint Id = 23,
 															},
 															Named = 
 															{
@@ -583,7 +564,7 @@ Cog =
 															Transform = 
 															{
 																Vec3 Translation = [0, 0.5, 0],
-																Vec3 Scale = [0.5, 0.5, 0.5],
+																Vec3 Scale = [0.100000001, 0.5, 0.100000001],
 																Quat Rotation = [-3.09086232e-008, 0.707106769, 0.707106829, 3.09086268e-008],
 															},
 															Model = 
@@ -594,7 +575,7 @@ Cog =
 																bool CastShadows = true,
 																string MaterialName = "4de020863e85bb61:DefaultMaterial",
 																string MeshName = "4de0354322b376ae:Sphere",
-																Vec4 Color = [1, 1, 1, 1],
+																Vec4 Color = [1, 1, 1, 0.935000002],
 															},
 														},
 													},
@@ -607,7 +588,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 26,
+										uint Id = 24,
 									},
 									Named = 
 									{
@@ -625,7 +606,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 27,
+												uint Id = 25,
 											},
 											Named = 
 											{
@@ -643,7 +624,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 28,
+														uint Id = 26,
 													},
 													Named = 
 													{
@@ -661,7 +642,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 29,
+																uint Id = 27,
 															},
 															Named = 
 															{
@@ -684,7 +665,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 30,
+										uint Id = 28,
 									},
 									Named = 
 									{
@@ -702,7 +683,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 31,
+												uint Id = 29,
 											},
 											Named = 
 											{
@@ -720,7 +701,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 32,
+														uint Id = 30,
 													},
 													Named = 
 													{
@@ -738,7 +719,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 33,
+																uint Id = 31,
 															},
 															Named = 
 															{
@@ -763,7 +744,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 34,
+								uint Id = 32,
 							},
 							Named = 
 							{
@@ -792,7 +773,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 35,
+								uint Id = 33,
 							},
 							Named = 
 							{
@@ -821,7 +802,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 36,
+								uint Id = 34,
 							},
 							Named = 
 							{

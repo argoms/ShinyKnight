@@ -11,6 +11,7 @@ class AttackTracerBehavior : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        this.Owner.Collider.DebugDraw();
         this.LifeTime -= event.Dt;
         if(this.LifeTime < 0)
         {

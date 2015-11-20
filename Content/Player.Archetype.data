@@ -32,10 +32,15 @@ Cog =
 	},
 	PlayerControl = 
 	{
-		string WalkAnimation = "561b9b03fac39e04:KnightWalk",
-		string Attack1_1Animation = "561ac7eed058ec0f:KnightAttack1_1",
+		string WalkAnimation = "56182ba8bffc5eed:knighwalkmaya1.All",
 		string IdleAnimation = "561b98ec12388fe4:KnightIdle.All",
-		string BlockAnimation = "561b98e511f194dc:KnightBlock",
+		string BlockAnimation = "561b98e511f194dc:KnightBlock.All",
+		string Attack1_1Animation = "561ac7eed058ec0f:KnightAttack1_1.All",
+		string Attack1_2Animation = "5619abee9456605f:KnightAttack1_2Maya.All",
+		string Attack1_3Animation = "5619a84cd1296a28:KnightAttack1_3Maya2.All",
+		string Attack2_1Animation = "",
+		string Attack2_2Animation = "",
+		string Attack2_3Animation = "",
 	},
 	EntityMovement = 
 	{
@@ -160,7 +165,7 @@ Cog =
 					},
 					SimpleAnimation = 
 					{
-						string AnimationName = "561b98e511f194dc:KnightBlock",
+						string AnimationName = "561b98e511f194dc:KnightBlock.All",
 						AnimPlayMode PlayMode = PlayOnce,
 					},
 					Hierarchy = 

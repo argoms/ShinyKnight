@@ -19,17 +19,30 @@ class PlayerControl : ZilchComponent
     var PlayerAnimation : SimpleAnimation; //player's animation
     var PlayerAnimationGraph : AnimationGraph; //player animation graph
     
-    var ComboProgress : Integer; //how many hits the player is into their combo
+    var ComboProgress : Integer = 1; //how many hits the player is into their combo
     
     //animations:
     [Property]
     var WalkAnimation : Animation;
     [Property]
-    var Attack1_1Animation : Animation;
-    [Property]
     var IdleAnimation  : Animation;
     [Property]
     var BlockAnimation : Animation;
+    
+    
+    [Property]
+    var Attack1_1Animation : Animation;
+    [Property]
+    var Attack1_2Animation : Animation;
+    [Property]
+    var Attack1_3Animation : Animation;
+    
+    [Property]
+    var Attack2_1Animation : Animation;
+    [Property]
+    var Attack2_2Animation : Animation;
+    [Property]
+    var Attack2_3Animation : Animation;
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -61,7 +74,7 @@ class PlayerControl : ZilchComponent
             this.PlayerAnimationGraph.TimeScale = 1;
             this.UpdateOrientation(event.Dt);
         } else {
-            this.PlayerAnimationGraph.TimeScale = 2;
+            
         }
     }
     
@@ -154,7 +167,7 @@ class PlayerControl : ZilchComponent
         this.LastMovement = movement;
         
         //change to walking animation if appropriate:
-        if(this.PlayerAnimation.Animation != Animation.KnightWalk && movement != Real3(0,0,0))
+        if(this.PlayerAnimation.Animation != this.WalkAnimation && movement != Real3(0,0,0))
         {
             //this.PlayerAnimation.PlaySingle(Animation.KnightWalk, AnimPlayMode.Loop);
             this.PlayerAnimation.Animation = this.WalkAnimation;
@@ -178,12 +191,60 @@ class PlayerControl : ZilchComponent
     */
     function Attack()
     {
+        
         var cursor:Real2 = Zero.Mouse.ScreenPosition;
         var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
         var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
-        this.Weapon.Attack(aim);
+        
         this.PlayerAnimation.Animation = null;
-        this.PlayerAnimation.PlaySingle(this.Attack1_1Animation, AnimPlayMode.PlayOnce);
+        if(this.ComboProgress == 1)
+        {
+            //forward step:
+            this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
+            
+            //configure weapon:
+            this.Weapon.BaseCooldown = 0.2;
+            this.Weapon.BaseWindup = 0.1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_1;
+            
+            //animation play:
+            this.PlayerAnimation.PlaySingle(this.Attack1_1Animation, AnimPlayMode.PlayOnce);
+            this.PlayerAnimationGraph.TimeScale = 2;
+        } else if(this.ComboProgress == 2)
+        {
+            //forward step:
+            this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
+            
+            //configure weapon:
+            this.Weapon.BaseCooldown = 0.2;
+            this.Weapon.BaseWindup = 0.1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_1;
+            
+            //animation play:
+            this.PlayerAnimation.PlaySingle(this.Attack1_2Animation, AnimPlayMode.PlayOnce);
+            this.PlayerAnimationGraph.TimeScale = 2;
+        } else if(this.ComboProgress == 3)
+        {
+            //forward step:
+            this.Owner.RigidBody.ApplyLinearVelocity(aim*15);
+            
+            //configure weapon:
+            this.Weapon.BaseCooldown = 0.4;
+            this.Weapon.BaseWindup = 0.1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_1;
+            
+            //animation play:
+            this.PlayerAnimation.PlaySingle(this.Attack1_3Animation, AnimPlayMode.PlayOnce);
+            this.PlayerAnimationGraph.TimeScale = 1.5;
+        }
+        
+        this.Weapon.Attack(aim);
+        
+        this.ComboProgress += 1;
+        if(this.ComboProgress > 3)
+        {
+            this.ComboProgress = 1;
+        }
         //this.PlayerAnimation.PlayMode = AnimPlayMode.PlayOnce;
     }
     

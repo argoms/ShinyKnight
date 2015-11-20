@@ -98,7 +98,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [-3.49654746, 6.48406887, 150],
+			Vec3 Translation = [12.9418068, -3.78990579, 150],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-008, 0, 1],
 		},
@@ -110,7 +110,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 2.23708224,
+			float Size = 40.6569939,
 		},
 		EditorCameraController = 
 		{
@@ -118,7 +118,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [-3.49654746, 6.48406887, 100],
+			Vec3 LookTarget = [12.9418068, -3.78990579, 100],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -146,6 +146,24 @@ Level =
 		Named = 
 		{
 			string Name = "AttackTracer",
+		},
+	},
+	ArchetypeInstance = 
+	{
+		string Name = "561825f0749fed54:knightmayatest1",
+		LinkId = 
+		{
+			uint Id = 4,
+		},
+		Transform = 
+		{
+			Vec3 Translation = [-2.90356636, 7.00196886, 100],
+			Vec3 Scale = [1, 1, 1],
+			Quat Rotation = [0, 0, 0, 1],
+		},
+		Named = 
+		{
+			string Name = "knightmayatest1",
 		},
 	},
 },

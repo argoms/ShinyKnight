@@ -1,0 +1,60 @@
+GeometryContent = 
+{
+	GeneratedArchetype = 
+	{
+		uint64 ResourceId = 56182ba9bff2228e,
+	},
+	GeometryImport = 
+	{
+		bool ChangeWinding = false,
+		Vec3 Translation = [0, 0, 0],
+		Quat Rotation = [0, 0, 0, 1],
+		Vec3 Scale = [1, 1, 1],
+	},
+	MeshBuilder = 
+	{
+		Array Meshes = 
+		[
+			{
+				string Name = "knighwalkmaya1.Circle.003",
+				uint64 ResourceId = 56182ba8bffc5aa8,
+			},
+			{
+				string Name = "knighwalkmaya1.Circle.002",
+				uint64 ResourceId = 56182ba8bffc5aad,
+			},
+			{
+				string Name = "knighwalkmaya1.Circle.001",
+				uint64 ResourceId = 56182ba8bffc5aaf,
+			},
+		],
+		MeshMode MeshMode = Multi,
+		ResourceCompression CompressMesh = None,
+		Generation Normals = Import,
+		Generation Tangents = Import,
+		float SmoothingAngle = 60,
+	},
+	SkeletonBuilder = 
+	{
+		string Name = "knighwalkmaya1",
+		uint64 ResourceId = 56182ba9bff2228c,
+	},
+	AnimationBuilder = 
+	{
+		string Name = "knighwalkmaya1",
+		uint64 ResourceId = 56182ba9bff22287,
+		bool MakeAnimationSet = false,
+		ResourceCompression CompressAnimation = None,
+		string PreviewArchetype = "",
+		Array Clips = 
+		[
+			{
+				string Name = "All",
+				uint64 ResourceId = 56182ba8bffc5eed,
+				int StartFrame = 0,
+				int EndFrame = 16,
+				LoopingMode LoopingMode = Default,
+			},
+		],
+	},
+},

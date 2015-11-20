@@ -8,6 +8,10 @@ class EntityAttack : ZilchComponent
     
     var Aim : Real3; //attack direction
     
+    var BaseCooldown : Real = 0.2;
+    
+    var BaseWindup :Real = 0.1;
+    
     [Property]
     var Friendly : Boolean; //true if it's a friendly, false if it's an enemy attack
     
@@ -51,8 +55,8 @@ class EntityAttack : ZilchComponent
     function Attack(aim : Real3)
     {
         this.Attacking = true;
-        this.Cooldown = 0.2;
-        this.Windup = 0.1;
+        this.Cooldown = this.BaseCooldown;
+        this.Windup = this.BaseWindup;
         this.Aim = aim;
         
     }

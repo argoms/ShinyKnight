@@ -1,0 +1,789 @@
+Cog = 
+{
+	LinkId = 
+	{
+		uint Id = 1,
+	},
+	Named = 
+	{
+		string Name = "KnightAttack1_2_12",
+	},
+	Transform = 
+	{
+		Vec3 Translation = [0, 0, 0],
+		Vec3 Scale = [1, 1, 1],
+		Quat Rotation = [0, 0, 0, 1],
+	},
+	AnimationGraph = 
+	{
+		bool Active = true,
+		AnimPlayMode PlayMode = PlayOnce,
+		float TimeScale = 1,
+		string AnimationName = "4f8ebbde619389d0:DefaultAnimation",
+		uint64 DebugPreviewId = 320000003daaaaab,
+	},
+	SimpleAnimation = 
+	{
+		string AnimationName = "561828e7eaf49f54:KnightAttack1_2_12.All",
+		AnimPlayMode PlayMode = PlayOnce,
+	},
+	Hierarchy = 
+	{
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 2,
+			},
+			Named = 
+			{
+				string Name = "Armature",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [0, 1.29999995, 0],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.707106769, 0, 0, 0.707106769],
+			},
+			Hierarchy = 
+			{
+				Cog = 
+				{
+					LinkId = 
+					{
+						uint Id = 3,
+					},
+					Named = 
+					{
+						string Name = "Torso",
+					},
+					Transform = 
+					{
+						Vec3 Translation = [0, 0, 0],
+						Vec3 Scale = [1, 1, 1],
+						Quat Rotation = [0.68478322, -0.315214097, -0.351170123, 0.555330157],
+					},
+					Hierarchy = 
+					{
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 4,
+							},
+							Named = 
+							{
+								string Name = "UpperTorso.L",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [0.187024996, 0.607641995, 0.126554996],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [0.56837064, 0.459657729, 0.624887645, -0.27419886],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 5,
+									},
+									Named = 
+									{
+										string Name = "UpperArm.L",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [-5.23038013e-009, 0.448022008, 3.55621985e-008],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [-0.422624022, -0.226332009, -0.0285373013, 0.877125084],
+									},
+									Hierarchy = 
+									{
+										Cog = 
+										{
+											LinkId = 
+											{
+												uint Id = 6,
+											},
+											Named = 
+											{
+												string Name = "LowerArm.L",
+											},
+											Transform = 
+											{
+												Vec3 Translation = [6.34871e-008, 0.329663008, -1.35394998e-007],
+												Vec3 Scale = [1, 1, 1],
+												Quat Rotation = [-0.320117056, 0.545973122, -0.470091075, 0.615185142],
+											},
+											Hierarchy = 
+											{
+												Cog = 
+												{
+													LinkId = 
+													{
+														uint Id = 7,
+													},
+													Named = 
+													{
+														string Name = "UpperHand.L",
+													},
+													Transform = 
+													{
+														Vec3 Translation = [1.62068005e-007, 0.400860995, 2.32203998e-008],
+														Vec3 Scale = [1, 1, 1],
+														Quat Rotation = [0.0810032263, 0.292615116, 0.114102036, 0.945936382],
+													},
+													Hierarchy = 
+													{
+														Cog = 
+														{
+															LinkId = 
+															{
+																uint Id = 8,
+															},
+															Named = 
+															{
+																string Name = "LowerHand.L",
+															},
+															Transform = 
+															{
+																Vec3 Translation = [-2.22156e-008, 0.150000006, 9.94714e-008],
+																Vec3 Scale = [1, 1, 1],
+																Quat Rotation = [-0.0804157779, -0.0636506751, -0.00917620678, 0.994684696],
+															},
+														},
+													},
+												},
+												Cog = 
+												{
+													LinkId = 
+													{
+														uint Id = 9,
+													},
+													Named = 
+													{
+														string Name = "UpperThumb.L",
+													},
+													Transform = 
+													{
+														Vec3 Translation = [1.62068005e-007, 0.400860995, 2.32203998e-008],
+														Vec3 Scale = [1, 1, 1],
+														Quat Rotation = [-0.319753915, 0.256566912, 0.386568874, 0.826132774],
+													},
+													Hierarchy = 
+													{
+														Cog = 
+														{
+															LinkId = 
+															{
+																uint Id = 10,
+															},
+															Named = 
+															{
+																string Name = "LowerThumb.L",
+															},
+															Transform = 
+															{
+																Vec3 Translation = [-7.03532024e-008, 0.169115007, 4.92563998e-008],
+																Vec3 Scale = [1, 1, 1],
+																Quat Rotation = [0.0225871075, -0.159104064, 0.138728037, 0.977205336],
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 11,
+							},
+							Named = 
+							{
+								string Name = "UpperTorso.R",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [0.187024996, 0.607641995, 0.126554996],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [-0.0721856877, -0.0778147876, 0.728984833, 0.676250815],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 12,
+									},
+									Named = 
+									{
+										string Name = "UpperArm.R",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [1.24713004e-008, 0.447896987, -4.90601018e-008],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [-0.327137977, -0.163479984, -0.187301978, 0.911686897],
+									},
+									Hierarchy = 
+									{
+										Cog = 
+										{
+											LinkId = 
+											{
+												uint Id = 13,
+											},
+											Named = 
+											{
+												string Name = "LowerArm.R",
+											},
+											Transform = 
+											{
+												Vec3 Translation = [-5.84463997e-008, 0.329589009, 1.47597007e-007],
+												Vec3 Scale = [1, 1, 1],
+												Quat Rotation = [-0.149487078, 0.136193082, 0.450963229, 0.869331479],
+											},
+											Hierarchy = 
+											{
+												Cog = 
+												{
+													LinkId = 
+													{
+														uint Id = 14,
+													},
+													Named = 
+													{
+														string Name = "UpperHand.R",
+													},
+													Transform = 
+													{
+														Vec3 Translation = [1.00476001e-008, 0.400999993, 2.84600006e-008],
+														Vec3 Scale = [1, 1, 1],
+														Quat Rotation = [2.28023955e-009, -0.0222344939, 6.93174806e-009, 0.99975276],
+													},
+													Hierarchy = 
+													{
+														Cog = 
+														{
+															LinkId = 
+															{
+																uint Id = 15,
+															},
+															Named = 
+															{
+																string Name = "LowerHand.R",
+															},
+															Transform = 
+															{
+																Vec3 Translation = [7.51890994e-008, 0.150000006, 4.98571993e-008],
+																Vec3 Scale = [1, 1, 1],
+																Quat Rotation = [-0.275666893, 0.0632500723, 0.00293401862, 0.959165514],
+															},
+														},
+													},
+												},
+												Cog = 
+												{
+													LinkId = 
+													{
+														uint Id = 16,
+													},
+													Named = 
+													{
+														string Name = "UpperThumb.L.001",
+													},
+													Transform = 
+													{
+														Vec3 Translation = [1.00476001e-008, 0.400999993, 2.84600006e-008],
+														Vec3 Scale = [1, 1, 1],
+														Quat Rotation = [-0.458751023, 0.124047011, 0.153157011, 0.866431057],
+													},
+													Hierarchy = 
+													{
+														Cog = 
+														{
+															LinkId = 
+															{
+																uint Id = 17,
+															},
+															Named = 
+															{
+																string Name = "LowerThumb.R",
+															},
+															Transform = 
+															{
+																Vec3 Translation = [9.41013028e-008, 0.169115007, 1.19181003e-008],
+																Vec3 Scale = [1, 1, 1],
+																Quat Rotation = [0.00439551054, 0.150121018, -0.140566021, 0.978614092],
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 18,
+							},
+							Named = 
+							{
+								string Name = "UpperTorso",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [0.187024996, 0.607641995, 0.126554996],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [4.16333998e-017, 9.87202e-008, -2.77555988e-017, 1],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 19,
+									},
+									Named = 
+									{
+										string Name = "Head",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [-5.58793012e-009, 0.108461998, -2.68308007e-008],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [-0.0592633337, 0.479744285, -0.00649689371, 0.875380516],
+									},
+								},
+							},
+						},
+					},
+				},
+				Cog = 
+				{
+					LinkId = 
+					{
+						uint Id = 20,
+					},
+					Named = 
+					{
+						string Name = "LegTorsoConnector.l",
+					},
+					Transform = 
+					{
+						Vec3 Translation = [0, 0, 0],
+						Vec3 Scale = [1, 1, 1],
+						Quat Rotation = [0.128360927, -0.222328871, 0.837000549, -0.483242691],
+					},
+					Hierarchy = 
+					{
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 21,
+							},
+							Named = 
+							{
+								string Name = "UpperLeg.l",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [0.186661005, 0.329569012, -0.0122683998],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [0.0777529106, 0.93097806, -0.297193021, 0.197258011],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 22,
+									},
+									Named = 
+									{
+										string Name = "LowerLeg.l",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [1.25359998e-008, 0.356723994, -8.29700966e-008],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [0.216474041, 0.592439115, -0.0013978302, 0.775985122],
+									},
+									Hierarchy = 
+									{
+										Cog = 
+										{
+											LinkId = 
+											{
+												uint Id = 23,
+											},
+											Named = 
+											{
+												string Name = "Foot.l",
+											},
+											Transform = 
+											{
+												Vec3 Translation = [1.28067001e-007, 0.75654, 3.7536001e-008],
+												Vec3 Scale = [1, 1, 1],
+												Quat Rotation = [-2.90516937e-007, 0.749025822, -0.662540793, 4.16801913e-006],
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				Cog = 
+				{
+					LinkId = 
+					{
+						uint Id = 24,
+					},
+					Named = 
+					{
+						string Name = "LegTorsoConnector.R",
+					},
+					Transform = 
+					{
+						Vec3 Translation = [0, 0, 0],
+						Vec3 Scale = [1, 1, 1],
+						Quat Rotation = [-0.128870055, -0.232221112, 0.695264339, 0.66788727],
+					},
+					Hierarchy = 
+					{
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 25,
+							},
+							Named = 
+							{
+								string Name = "UpperLeg.R",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [-0.222994, 0.235449001, -0.0325501002],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [-0.132920966, 0.903806806, -0.363582939, 0.182407975],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 26,
+									},
+									Named = 
+									{
+										string Name = "LowerLeg.R",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [2.66829003e-010, 0.35679999, 1.96453005e-008],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [0.24095206, -0.543141127, -0.0222028047, 0.804019153],
+									},
+									Hierarchy = 
+									{
+										Cog = 
+										{
+											LinkId = 
+											{
+												uint Id = 27,
+											},
+											Named = 
+											{
+												string Name = "Foot.R",
+											},
+											Transform = 
+											{
+												Vec3 Translation = [1.45761007e-007, 0.757000029, 2.04288009e-009],
+												Vec3 Scale = [1, 1, 1],
+												Quat Rotation = [0.0472918935, -0.521812916, 0.851272881, 0.0284481961],
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 28,
+			},
+			Named = 
+			{
+				string Name = "Circle.003",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [0, 2.5, 0],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.5, 0.5, -0.5, 0.5],
+			},
+			SkinnedModel = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string Material = "4de020863e85bb61:DefaultMaterial",
+				string Mesh = "561828e7eaf49afa:KnightAttack1_2_12.Circle.003",
+				Vec4 Color = [1, 1, 1, 1],
+				Vec3 BoundingCenter = [0.801113546, -1.12762713, 1.2863431],
+				Vec3 BoundingExtents = [0.167589843, 1.68718171, 0.460449398],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 29,
+			},
+			Named = 
+			{
+				string Name = "Circle.002",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [0, 2.5, 0],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.5, 0.5, -0.5, 0.5],
+			},
+			SkinnedModel = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string Material = "4de020863e85bb61:DefaultMaterial",
+				string Mesh = "561828e7eaf49b03:KnightAttack1_2_12.Circle.002",
+				Vec4 Color = [1, 1, 1, 1],
+				Vec3 BoundingCenter = [-0.0163149238, 0.0012139678, 0],
+				Vec3 BoundingExtents = [0.483685076, 0.414531827, 0.36274761],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 30,
+			},
+			Named = 
+			{
+				string Name = "Circle.001",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [0, 2.5, 0],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.5, 0.5, -0.5, 0.5],
+			},
+			SkinnedModel = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string Material = "4de020863e85bb61:DefaultMaterial",
+				string Mesh = "561828e7eaf49b05:KnightAttack1_2_12.Circle.001",
+				Vec4 Color = [1, 1, 1, 1],
+				Vec3 BoundingCenter = [1.45117188, -0.0637774616, 6.06775284e-005],
+				Vec3 BoundingExtents = [1.04882813, 0.297198296, 1.4943043],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 31,
+			},
+			Named = 
+			{
+				string Name = "Lamp",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-0.187537998, 6.36479998, 0.00802301988],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 32,
+			},
+			Named = 
+			{
+				string Name = "Camera",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [4.46815014, 8.07417965, 7.50365019],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.175408989, -0.468236953, 0.293652982, 0.814710855],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 33,
+			},
+			Named = 
+			{
+				string Name = "Lamp.001",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-0.187537998, 6.36479998, -6.11661005],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 34,
+			},
+			Named = 
+			{
+				string Name = "Lamp.002",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-0.187537998, 6.36479998, 5.07104015],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 35,
+			},
+			Named = 
+			{
+				string Name = "Lamp.003",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [5.26456022, 1.61901999, 0.207067996],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 36,
+			},
+			Named = 
+			{
+				string Name = "Lamp.004",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-4.23585987, 1.61901999, 0.207067996],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 37,
+			},
+			Named = 
+			{
+				string Name = "Lamp.005",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-4.23585987, 1.61901999, -5.78317022],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 38,
+			},
+			Named = 
+			{
+				string Name = "Lamp.006",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [4.77874994, 1.61901999, -5.78317022],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 39,
+			},
+			Named = 
+			{
+				string Name = "Lamp.007",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [4.77874994, 1.61901999, 6.05247021],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 40,
+			},
+			Named = 
+			{
+				string Name = "Lamp.008",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-3.25277996, 1.61901999, 6.05247021],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [-0.570948005, 0.272170991, 0.755879998, 0.169075996],
+			},
+		},
+	},
+},

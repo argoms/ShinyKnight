@@ -43,8 +43,8 @@ class EntityHealth : ZilchComponent
             this.STCounter += event.Dt;
             if(this.STCounter > this.StaggerTimer)
             {
+                this.SDCounter = 0;
                 this.STCounter = 0;
-                this.StaggerDamage = 0;
             }
         }
     }

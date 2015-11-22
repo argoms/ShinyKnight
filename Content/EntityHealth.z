@@ -2,7 +2,7 @@
     EnemyHealth
     @James/Argoms
     
-    Component managing health points of enemies.
+    Component managing health points of enemies. Shamelesly stolen from dave.
 */
 class EntityHealth : ZilchComponent
 {
@@ -12,6 +12,8 @@ class EntityHealth : ZilchComponent
     var RandomGenerator:Random = Random();//random number generator
     
     var Important:Boolean = true; //whether or not this enemy adjusts the level's enemy counter
+    
+    var DamageColor : Real4 = Real4(1,1,1,1); //color of text that pops up when entity is damaged, default white
     
     //[Property]
     //var IgnoresProjectiles:Boolean = false; //whether or not object ignores projectiles
@@ -35,7 +37,12 @@ class EntityHealth : ZilchComponent
     
     function TakeDamage(damage : Integer) //called when taking damage
     {
+        //actually subtract health:
         this.Health -= damage;
+        
+        //create damage text popup:
+        var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
+        damageText.SpriteText.Text = "`damage`";
         
         if (this.Health < 1)
         {

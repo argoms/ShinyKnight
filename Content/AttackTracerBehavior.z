@@ -21,6 +21,7 @@ class AttackTracerBehavior : ZilchComponent
     
     function OnHit(event : CollisionEvent)
     {
+        //Console.WriteLine(event.OtherObject);
         if(event.OtherObject.EntityHealth != null)
         {
             event.OtherObject.EntityHealth.TakeDamage(this.Damage);

@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [0, 0, 0],
+		Vec3 Translation = [4.41552544, 3.69092631, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -52,11 +52,26 @@ Cog =
 	},
 	EntityHealth = 
 	{
-		int Health = 1,
+		int Health = 3,
 	},
 	ZombieAI = 
 	{
 		float AttackRange = 4,
+		CogPath PresetTarget = 
+		{
+			string Path = ":/Player",
+			bool ErrorOnResolveToNull = false,
+			bool ErrorOnPathCantCompute = false,
+			bool ErrorOnDirectLinkFail = false,
+			bool UpdateCogOnPathChange = true,
+			bool UpdatePathOnCogChange = true,
+			bool UpdateCogOnInitialize = true,
+			bool ResolvedNullErrorOccurred = false,
+			uint ResolvedCog = 2,
+			CogPathPreference PathPreference0 = CogRelative,
+			CogPathPreference PathPreference1 = SpaceRelative,
+			CogPathPreference PathPreference2 = Absolute,
+		},
 	},
 	AutoOrientToVelocity = 
 	{
@@ -72,7 +87,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 2,
+				uint Id = 3,
 			},
 			Named = 
 			{
@@ -107,7 +122,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 3,
+				uint Id = 4,
 			},
 			Named = 
 			{
@@ -125,7 +140,7 @@ Cog =
 				{
 					LinkId = 
 					{
-						uint Id = 4,
+						uint Id = 5,
 					},
 					Named = 
 					{
@@ -172,7 +187,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 5,
+								uint Id = 6,
 							},
 							Named = 
 							{
@@ -190,7 +205,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 6,
+										uint Id = 7,
 									},
 									Named = 
 									{
@@ -208,7 +223,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 7,
+												uint Id = 8,
 											},
 											Named = 
 											{
@@ -226,7 +241,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 8,
+														uint Id = 9,
 													},
 													Named = 
 													{
@@ -244,7 +259,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 9,
+																uint Id = 10,
 															},
 															Named = 
 															{
@@ -265,7 +280,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 10,
+												uint Id = 11,
 											},
 											Named = 
 											{
@@ -283,7 +298,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 11,
+														uint Id = 12,
 													},
 													Named = 
 													{
@@ -301,7 +316,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 12,
+																uint Id = 13,
 															},
 															Named = 
 															{
@@ -322,7 +337,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 13,
+												uint Id = 14,
 											},
 											Named = 
 											{
@@ -339,7 +354,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 14,
+												uint Id = 15,
 											},
 											Named = 
 											{
@@ -357,7 +372,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 15,
+														uint Id = 16,
 													},
 													Named = 
 													{
@@ -375,7 +390,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 16,
+																uint Id = 17,
 															},
 															Named = 
 															{
@@ -394,7 +409,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 17,
+														uint Id = 18,
 													},
 													Named = 
 													{
@@ -412,7 +427,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 18,
+																uint Id = 19,
 															},
 															Named = 
 															{
@@ -437,7 +452,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 19,
+								uint Id = 20,
 							},
 							Named = 
 							{
@@ -454,7 +469,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 20,
+								uint Id = 21,
 							},
 							Named = 
 							{
@@ -471,7 +486,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 21,
+								uint Id = 22,
 							},
 							Named = 
 							{

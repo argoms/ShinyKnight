@@ -1,0 +1,36 @@
+/*
+    DamageTextBehavior
+    @James/Argoms
+    
+    Component controlling the damage numbers that pop up when an object is hit.
+*/
+class DamageTextBehavior : ZilchComponent
+{
+    var TimePassed:Real = 0;
+    var Text:String = "";
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        //increment timer:
+        this.TimePassed += event.Dt;
+        
+        //fade and move upwards:
+        this.Owner.Transform.Translation += Real3(0, 0.005*(2-this.TimePassed), 0);
+        this.Owner.SpriteText.Color -= Real4(0, 0, 0, 0.25)*event.Dt;
+        
+        //kill self if lifetime exceeded:
+        if(this.TimePassed > 2) 
+        {
+            this.Owner.Destroy();
+        }
+    }
+    
+    function SetText(text:String) //component constructors in zilch confuse me, so dumb workaround here
+    {
+        this.Owner.SpriteText.Text = text;
+    }
+}

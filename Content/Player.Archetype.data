@@ -77,6 +77,10 @@ Cog =
 	{
 		bool Friendly = false,
 	},
+	EntityHealth = 
+	{
+		int Health = 500,
+	},
 	Hierarchy = 
 	{
 		Cog = 

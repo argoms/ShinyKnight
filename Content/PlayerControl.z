@@ -12,7 +12,9 @@ class PlayerControl : ZilchComponent
     //internal for movement calculations:
     var LastMovement : Real3; //last movement vector of the player
     var FollowMouse : Boolean = false; //whether or not the player looks at the cursor
-    var Attacking : Boolean = false; //whether or not the player is currently attacking
+    
+    //var Attacking : Boolean = false; //whether or not the player is currently attacking
+    //DEPRECATED: attacking state now found in EntityAttack behavior
     
     var Weapon : EntityAttack; //contains info for doing damage
     
@@ -20,6 +22,7 @@ class PlayerControl : ZilchComponent
     var PlayerAnimationGraph : AnimationGraph; //player animation graph
     
     var ComboProgress : Integer = 1; //how many hits the player is into their combo
+    var ComboCooldown : Real = 0; //time before combo resets
     
     //animations:
     [Property]
@@ -43,6 +46,7 @@ class PlayerControl : ZilchComponent
     var Attack2_2Animation : Animation;
     [Property]
     var Attack2_3Animation : Animation;
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -64,7 +68,6 @@ class PlayerControl : ZilchComponent
     function OnLogicUpdate(event : UpdateEvent)
     {
         
-        
         //update mouse state:
         this.UpdateMouseInput();
         
@@ -73,6 +76,12 @@ class PlayerControl : ZilchComponent
         {
             this.PlayerAnimationGraph.TimeScale = 1;
             this.UpdateOrientation(event.Dt);
+            this.ComboCooldown -= event.Dt;
+            if(this.ComboCooldown <= 0)
+            {
+                this.ComboProgress = 1;
+                this.ComboCooldown = 1;
+            }
         } else {
             
         }
@@ -201,9 +210,10 @@ class PlayerControl : ZilchComponent
         {
             //forward step:
             this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
+            this.Weapon.Damage = 1;
             
             //configure weapon:
-            this.Weapon.BaseCooldown = 0.2;
+            this.Weapon.BaseCooldown = 0.1;
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_1;
             
@@ -216,9 +226,10 @@ class PlayerControl : ZilchComponent
             this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
             
             //configure weapon:
-            this.Weapon.BaseCooldown = 0.2;
+            this.Weapon.BaseCooldown = 0.1;
             this.Weapon.BaseWindup = 0.1;
-            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_2;
+            this.Weapon.Damage = 1;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_2Animation, AnimPlayMode.PlayOnce);
@@ -231,7 +242,8 @@ class PlayerControl : ZilchComponent
             //configure weapon:
             this.Weapon.BaseCooldown = 0.4;
             this.Weapon.BaseWindup = 0.1;
-            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_3;
+            this.Weapon.Damage = 2;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_3Animation, AnimPlayMode.PlayOnce);

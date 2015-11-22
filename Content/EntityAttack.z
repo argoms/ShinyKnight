@@ -2,18 +2,23 @@ class EntityAttack : ZilchComponent
 {
     var Attacking : Boolean = false; //whether or not entity is currently attacking
     
-    var Cooldown : Real = 0; //how long until the entity stops being in the attacking state
+    var Cooldown : Real = 0; //how long until the entity stops being in the attacking state, INTERNAL COUNTER, NOT STARTING VALUE
     
-    var Windup : Real = 0; //how long of a delay before the attack starts
+    var Windup : Real = 0; //how long of a delay before the attack starts, INTERNAL COUNTER, NOT STARTING VALUE
     
     var Aim : Real3; //attack direction
     
-    var BaseCooldown : Real = 0.2;
+    var BaseCooldown : Real = 0.2; //cooldown value on beginning attack
     
-    var BaseWindup :Real = 0.1;
+    var BaseWindup :Real = 0.1; //windup value on beginning attack
+    
+    var Damage : Integer = 1;
     
     [Property]
     var Friendly : Boolean; //true if it's a friendly, false if it's an enemy attack
+    
+    [Property]
+    var MinRange : Real = 1; //how many units away the attack tracer is spawned
     
     var AttackCollision : MultiConvexMesh = MultiConvexMesh.KnightAttackTracer1_1; //the collider used for attacks
     function Initialize(init : CogInitializer)
@@ -32,8 +37,9 @@ class EntityAttack : ZilchComponent
                 if(this.Windup < 0)
                 {
                     //var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim);
-                    var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim);
+                    var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim * this.MinRange);
                     tracer.Transform.Rotation = this.Owner.Transform.Rotation;
+                    tracer.AttackTracerBehavior.Damage = this.Damage;
                     if(this.Friendly)
                     {
                         tracer.Collider.CollisionGroup = CollisionGroup.FriendlyProjectile;

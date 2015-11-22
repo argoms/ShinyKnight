@@ -1,3 +1,9 @@
+/*
+ZombieAI
+
+AI for zombie-like opponents (eg. standard lollipop men)
+*/
+
 class ZombieAI : ZilchComponent
 {
     var TargetEntity: Cog;
@@ -6,23 +12,37 @@ class ZombieAI : ZilchComponent
     [Property]
     var AttackRange : Real = 4;
     
+    [Property]
+    var PresetTarget : CogPath;
+    
+    var Weapon : EntityAttack;
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        if(this.PresetTarget != null)
+        {
+            this.TargetEntity = this.PresetTarget.Cog;
+        }
+        this.Weapon = this.Owner.EntityAttack;
+        this.Weapon.AttackCollision = MultiConvexMesh.LollipopAttack;
+        this.Weapon.BaseWindup = 0.5;
+        this.Weapon.BaseCooldown = 0.5;
+        this.Weapon.MinRange = 0.5;
+        this.Weapon.Damage = 5;
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        if(!this.Attacking)
+        if(!this.Weapon.Attacking)
         {
             
             this.MovementVector =  this.TargetEntity.Transform.Translation - this.Owner.Transform.Translation;
             if(this.DistanceSQ(this.MovementVector) <= this.AttackRange)
             {
                 Math.Normalize(this.MovementVector);
-                this.Owner.EntityAttack.Attack(this.MovementVector);
-                this.Attacking = true;
-                Console.WriteLine(this.DistanceSQ(this.MovementVector));
+                this.Weapon.Attack(this.MovementVector);
+                //this.Attacking = true;
+                //Console.WriteLine(this.DistanceSQ(this.MovementVector));
             } else {
                 Math.Normalize(this.MovementVector);
             }

@@ -21,8 +21,8 @@ class PlayerControl : ZilchComponent
     var PlayerAnimation : SimpleAnimation; //player's animation
     var PlayerAnimationGraph : AnimationGraph; //player animation graph
     
-    var ComboProgress : Integer = 1; //how many hits the player is into their combo
-    var ComboCooldown : Real = 0; //time before combo resets
+    var StringProgress : Integer = 1; //how many hits the player is into their String
+    var StringCooldown : Real = 0; //time before String resets
     
     //animations:
     [Property]
@@ -62,33 +62,48 @@ class PlayerControl : ZilchComponent
         this.Weapon = this.Owner.EntityAttack;
         this.Weapon.Friendly = true;
         this.PlayerAnimation = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").SimpleAnimation;
-        //this.PlayerAnimation.Animation = Animation.KnightAttack1_1;
         this.PlayerAnimationGraph = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").AnimationGraph;
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        
         //update mouse state:
         this.UpdateMouseInput();
         
         //update player translation:
         if(!this.Weapon.Attacking)
         {
-            this.PlayerAnimationGraph.TimeScale = 1;
-            if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
+            if(Zero.Mouse.IsButtonDown(MouseButtons.Left))
             {
-                this.PlayerAnimation.PlaySingle(this.BlockAnimation, AnimPlayMode.Loop);
-                this.Owner.EntityHealth.Blocking = true;
-                this.UpdateOrientation(event.Dt, false);
+                this.AltAttack();
             } else {
-                this.Owner.EntityHealth.Blocking = false;
-                this.UpdateOrientation(event.Dt, true);
-                this.ComboCooldown -= event.Dt;
-                if(this.ComboCooldown <= 0)
+                
+                this.PlayerAnimationGraph.TimeScale = 1;
+                
+                //blocking:
+                if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
                 {
-                    this.ComboProgress = 1;
-                    this.ComboCooldown = 1;
+                    //animation:
+                    this.PlayerAnimation.PlaySingle(this.BlockAnimation, AnimPlayMode.Loop);
+                    this.PlayerAnimation.Animation = this.BlockAnimation;
+                    
+                    //internal:
+                    this.Owner.EntityHealth.Blocking = true;
+                    this.UpdateOrientation(event.Dt, false);
+                    
+                } else {
+                    //regular movement:
+                    this.Owner.EntityHealth.Blocking = false;
+                    this.UpdateOrientation(event.Dt, true);
+                    
+                }
+                
+                //string counter reset:
+                this.StringCooldown -= event.Dt;
+                if(this.StringCooldown <= 0)
+                {
+                    this.StringProgress = 1;
+                    this.StringCooldown = 0.1;
                 }
             }
         } else {
@@ -99,6 +114,7 @@ class PlayerControl : ZilchComponent
     /*
     UpdateOrientation
         handles the direction that the player is facing in
+        changemovement determienes whether or not the player can actually move
     */
     function UpdateOrientation(dt : Real, changeMovement : Boolean)
     {
@@ -125,17 +141,11 @@ class PlayerControl : ZilchComponent
             } 
             if(this.FollowMouse)
             {
-                var cursor:Real2 = Zero.Mouse.ScreenPosition;
-                var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
-                var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
-                this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
+                this.AimAtMouse();
                 //Console.WriteLine(this.Owner.Orientation.WorldForward);
             }
         } else {
-            var cursor:Real2 = Zero.Mouse.ScreenPosition;
-            var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
-            var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
-            this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
+            this.AimAtMouse();
         }
     }
     
@@ -162,6 +172,18 @@ class PlayerControl : ZilchComponent
         }
     }
     
+    /*AimAtMouse
+        Points player towards mouse
+        returns direction
+    */
+    function AimAtMouse() : Real3
+    {
+        var cursor:Real2 = Zero.Mouse.ScreenPosition;
+        var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
+        var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
+        this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
+        return aim;
+    }
     /*
     UpdateMovement
         calculates movement vector based on key input, applies to EntityMovement
@@ -195,8 +217,10 @@ class PlayerControl : ZilchComponent
         //change to walking animation if appropriate:
         if(this.PlayerAnimation.Animation != this.WalkAnimation && movement != Real3(0,0,0))
         {
+            
             //this.PlayerAnimation.PlaySingle(Animation.KnightWalk, AnimPlayMode.Loop);
             this.PlayerAnimation.Animation = this.WalkAnimation;
+            this.PlayerAnimation.PlaySingle(this.WalkAnimation, AnimPlayMode.Loop);
             this.PlayerAnimation.PlayMode = AnimPlayMode.Loop;
         } else {
             //idle stance if not moving
@@ -218,12 +242,10 @@ class PlayerControl : ZilchComponent
     function Attack()
     {
         
-        var cursor:Real2 = Zero.Mouse.ScreenPosition;
-        var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
-        var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
+        var aim : Real3= this.AimAtMouse();
         
         this.PlayerAnimation.Animation = null;
-        if(this.ComboProgress == 1)
+        if(this.StringProgress == 1)
         {
             //forward step:
             this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
@@ -232,13 +254,13 @@ class PlayerControl : ZilchComponent
             //configure weapon:
             this.Weapon.BaseCooldown = 0.1;
             this.Weapon.BaseWindup = 0.1;
-            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_1;
             this.Weapon.Knockback = 5;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_1Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 2;
-        } else if(this.ComboProgress == 2)
+            this.PlayerAnimationGraph.TimeScale = 1.25;
+        } else if(this.StringProgress == 2)
         {
             //forward step:
             this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
@@ -246,36 +268,102 @@ class PlayerControl : ZilchComponent
             //configure weapon:
             this.Weapon.BaseCooldown = 0.1;
             this.Weapon.BaseWindup = 0.1;
-            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_2;
+            this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_2;
             this.Weapon.Damage = 1;
             this.Weapon.Knockback = 5;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_2Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 2;
-        } else if(this.ComboProgress == 3)
+            this.PlayerAnimationGraph.TimeScale = 1.25;
+        } else if(this.StringProgress == 3)
         {
             //forward step:
-            this.Owner.RigidBody.ApplyLinearVelocity(aim*15);
+            this.Owner.RigidBody.ApplyLinearVelocity(aim*20);
             
             //configure weapon:
             this.Weapon.BaseCooldown = 0.4;
             this.Weapon.BaseWindup = 0.1;
-            this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_3;
+            this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_3;
             this.Weapon.Damage = 2;
             this.Weapon.Knockback = 25;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_3Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 1.5;
+            this.PlayerAnimationGraph.TimeScale = 1;
         }
         
         this.Weapon.Attack(aim);
         
-        this.ComboProgress += 1;
-        if(this.ComboProgress > 3)
+        this.StringProgress += 1;
+        if(this.StringProgress > 3)
         {
-            this.ComboProgress = 1;
+            this.StringProgress = 1;
+        }
+        //this.PlayerAnimation.PlayMode = AnimPlayMode.PlayOnce;
+    }
+    
+    /*
+    AltAttack
+        Player's alternate attack combo
+    */
+    function AltAttack()
+    {
+        var aim : Real3= this.AimAtMouse();
+        
+        this.PlayerAnimation.Animation = null;
+        if(this.StringProgress == 1)
+        {
+            //forward step:
+            this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
+            this.Weapon.Damage = 1;
+            
+            //configure weapon:
+            this.Weapon.BaseCooldown = 0.1;
+            this.Weapon.BaseWindup = 0.1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_1;
+            this.Weapon.Knockback = 5;
+            
+            //animation play:
+            this.PlayerAnimation.PlaySingle(this.Attack2_1Animation, AnimPlayMode.PlayOnce);
+            this.PlayerAnimationGraph.TimeScale = 1.25;
+        } else if(this.StringProgress == 2)
+        {
+            //forward step:
+            this.Owner.RigidBody.ApplyLinearVelocity(aim*3);
+            
+            //configure weapon:
+            this.Weapon.BaseCooldown = 0.1;
+            this.Weapon.BaseWindup = 0.1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_2;
+            this.Weapon.Damage = 1;
+            this.Weapon.Knockback = 5;
+            
+            //animation play:
+            this.PlayerAnimation.PlaySingle(this.Attack2_2Animation, AnimPlayMode.PlayOnce);
+            this.PlayerAnimationGraph.TimeScale = 1;
+        } else if(this.StringProgress == 3)
+        {
+            //forward step:
+            this.Owner.RigidBody.ApplyLinearVelocity(aim*50);
+            
+            //configure weapon:
+            this.Weapon.BaseCooldown = 0.4;
+            this.Weapon.BaseWindup = 0.1;
+            this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_3;
+            this.Weapon.Damage = 2;
+            this.Weapon.Knockback = 25;
+            
+            //animation play:
+            this.PlayerAnimation.PlaySingle(this.Attack2_3Animation, AnimPlayMode.PlayOnce);
+            this.PlayerAnimationGraph.TimeScale = 2;
+        }
+        
+        this.Weapon.Attack(aim);
+        
+        this.StringProgress += 1;
+        if(this.StringProgress > 3)
+        {
+            this.StringProgress = 1;
         }
         //this.PlayerAnimation.PlayMode = AnimPlayMode.PlayOnce;
     }
@@ -284,7 +372,12 @@ class PlayerControl : ZilchComponent
     {
         if(!this.Weapon.Attacking)
         {
-            this.Attack();
+            if(this.Owner.EntityHealth.Blocking)
+            {
+                this.AltAttack();
+            } else {
+                this.Attack();
+            }
         }
     }
     

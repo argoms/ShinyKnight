@@ -27,7 +27,7 @@ Cog =
 		bool Asleep = false,
 		bool Kinematic = false,
 		bool RotationLocked = false,
-		bool Mode2D = true,
+		bool Mode2D = false,
 		bool AllowSleep = false,
 		bool Inherit2DMode = true,
 		Vec3 Velocity = [0, 0, 0],
@@ -41,6 +41,12 @@ Cog =
 		string MaterialName = "4de020863e872da8:DefaultPhysicsMaterial",
 		string SerializedGroupName = "4e740859314e5515:DefaultGroup",
 		Vec3 Offset = [0, 0, 0],
-		string MeshName = "562e46b053da4a8b:KnightAttackTracer1_1",
+		string MeshName = "562e46b053da4a8b:KATracer1_1",
+	},
+	DragEffect = 
+	{
+		bool Active = true,
+		bool WakeUpOnChange = true,
+		float Drag = 8,
 	},
 },

@@ -2,8 +2,8 @@ BinaryContent =
 {
 	BinaryBuilder = 
 	{
-		string Name = "KnightAttackTracer1_2",
-		uint64 ResourceId = 56078b810327dd76,
+		string Name = "KATracer2_2",
+		uint64 ResourceId = 5604cc8009d2450f,
 		string LoaderType = "MultiConvexMesh",
 		uint Version = 0,
 		string FilterTag = "",

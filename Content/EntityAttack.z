@@ -25,7 +25,7 @@ class EntityAttack : ZilchComponent
     [Property]
     var MinRange : Real = 1; //how many units away the attack tracer is spawned
     
-    var AttackCollision : MultiConvexMesh = MultiConvexMesh.KnightAttackTracer1_1; //the collider used for attacks
+    var AttackCollision : MultiConvexMesh = MultiConvexMesh.KATracer1_1; //the collider used for attacks
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -49,6 +49,7 @@ class EntityAttack : ZilchComponent
                     tracer.Transform.Rotation = this.Owner.Transform.Rotation;
                     tracer.AttackTracerBehavior.Damage = this.Damage;
                     tracer.AttackTracerBehavior.Knockback = this.Knockback * this.Aim;
+                    tracer.RigidBody.Velocity = this.Owner.RigidBody.Velocity;
                     if(this.Friendly)
                     {
                         tracer.Collider.CollisionGroup = CollisionGroup.FriendlyProjectile;

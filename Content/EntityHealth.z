@@ -51,6 +51,10 @@ class EntityHealth : ZilchComponent
     
     function TakeDamage(damage : Integer) //called when taking damage
     {
+        if(this.Owner.AutoOrientToVelocity != null)
+        {
+            //this.Owner.RemoveComponentByName("AutoOrientToVelocity");
+        }
         if(this.Blocking)
         {
             damage = 0;

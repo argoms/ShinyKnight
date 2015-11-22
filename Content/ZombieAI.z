@@ -13,9 +13,34 @@ class ZombieAI : ZilchComponent
     var AttackRange : Real = 4;
     
     [Property]
+    var WalkAnimation : Animation;
+    
+    [Property]
+    var AttackAnimation : Animation;
+    
+    [Property]
+    var IdleAnimation : Animation;
+    
+    [Property]
     var PresetTarget : CogPath;
     
     var Weapon : EntityAttack;
+    
+    [Property]
+    var Mesh:CogPath;
+    
+    [Property]
+    var PreAttackPause : Real = 0.5;
+    
+    var AttackPauseTimer : Real = 0;
+    
+    [Property]
+    var AttackTracer : MultiConvexMesh;
+    
+    var EntityAnimation : SimpleAnimation;
+    var EntityAnimationGraph : AnimationGraph;
+    
+    var JustAttacking : Boolean = false;
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -24,29 +49,65 @@ class ZombieAI : ZilchComponent
             this.TargetEntity = this.PresetTarget.Cog;
         }
         this.Weapon = this.Owner.EntityAttack;
-        this.Weapon.AttackCollision = MultiConvexMesh.LollipopAttack;
-        this.Weapon.BaseWindup = 0.5;
-        this.Weapon.BaseCooldown = 0.5;
+        this.Weapon.AttackCollision = this.AttackTracer;
+        this.Weapon.BaseWindup = 0.15;
+        this.Weapon.BaseCooldown = 1;
         this.Weapon.MinRange = 0.5;
         this.Weapon.Damage = 5;
+    
+        
+        this.EntityAnimation = this.Mesh.Cog.SimpleAnimation;
+        this.EntityAnimationGraph = this.Mesh.Cog.AnimationGraph;
+        this.EntityAnimationGraph.TimeScale = 1;
+        
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        if(!this.Weapon.Attacking)
+        if(this.Owner.EntityAttack.StaggerTimer > 0)
         {
-            
-            this.MovementVector =  this.TargetEntity.Transform.Translation - this.Owner.Transform.Translation;
-            if(this.DistanceSQ(this.MovementVector) <= this.AttackRange)
+            this.AttackPauseTimer = -1;
+            this.JustAttacking = true;
+        }
+        
+        if(this.AttackPauseTimer <= 0)
+        {
+            if(!this.Weapon.Attacking)
+            {
+                
+                this.MovementVector =  this.TargetEntity.Transform.Translation - this.Owner.Transform.Translation;
+                if(this.DistanceSQ(this.MovementVector) <= this.AttackRange)
+                {
+                    
+                    this.AttackPauseTimer = this.PreAttackPause;
+                    this.EntityAnimation.DirectBlend(this.AttackAnimation, this.PreAttackPause, AnimPlayMode.PlayOnce);
+                    //this.EntityAnimation.PlaySingle(this.IdleAnimation, AnimPlayMode.PlayOnce);
+                    //this.Attacking = true;
+                    //Console.WriteLine(this.DistanceSQ(this.MovementVector));
+                } else {
+                    Math.Normalize(this.MovementVector);
+                }
+                this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
+                
+                //play walk anim if attack just finished:
+                if(this.JustAttacking)
+                {
+                    this.EntityAnimationGraph.TimeScale = 1;
+                    this.EntityAnimation.PlaySingle(this.WalkAnimation, AnimPlayMode.Loop);
+                }
+            } else {
+                
+            }
+            this.JustAttacking = this.Weapon.Attacking;
+        } else {
+            this.AttackPauseTimer -= event.Dt;
+            if(this.AttackPauseTimer <= 0 && this.AttackPauseTimer > -1)
             {
                 Math.Normalize(this.MovementVector);
                 this.Weapon.Attack(this.MovementVector);
-                //this.Attacking = true;
-                //Console.WriteLine(this.DistanceSQ(this.MovementVector));
-            } else {
-                Math.Normalize(this.MovementVector);
+                this.EntityAnimationGraph.TimeScale = 1;
+                this.EntityAnimation.PlaySingle(this.AttackAnimation, AnimPlayMode.PlayOnce);
             }
-            this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
         }
     }
     

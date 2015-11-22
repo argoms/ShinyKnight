@@ -15,30 +15,53 @@ class EntityHealth : ZilchComponent
     
     var DamageColor : Real4 = Real4(1,1,1,1); //color of text that pops up when entity is damaged, default white
     
-    //[Property]
-    //var IgnoresProjectiles:Boolean = false; //whether or not object ignores projectiles
+    [Property]
+    var StaggerDamage : Integer = 2; //amount of damage taken to stagger
     
-    //MATT
+    [Property]
+    var StaggerTimer : Real = 1; //rate at which the stagger cooldown decreases
     
-    //[Dependency]
-    //var AddScore : AddScore; //Needed to add to score on death
+    [Property]
+    var StaggerTime : Real = 1; //amount of time that the entity is staggered for by default
     
-    //END MATT
+    var SDCounter : Integer = 0; //internal counter for stagger damage
+    
+    var STCounter : Real = 0; //internal counter for stagger timing
+    
+    var Blocking : Boolean;
     
     function Initialize(init : CogInitializer)
     {
         //this.Health *= this.LevelSettings.LevelBehavior.Difficulty;
-        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        if(this.SDCounter > 0)
+        {
+            this.STCounter += event.Dt;
+            if(this.STCounter > this.StaggerTimer)
+            {
+                this.STCounter = 0;
+                this.StaggerDamage = 0;
+            }
+        }
     }
     
     function TakeDamage(damage : Integer) //called when taking damage
     {
+        if(this.Blocking)
+        {
+            damage = 0;
+        }
         //actually subtract health:
         this.Health -= damage;
+        this.SDCounter += 1;
+        if(this.SDCounter >= this.StaggerDamage)
+        {
+            this.Stagger();
+        }
         
         //create damage text popup:
         var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
@@ -64,5 +87,17 @@ class EntityHealth : ZilchComponent
         }
         
         //explosion:
+    }
+    
+    function Stagger()
+    {
+        var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
+        damageText.SpriteText.Text = "   ow :(";
+        if(this.Owner.EntityAttack.Attacking)
+        {
+            Console.WriteLine(this.Owner);
+            this.Owner.EntityAttack.Attacking = false;
+        }
+        this.Owner.EntityAttack.StaggerTimer = this.StaggerTime;
     }
 }

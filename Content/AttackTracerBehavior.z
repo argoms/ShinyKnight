@@ -3,6 +3,8 @@ class AttackTracerBehavior : ZilchComponent
     var LifeTime : Real = 0.25;
     
     var Damage : Integer = 1;
+    
+    var Knockback : Real3 = Real3(0,0,0);
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -25,6 +27,7 @@ class AttackTracerBehavior : ZilchComponent
         if(event.OtherObject.EntityHealth != null)
         {
             event.OtherObject.EntityHealth.TakeDamage(this.Damage);
+            event.OtherObject.RigidBody.ApplyLinearVelocity(this.Knockback);
         }
     }
     

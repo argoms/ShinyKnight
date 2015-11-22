@@ -10,6 +10,9 @@ class EntityMovement : ZilchComponent
     
     function Move(movement : Real3, dt : Real)
     {
-        this.Owner.RigidBody.ApplyLinearVelocity(movement*dt*this.MoveSpeed);
+        if(this.Owner.EntityAttack.StaggerTimer <= 0)
+        {
+            this.Owner.RigidBody.ApplyLinearVelocity(movement*dt*this.MoveSpeed);
+        }
     }
 }

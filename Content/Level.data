@@ -240,12 +240,16 @@ Level =
 		},
 		EntityAttack = 
 		{
+			float Knockback = 5,
 			bool Friendly = false,
 			float MinRange = 1,
 		},
 		EntityHealth = 
 		{
 			int Health = 100,
+			int StaggerDamage = 2,
+			float StaggerTimer = 1,
+			float StaggerTime = 1,
 		},
 		Hierarchy = 
 		{
@@ -1067,7 +1071,10 @@ Level =
 		},
 		EntityHealth = 
 		{
-			int Health = 3,
+			int Health = 10,
+			int StaggerDamage = 2,
+			float StaggerTimer = 1,
+			float StaggerTime = 1,
 		},
 		ZombieAI = 
 		{
@@ -1094,6 +1101,7 @@ Level =
 		},
 		EntityAttack = 
 		{
+			float Knockback = 10,
 			bool Friendly = false,
 			float MinRange = 1,
 		},

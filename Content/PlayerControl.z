@@ -47,6 +47,7 @@ class PlayerControl : ZilchComponent
     [Property]
     var Attack2_3Animation : Animation;
     
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -75,12 +76,20 @@ class PlayerControl : ZilchComponent
         if(!this.Weapon.Attacking)
         {
             this.PlayerAnimationGraph.TimeScale = 1;
-            this.UpdateOrientation(event.Dt);
-            this.ComboCooldown -= event.Dt;
-            if(this.ComboCooldown <= 0)
+            if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
             {
-                this.ComboProgress = 1;
-                this.ComboCooldown = 1;
+                this.PlayerAnimation.PlaySingle(this.BlockAnimation, AnimPlayMode.Loop);
+                this.Owner.EntityHealth.Blocking = true;
+                this.UpdateOrientation(event.Dt, false);
+            } else {
+                this.Owner.EntityHealth.Blocking = false;
+                this.UpdateOrientation(event.Dt, true);
+                this.ComboCooldown -= event.Dt;
+                if(this.ComboCooldown <= 0)
+                {
+                    this.ComboProgress = 1;
+                    this.ComboCooldown = 1;
+                }
             }
         } else {
             
@@ -91,34 +100,42 @@ class PlayerControl : ZilchComponent
     UpdateOrientation
         handles the direction that the player is facing in
     */
-    function UpdateOrientation(dt : Real)
+    function UpdateOrientation(dt : Real, changeMovement : Boolean)
     {
-        if(Zero.Mouse.RawMovement != Real2(0,0))
+        if(changeMovement)
         {
-            this.FollowMouse = true;
-            if(this.Owner.AutoOrientToVelocity != null)
+            if(Zero.Mouse.RawMovement != Real2(0,0))
             {
-                this.Owner.RemoveComponentByName("AutoOrientToVelocity");
+                this.FollowMouse = true;
+                if(this.Owner.AutoOrientToVelocity != null)
+                {
+                    this.Owner.RemoveComponentByName("AutoOrientToVelocity");
+                }
             }
-        }
-        if(this.UpdateMovement(dt))
-        {
-            
-            this.FollowMouse =false;
-            //Console.WriteLine("potato");
-            if(this.Owner.AutoOrientToVelocity == null)
+            if(this.UpdateMovement(dt))
             {
                 
-                this.Owner.AddComponentByName("AutoOrientToVelocity");
+                this.FollowMouse =false;
+                //Console.WriteLine("potato");
+                if(this.Owner.AutoOrientToVelocity == null)
+                {
+                    
+                    this.Owner.AddComponentByName("AutoOrientToVelocity");
+                }
+            } 
+            if(this.FollowMouse)
+            {
+                var cursor:Real2 = Zero.Mouse.ScreenPosition;
+                var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
+                var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
+                this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
+                //Console.WriteLine(this.Owner.Orientation.WorldForward);
             }
-        } 
-        if(this.FollowMouse)
-        {
+        } else {
             var cursor:Real2 = Zero.Mouse.ScreenPosition;
             var worldCursor:Real3 = this.LevelSettings.CameraViewport.ScreenToWorldZPlane(cursor, 0);
             var aim:Real3 = Math.Normalize(Real3(worldCursor.X-this.Owner.Transform.Translation.X, worldCursor.Y-this.Owner.Transform.Translation.Y, 0));
             this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
-            //Console.WriteLine(this.Owner.Orientation.WorldForward);
         }
     }
     
@@ -216,6 +233,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseCooldown = 0.1;
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_1;
+            this.Weapon.Knockback = 5;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_1Animation, AnimPlayMode.PlayOnce);
@@ -230,6 +248,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_2;
             this.Weapon.Damage = 1;
+            this.Weapon.Knockback = 5;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_2Animation, AnimPlayMode.PlayOnce);
@@ -244,6 +263,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KnightAttackTracer1_3;
             this.Weapon.Damage = 2;
+            this.Weapon.Knockback = 25;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_3Animation, AnimPlayMode.PlayOnce);

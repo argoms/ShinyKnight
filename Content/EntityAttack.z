@@ -14,6 +14,11 @@ class EntityAttack : ZilchComponent
     
     var Damage : Integer = 1;
     
+    var StaggerTimer : Real;
+    
+    [Property]
+    var Knockback : Real = 5;
+    
     [Property]
     var Friendly : Boolean; //true if it's a friendly, false if it's an enemy attack
     
@@ -28,7 +33,10 @@ class EntityAttack : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        
+        if(this.StaggerTimer > 0)
+        {
+            this.StaggerTimer -= event.Dt;
+        }
         if(this.Attacking)
         {
             if(this.Windup > 0)
@@ -40,6 +48,7 @@ class EntityAttack : ZilchComponent
                     var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim * this.MinRange);
                     tracer.Transform.Rotation = this.Owner.Transform.Rotation;
                     tracer.AttackTracerBehavior.Damage = this.Damage;
+                    tracer.AttackTracerBehavior.Knockback = this.Knockback * this.Aim;
                     if(this.Friendly)
                     {
                         tracer.Collider.CollisionGroup = CollisionGroup.FriendlyProjectile;
@@ -60,10 +69,13 @@ class EntityAttack : ZilchComponent
     
     function Attack(aim : Real3)
     {
-        this.Attacking = true;
-        this.Cooldown = this.BaseCooldown;
-        this.Windup = this.BaseWindup;
-        this.Aim = aim;
+        if(this.StaggerTimer <= 0)
+        {
+            this.Attacking = true;
+            this.Cooldown = this.BaseCooldown;
+            this.Windup = this.BaseWindup;
+            this.Aim = aim;
+        }
         
     }
 }

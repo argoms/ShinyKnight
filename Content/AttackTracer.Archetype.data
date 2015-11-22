@@ -21,18 +21,6 @@ Cog =
 	AttackTracerBehavior = 
 	{
 	},
-	RigidBody = 
-	{
-		bool Static = false,
-		bool Asleep = false,
-		bool Kinematic = false,
-		bool RotationLocked = false,
-		bool Mode2D = false,
-		bool AllowSleep = false,
-		bool Inherit2DMode = true,
-		Vec3 Velocity = [0, 0, 0],
-		Vec3 AngularVelocity = [0, 0, 0],
-	},
 	MultiConvexMeshCollider = 
 	{
 		bool Ghost = true,

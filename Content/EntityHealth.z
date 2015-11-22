@@ -99,7 +99,7 @@ class EntityHealth : ZilchComponent
         damageText.SpriteText.Text = "   ow :(";
         if(this.Owner.EntityAttack.Attacking)
         {
-            Console.WriteLine(this.Owner);
+            //Console.WriteLine(this.Owner);
             this.Owner.EntityAttack.Attacking = false;
         }
         this.Owner.EntityAttack.StaggerTimer = this.StaggerTime;

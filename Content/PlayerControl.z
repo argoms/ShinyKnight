@@ -255,7 +255,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseCooldown = 0.1;
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_1;
-            this.Weapon.Knockback = 5;
+            this.Weapon.Knockback = 3;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_1Animation, AnimPlayMode.PlayOnce);
@@ -270,7 +270,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_2;
             this.Weapon.Damage = 1;
-            this.Weapon.Knockback = 5;
+            this.Weapon.Knockback = 3;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_2Animation, AnimPlayMode.PlayOnce);
@@ -285,7 +285,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_3;
             this.Weapon.Damage = 2;
-            this.Weapon.Knockback = 25;
+            this.Weapon.Knockback = 15;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_3Animation, AnimPlayMode.PlayOnce);
@@ -321,7 +321,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseCooldown = 0.1;
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_1;
-            this.Weapon.Knockback = 5;
+            this.Weapon.Knockback = 2;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack2_1Animation, AnimPlayMode.PlayOnce);
@@ -336,7 +336,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_2;
             this.Weapon.Damage = 1;
-            this.Weapon.Knockback = 5;
+            this.Weapon.Knockback = 2;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack2_2Animation, AnimPlayMode.PlayOnce);
@@ -351,7 +351,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_3;
             this.Weapon.Damage = 2;
-            this.Weapon.Knockback = 25;
+            this.Weapon.Knockback = 5;
             
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack2_3Animation, AnimPlayMode.PlayOnce);

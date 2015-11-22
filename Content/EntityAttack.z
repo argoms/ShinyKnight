@@ -45,11 +45,13 @@ class EntityAttack : ZilchComponent
                 if(this.Windup < 0)
                 {
                     //var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim);
-                    var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim * this.MinRange);
-                    tracer.Transform.Rotation = this.Owner.Transform.Rotation;
+                    //var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim * this.MinRange);
+                    var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, Real3(0,1,0) * this.MinRange);
+                    //tracer.Transform.Rotation = this.Owner.Transform.Rotation;
                     tracer.AttackTracerBehavior.Damage = this.Damage;
                     tracer.AttackTracerBehavior.Knockback = this.Knockback * this.Aim;
-                    tracer.RigidBody.Velocity = this.Owner.RigidBody.Velocity;
+                    //tracer.RigidBody.Velocity = this.Owner.RigidBody.Velocity;
+                    tracer.AttachTo(this.Owner);
                     if(this.Friendly)
                     {
                         tracer.Collider.CollisionGroup = CollisionGroup.FriendlyProjectile;

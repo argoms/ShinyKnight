@@ -37,6 +37,9 @@ class ZombieAI : ZilchComponent
     [Property]
     var AttackTracer : MultiConvexMesh;
     
+    [Property]
+    var LungeStrength : Real = 10;
+    
     var EntityAnimation : SimpleAnimation;
     var EntityAnimationGraph : AnimationGraph;
     
@@ -78,7 +81,8 @@ class ZombieAI : ZilchComponent
                 this.MovementVector =  this.TargetEntity.Transform.Translation - this.Owner.Transform.Translation;
                 if(this.DistanceSQ(this.MovementVector) <= this.AttackRange)
                 {
-                    
+                    this.MovementVector = (this.AimAtTarget());
+                    this.Owner.RemoveComponentByName("AutoOrientToVelocity");
                     this.AttackPauseTimer = this.PreAttackPause;
                     this.EntityAnimation.DirectBlend(this.AttackAnimation, this.PreAttackPause, AnimPlayMode.PlayOnce);
                     //this.EntityAnimation.PlaySingle(this.IdleAnimation, AnimPlayMode.PlayOnce);
@@ -86,8 +90,13 @@ class ZombieAI : ZilchComponent
                     //Console.WriteLine(this.DistanceSQ(this.MovementVector));
                 } else {
                     Math.Normalize(this.MovementVector);
+                    this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
+                    if(this.Owner.AutoOrientToVelocity == null)
+                    {
+                        this.Owner.AddComponentByName("AutoOrientToVelocity");
+                    }
                 }
-                this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
+                
                 
                 //play walk anim if attack just finished:
                 if(this.JustAttacking)
@@ -103,6 +112,8 @@ class ZombieAI : ZilchComponent
             this.AttackPauseTimer -= event.Dt;
             if(this.AttackPauseTimer <= 0 && this.AttackPauseTimer > -1)
             {
+                
+                this.Owner.RigidBody.ApplyLinearVelocity(this.MovementVector * this.LungeStrength);
                 Math.Normalize(this.MovementVector);
                 this.Weapon.Attack(this.MovementVector);
                 this.EntityAnimationGraph.TimeScale = 1;
@@ -119,5 +130,13 @@ class ZombieAI : ZilchComponent
     function DistanceSQ(input : Real3): Real
     {
         return input.X * input.X + input.Y * input.Y;
+    }
+    
+    function AimAtTarget() : Real3
+    {
+        var targetLocation:Real3 = this.PresetTarget.Cog.Transform.Translation;
+        var aim:Real3 = Math.Normalize(Real3(targetLocation.X-this.Owner.Transform.Translation.X, targetLocation.Y-this.Owner.Transform.Translation.Y, 0));
+        this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
+        return aim;
     }
 }

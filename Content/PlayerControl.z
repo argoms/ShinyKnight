@@ -74,7 +74,7 @@ class PlayerControl : ZilchComponent
     function OnLogicUpdate(event : UpdateEvent)
     {
         //temporary for lack of hud:
-        Console.WriteLine(this.Owner.EntityHealth.Stamina);
+        //Console.WriteLine(this.Owner.EntityHealth.Stamina);
         
         
         

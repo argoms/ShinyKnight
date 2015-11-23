@@ -1,0 +1,15 @@
+/*TEMPORARY*/
+class DebugStaminaBar : ZilchComponent
+{
+    var Bar : Cog;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        this.Bar = this.Owner.FindChildByName("TempStamBar");
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.Bar.Transform.Scale = Real3(this.Owner.EntityHealth.Stamina / 100,0.1,1);
+    }
+}

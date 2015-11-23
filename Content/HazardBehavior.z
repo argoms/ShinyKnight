@@ -1,0 +1,53 @@
+class HazardBehavior : ZilchComponent
+{
+    [Property]
+    var ActiveTime : Real = 1;
+    
+    [Property]
+    var CoolDown : Real = 1;
+    
+    [Property]
+    var Damage : Integer = 2;
+    
+    var Timer : Real = 0;
+    var Active : Boolean = false;
+    
+    [Property]
+    var Enabled : Boolean = true;
+    
+    [Property]
+    var EmitRateMultiplier : Real = 1; //useful if you want to scale up the space
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        this.Owner.EntityAttack.AttackCollision = MultiConvexMesh.Square;
+        this.Owner.EntityAttack.MinRange = 0;
+        this.Owner.EntityAttack.Damage = this.Damage;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Enabled)
+        {
+            this.Timer -= event.Dt;
+            if(this.Timer <= 0)
+            {
+                this.Active = !this.Active;
+                if(this.Active)
+                {
+                    this.Owner.BoxParticleEmitter.EmitRate = 100 * this.EmitRateMultiplier;
+                    this.Owner.EntityAttack.TracerLifetime = this.ActiveTime;
+                    this.Owner.EntityAttack.Attack(Real3(0,0,0));
+                    this.Timer = this.ActiveTime;
+                } else {
+                    this.Owner.BoxParticleEmitter.EmitRate = 5 * this.EmitRateMultiplier;
+                    this.Timer = this.CoolDown;
+                }
+            }
+        } else {
+            this.Owner.BoxParticleEmitter.EmitRate = 5;
+            this.Timer = this.CoolDown;
+        }
+    }
+}

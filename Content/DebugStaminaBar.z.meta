@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "DebugStaminaBar",
+		uint64 ResourceId = 56047383f48d6635,
+	},
+},

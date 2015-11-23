@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "EntityDelayedStep",
+		uint64 ResourceId = 5604854d77321a83,
+	},
+},

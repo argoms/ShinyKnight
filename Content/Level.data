@@ -95,7 +95,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [8.80093002, 0.956637323, 51.4658966],
+			Vec3 Translation = [7.43930674, 0.956637323, 51.4658966],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-008, 0, 1],
 		},
@@ -115,7 +115,7 @@ Level =
 			float LookDistance = 50,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [8.80093002, 0.956637323, 1.46589601],
+			Vec3 LookTarget = [7.43930674, 0.956637323, 1.46589601],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -314,15 +314,33 @@ Level =
 			uint StartFrame = 0,
 		},
 	},
-	Cog = 
+	ArchetypeInstance = 
 	{
+		string Name = "5604cd9a3e98ca89:CandyKnight",
 		LinkId = 
 		{
 			uint Id = 9,
 		},
+		Transform = 
+		{
+			Vec3 Translation = [9, 0, 0],
+			Vec3 Scale = [1, 1, 1],
+			Quat Rotation = [0, 0, 0, 1],
+		},
 		Named = 
 		{
 			string Name = "Enemy",
+		},
+	},
+	Cog = 
+	{
+		LinkId = 
+		{
+			uint Id = 10,
+		},
+		Named = 
+		{
+			string Name = "BigDebugEnemy",
 		},
 		Archetyped = 
 		{
@@ -330,8 +348,8 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [9, 0, 0],
-			Vec3 Scale = [1, 1, 1],
+			Vec3 Translation = [9, -3.0967896, 0],
+			Vec3 Scale = [1.5, 1.5, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},
 		RigidBody = 
@@ -348,7 +366,7 @@ Level =
 		},
 		EntityMovement = 
 		{
-			float MoveSpeed = 8,
+			float MoveSpeed = 4,
 		},
 		SphereCollider = 
 		{
@@ -373,10 +391,6 @@ Level =
 			Vec3 ForwardVector = [0, 1, 0],
 			OrientationBases DefaultBases = ForwardYUpZ,
 		},
-		AutoOrientToVelocity = 
-		{
-			float AngleOffset = 0,
-		},
 		EntityAttack = 
 		{
 			float Knockback = 5,
@@ -385,10 +399,12 @@ Level =
 		},
 		EntityHealth = 
 		{
-			int Health = 100,
-			int StaggerDamage = 2,
+			int Health = 10,
+			int StaggerDamage = 5,
 			float StaggerTimer = 1,
 			float StaggerTime = 1,
+			float MaxStamina = 50,
+			float StaminaRegenRate = 20,
 		},
 		ZombieAI = 
 		{
@@ -421,7 +437,7 @@ Level =
 				bool UpdatePathOnCogChange = true,
 				bool UpdateCogOnInitialize = true,
 				bool ResolvedNullErrorOccurred = false,
-				uint ResolvedCog = 10,
+				uint ResolvedCog = 11,
 				CogPathPreference PathPreference0 = CogRelative,
 				CogPathPreference PathPreference1 = SpaceRelative,
 				CogPathPreference PathPreference2 = Absolute,
@@ -430,13 +446,16 @@ Level =
 			string AttackTracer = "5604cc1a23aedf41:KATracer2_3",
 			float LungeStrength = 20,
 		},
+		EntityDelayedStep = 
+		{
+		},
 		Hierarchy = 
 		{
 			Cog = 
 			{
 				LinkId = 
 				{
-					uint Id = 11,
+					uint Id = 12,
 				},
 				Named = 
 				{
@@ -474,7 +493,7 @@ Level =
 			{
 				LinkId = 
 				{
-					uint Id = 12,
+					uint Id = 13,
 				},
 				Named = 
 				{
@@ -492,7 +511,7 @@ Level =
 					{
 						LinkId = 
 						{
-							uint Id = 10,
+							uint Id = 11,
 						},
 						Named = 
 						{
@@ -527,7 +546,7 @@ Level =
 							{
 								LinkId = 
 								{
-									uint Id = 13,
+									uint Id = 14,
 								},
 								Named = 
 								{
@@ -545,7 +564,7 @@ Level =
 									{
 										LinkId = 
 										{
-											uint Id = 14,
+											uint Id = 15,
 										},
 										Named = 
 										{
@@ -563,7 +582,7 @@ Level =
 											{
 												LinkId = 
 												{
-													uint Id = 15,
+													uint Id = 16,
 												},
 												Named = 
 												{
@@ -581,7 +600,7 @@ Level =
 													{
 														LinkId = 
 														{
-															uint Id = 16,
+															uint Id = 17,
 														},
 														Named = 
 														{
@@ -599,7 +618,7 @@ Level =
 															{
 																LinkId = 
 																{
-																	uint Id = 17,
+																	uint Id = 18,
 																},
 																Named = 
 																{
@@ -617,7 +636,7 @@ Level =
 																	{
 																		LinkId = 
 																		{
-																			uint Id = 18,
+																			uint Id = 19,
 																		},
 																		Named = 
 																		{
@@ -635,7 +654,7 @@ Level =
 																			{
 																				LinkId = 
 																				{
-																					uint Id = 19,
+																					uint Id = 20,
 																				},
 																				Named = 
 																				{
@@ -705,7 +724,7 @@ Level =
 																	{
 																		LinkId = 
 																		{
-																			uint Id = 20,
+																			uint Id = 21,
 																		},
 																		Named = 
 																		{
@@ -723,7 +742,7 @@ Level =
 																			{
 																				LinkId = 
 																				{
-																					uint Id = 21,
+																					uint Id = 22,
 																				},
 																				Named = 
 																				{
@@ -748,7 +767,7 @@ Level =
 											{
 												LinkId = 
 												{
-													uint Id = 22,
+													uint Id = 23,
 												},
 												Named = 
 												{
@@ -766,7 +785,7 @@ Level =
 													{
 														LinkId = 
 														{
-															uint Id = 23,
+															uint Id = 24,
 														},
 														Named = 
 														{
@@ -784,7 +803,7 @@ Level =
 															{
 																LinkId = 
 																{
-																	uint Id = 24,
+																	uint Id = 25,
 																},
 																Named = 
 																{
@@ -802,7 +821,7 @@ Level =
 																	{
 																		LinkId = 
 																		{
-																			uint Id = 25,
+																			uint Id = 26,
 																		},
 																		Named = 
 																		{
@@ -820,7 +839,7 @@ Level =
 																			{
 																				LinkId = 
 																				{
-																					uint Id = 26,
+																					uint Id = 27,
 																				},
 																				Named = 
 																				{
@@ -839,7 +858,7 @@ Level =
 																	{
 																		LinkId = 
 																		{
-																			uint Id = 27,
+																			uint Id = 28,
 																		},
 																		Named = 
 																		{
@@ -857,7 +876,7 @@ Level =
 																			{
 																				LinkId = 
 																				{
-																					uint Id = 28,
+																					uint Id = 29,
 																				},
 																				Named = 
 																				{
@@ -882,7 +901,7 @@ Level =
 											{
 												LinkId = 
 												{
-													uint Id = 29,
+													uint Id = 30,
 												},
 												Named = 
 												{
@@ -900,7 +919,7 @@ Level =
 													{
 														LinkId = 
 														{
-															uint Id = 30,
+															uint Id = 31,
 														},
 														Named = 
 														{
@@ -918,7 +937,7 @@ Level =
 															{
 																LinkId = 
 																{
-																	uint Id = 31,
+																	uint Id = 32,
 																},
 																Named = 
 																{
@@ -951,7 +970,7 @@ Level =
 									{
 										LinkId = 
 										{
-											uint Id = 32,
+											uint Id = 33,
 										},
 										Named = 
 										{
@@ -969,7 +988,7 @@ Level =
 											{
 												LinkId = 
 												{
-													uint Id = 33,
+													uint Id = 34,
 												},
 												Named = 
 												{
@@ -987,7 +1006,7 @@ Level =
 													{
 														LinkId = 
 														{
-															uint Id = 34,
+															uint Id = 35,
 														},
 														Named = 
 														{
@@ -1005,7 +1024,7 @@ Level =
 															{
 																LinkId = 
 																{
-																	uint Id = 35,
+																	uint Id = 36,
 																},
 																Named = 
 																{
@@ -1028,7 +1047,7 @@ Level =
 									{
 										LinkId = 
 										{
-											uint Id = 36,
+											uint Id = 37,
 										},
 										Named = 
 										{
@@ -1046,7 +1065,7 @@ Level =
 											{
 												LinkId = 
 												{
-													uint Id = 37,
+													uint Id = 38,
 												},
 												Named = 
 												{
@@ -1064,7 +1083,7 @@ Level =
 													{
 														LinkId = 
 														{
-															uint Id = 38,
+															uint Id = 39,
 														},
 														Named = 
 														{
@@ -1082,7 +1101,7 @@ Level =
 															{
 																LinkId = 
 																{
-																	uint Id = 39,
+																	uint Id = 40,
 																},
 																Named = 
 																{
@@ -1107,7 +1126,7 @@ Level =
 							{
 								LinkId = 
 								{
-									uint Id = 40,
+									uint Id = 41,
 								},
 								Named = 
 								{
@@ -1136,7 +1155,7 @@ Level =
 							{
 								LinkId = 
 								{
-									uint Id = 41,
+									uint Id = 42,
 								},
 								Named = 
 								{
@@ -1165,7 +1184,7 @@ Level =
 							{
 								LinkId = 
 								{
-									uint Id = 42,
+									uint Id = 43,
 								},
 								Named = 
 								{

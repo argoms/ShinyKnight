@@ -30,6 +30,13 @@ class EntityHealth : ZilchComponent
     
     var Blocking : Boolean;
     
+    [Property]
+    var MaxStamina : Real= 50;
+    
+    [Property]
+    var StaminaRegenRate : Real = 20;
+    
+    var Stamina : Real = 0;
     function Initialize(init : CogInitializer)
     {
         //this.Health *= this.LevelSettings.LevelBehavior.Difficulty;
@@ -38,6 +45,7 @@ class EntityHealth : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        
         if(this.SDCounter > 0)
         {
             this.STCounter += event.Dt;
@@ -45,6 +53,15 @@ class EntityHealth : ZilchComponent
             {
                 this.SDCounter = 0;
                 this.STCounter = 0;
+            }
+        }
+        
+        if(this.Stamina < this.MaxStamina)
+        {
+            this.Stamina += (event.Dt * this.StaminaRegenRate);
+            if(this.Stamina > this.MaxStamina)
+            {
+                this.Stamina = this.MaxStamina;
             }
         }
     }
@@ -57,7 +74,9 @@ class EntityHealth : ZilchComponent
         }
         if(this.Blocking)
         {
+            this.Stamina -= damage * 5;
             damage = 0;
+            
         }
         //actually subtract health:
         this.Health -= damage;

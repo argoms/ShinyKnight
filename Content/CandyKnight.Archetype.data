@@ -32,7 +32,7 @@ Cog =
 	},
 	EntityMovement = 
 	{
-		float MoveSpeed = 4,
+		float MoveSpeed = 8,
 	},
 	SphereCollider = 
 	{
@@ -57,10 +57,6 @@ Cog =
 		Vec3 ForwardVector = [0, 1, 0],
 		OrientationBases DefaultBases = ForwardYUpZ,
 	},
-	AutoOrientToVelocity = 
-	{
-		float AngleOffset = 0,
-	},
 	EntityAttack = 
 	{
 		float Knockback = 5,
@@ -69,10 +65,12 @@ Cog =
 	},
 	EntityHealth = 
 	{
-		int Health = 100,
-		int StaggerDamage = 2,
+		int Health = 10,
+		int StaggerDamage = 5,
 		float StaggerTimer = 1,
 		float StaggerTime = 1,
+		float MaxStamina = 50,
+		float StaminaRegenRate = 20,
 	},
 	ZombieAI = 
 	{
@@ -112,6 +110,10 @@ Cog =
 		},
 		float PreAttackPause = 0.5,
 		string AttackTracer = "5604cc1a23aedf41:KATracer2_3",
+		float LungeStrength = 20,
+	},
+	EntityDelayedStep = 
+	{
 	},
 	Hierarchy = 
 	{

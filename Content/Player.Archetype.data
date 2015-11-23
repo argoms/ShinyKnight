@@ -41,6 +41,7 @@ Cog =
 		string Attack2_1Animation = "5604c5540b05127a:KnightAttack2_1Maya.All",
 		string Attack2_2Animation = "5604cab9178aac96:KnightAttack2_2Maya.All",
 		string Attack2_3Animation = "5604cab015636c76:KnightAttack2_3Maya.All",
+		float AttackStaminaCost = 20,
 	},
 	EntityMovement = 
 	{
@@ -85,6 +86,11 @@ Cog =
 		int StaggerDamage = 2,
 		float StaggerTimer = 1,
 		float StaggerTime = 1,
+		float MaxStamina = 50,
+		float StaminaRegenRate = 40,
+	},
+	EntityDelayedStep = 
+	{
 	},
 	Hierarchy = 
 	{

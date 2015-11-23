@@ -51,6 +51,8 @@ class PlayerControl : ZilchComponent
     //internal flag to make sure that the walking animation is swapped to
     var ActionFinishedFlag : Boolean;
     
+    [Property]
+    var AttackStaminaCost : Real = 20;
     
     function Initialize(init : CogInitializer)
     {
@@ -71,14 +73,20 @@ class PlayerControl : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        //temporary for lack of hud:
+        Console.WriteLine(this.Owner.EntityHealth.Stamina);
+        
+        
+        
         //update mouse state:
         this.UpdateMouseInput();
         
         //update player translation:
         if(!this.Weapon.Attacking)
         {
-            if(Zero.Mouse.IsButtonDown(MouseButtons.Left))
+            if(Zero.Mouse.IsButtonDown(MouseButtons.Left) && this.AttackStaminaCost <= this.Owner.EntityHealth.Stamina)
             {
+                this.Owner.EntityHealth.Stamina -= this.AttackStaminaCost;
                 this.AltAttack();
             } else {
                 
@@ -88,7 +96,7 @@ class PlayerControl : ZilchComponent
                 if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
                 {
                     //animation:
-                    this.CrossBlendedPlay(this.BlockAnimation, 0.1, AnimPlayMode.PlayOnce, 1);
+                    this.CrossBlendedPlay(this.BlockAnimation, 0.05, AnimPlayMode.PlayOnce, 1);
                     
                     //internal:
                     this.Owner.EntityHealth.Blocking = true;
@@ -243,7 +251,7 @@ class PlayerControl : ZilchComponent
             this.PlayerAnimation.PlayMode = AnimPlayMode.Loop;
             */
 
-            this.CrossBlendedPlay(this.WalkAnimation, 0.25, AnimPlayMode.Loop, 1);
+            this.CrossBlendedPlay(this.WalkAnimation, 0.1, AnimPlayMode.Loop, 1);
             this.ActionFinishedFlag = false;
             this.EntityAnimationGraph.TimeScale = 1;
         } else {
@@ -268,13 +276,13 @@ class PlayerControl : ZilchComponent
     function Attack()
     {
         
-        var aim : Real3= this.AimAtMouse();
+        var aim : Real3 = this.AimAtMouse();
         
         this.PlayerAnimation.Animation = null;
         if(this.StringProgress == 1)
         {
             //forward step:
-            this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
+            this.Owner.EntityDelayedStep.AddStep(0.1, aim*5);
             this.Weapon.Damage = 1;
             
             //configure weapon:
@@ -293,7 +301,7 @@ class PlayerControl : ZilchComponent
         } else if(this.StringProgress == 2)
         {
             //forward step:
-            this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
+            this.Owner.EntityDelayedStep.AddStep(0.1, aim*5);
             
             //configure weapon:
             this.Weapon.BaseCooldown = 0.1;
@@ -311,7 +319,7 @@ class PlayerControl : ZilchComponent
         } else if(this.StringProgress == 3)
         {
             //forward step:
-            this.Owner.RigidBody.ApplyLinearVelocity(aim*20);
+            this.Owner.EntityDelayedStep.AddStep(0.1, aim*20);
             
             //configure weapon:
             this.Weapon.BaseCooldown = 0.4;
@@ -348,7 +356,7 @@ class PlayerControl : ZilchComponent
         if(this.StringProgress == 1)
         {
             //forward step:
-            this.Owner.RigidBody.ApplyLinearVelocity(aim*5);
+            this.Owner.EntityDelayedStep.AddStep(0.1, aim*3);
             this.Weapon.Damage = 1;
             
             //configure weapon:
@@ -361,7 +369,7 @@ class PlayerControl : ZilchComponent
         } else if(this.StringProgress == 2)
         {
             //forward step:
-            this.Owner.RigidBody.ApplyLinearVelocity(aim*3);
+            this.Owner.EntityDelayedStep.AddStep(0.1, aim*3);
             
             //configure weapon:
             this.Weapon.BaseCooldown = 0.1;
@@ -374,7 +382,8 @@ class PlayerControl : ZilchComponent
         } else if(this.StringProgress == 3)
         {
             //forward step:
-            this.Owner.RigidBody.ApplyLinearVelocity(aim*50);
+            //this.Owner.RigidBody.ApplyLinearVelocity(aim*50);
+            this.Owner.EntityDelayedStep.AddStep(0.1, aim*50);
             
             //configure weapon:
             this.Weapon.BaseCooldown = 0.4;
@@ -400,11 +409,16 @@ class PlayerControl : ZilchComponent
     {
         if(!this.Weapon.Attacking)
         {
-            if(this.Owner.EntityHealth.Blocking)
+            if(this.Owner.EntityHealth.Stamina >= this.AttackStaminaCost)
             {
-                this.AltAttack();
-            } else {
-                this.Attack();
+                this.Owner.EntityHealth.Stamina -= this.AttackStaminaCost;
+                
+                if(this.Owner.EntityHealth.Blocking)
+                {
+                    this.AltAttack();
+                } else {
+                    this.Attack();
+                }
             }
         }
     }

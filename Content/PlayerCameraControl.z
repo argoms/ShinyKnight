@@ -10,7 +10,7 @@ class PlayerCameraControl : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        this.Owner.Transform.Translation = this.MyPlayer.Transform.Translation + Real3(0,-2,20);
+        this.Owner.Transform.Translation = this.MyPlayer.Transform.Translation + Real3(0,-5,20);
         //this.Owner.Orientation.LookAtDirectionWithUp(Real3(0,0,1), Real3(0,1,0));
     }
 }

@@ -74,7 +74,7 @@ class EntityHealth : ZilchComponent
         }
         if(this.Blocking)
         {
-            this.Stamina -= damage * 5;
+            this.Stamina -= damage * 8;
             damage = 0;
             
         }

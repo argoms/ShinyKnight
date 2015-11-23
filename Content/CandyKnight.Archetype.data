@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [9, 0, 0],
+		Vec3 Translation = [0, 0, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -88,7 +88,7 @@ Cog =
 			bool UpdatePathOnCogChange = true,
 			bool UpdateCogOnInitialize = true,
 			bool ResolvedNullErrorOccurred = false,
-			uint ResolvedCog = 2,
+			uint ResolvedCog = 4294967293,
 			CogPathPreference PathPreference0 = CogRelative,
 			CogPathPreference PathPreference1 = SpaceRelative,
 			CogPathPreference PathPreference2 = Absolute,
@@ -103,7 +103,7 @@ Cog =
 			bool UpdatePathOnCogChange = true,
 			bool UpdateCogOnInitialize = true,
 			bool ResolvedNullErrorOccurred = false,
-			uint ResolvedCog = 3,
+			uint ResolvedCog = 2,
 			CogPathPreference PathPreference0 = CogRelative,
 			CogPathPreference PathPreference1 = SpaceRelative,
 			CogPathPreference PathPreference2 = Absolute,
@@ -121,7 +121,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 4,
+				uint Id = 3,
 			},
 			Named = 
 			{
@@ -159,7 +159,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 5,
+				uint Id = 4,
 			},
 			Named = 
 			{
@@ -177,7 +177,7 @@ Cog =
 				{
 					LinkId = 
 					{
-						uint Id = 3,
+						uint Id = 2,
 					},
 					Named = 
 					{
@@ -212,7 +212,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 6,
+								uint Id = 5,
 							},
 							Named = 
 							{
@@ -230,7 +230,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 7,
+										uint Id = 6,
 									},
 									Named = 
 									{
@@ -248,7 +248,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 8,
+												uint Id = 7,
 											},
 											Named = 
 											{
@@ -266,7 +266,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 9,
+														uint Id = 8,
 													},
 													Named = 
 													{
@@ -284,7 +284,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 10,
+																uint Id = 9,
 															},
 															Named = 
 															{
@@ -302,7 +302,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 11,
+																		uint Id = 10,
 																	},
 																	Named = 
 																	{
@@ -320,7 +320,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 12,
+																				uint Id = 11,
 																			},
 																			Named = 
 																			{
@@ -347,7 +347,7 @@ Cog =
 																				ParticleSortMode SortMode = Youngest,
 																				ParticleAnimation ParticleAnimation = Single,
 																				string Texture = "5274db4c2e7c11f9:Circle",
-																				Vec4 Tint = [0.902249992, 0.574999988, 1, 0.595000029],
+																				Vec4 Tint = [0.985000014, 0.300424993, 0.69063288, 0.595000029],
 																				float VelocityScale = 1,
 																				float LengthScale = 1,
 																				float MaxParticleSize = 100,
@@ -368,7 +368,7 @@ Cog =
 																				bool RandomSpin = true,
 																				float Fill = 1,
 																				float EmitterVelocityPercent = 0,
-																				Vec3 StartVelocity = [10, 0, 0],
+																				Vec3 StartVelocity = [15, 0, 0],
 																				Vec3 RandomVelocity = [1, 1, 1],
 																				Vec3 TangentVelocity = [0, 0, 0],
 																				Vec3 EmitterSize = [0, 0, 0],
@@ -382,6 +382,36 @@ Cog =
 																				float Growth = 0,
 																				float Dampening = 0,
 																				Vec3 Twist = [1000, 0, 0],
+																			},
+																			Hierarchy = 
+																			{
+																				Cog = 
+																				{
+																					LinkId = 
+																					{
+																						uint Id = 12,
+																					},
+																					Named = 
+																					{
+																						string Name = "Spear",
+																					},
+																					Transform = 
+																					{
+																						Vec3 Translation = [-0.649044871, -0.69133234, -1.37096071],
+																						Vec3 Scale = [1, 0.99999994, 1.00000012],
+																						Quat Rotation = [-2.57887223e-008, 1.66922511e-008, 0.682636321, 0.730758309],
+																					},
+																					Model = 
+																					{
+																						bool Visible = true,
+																						bool VisibilityCulling = true,
+																						bool VisibilityEvents = true,
+																						bool CastShadows = true,
+																						string MaterialName = "4de020863e85bb61:DefaultMaterial",
+																						string MeshName = "560445b1bff1c828:knightitems.Spear",
+																						Vec4 Color = [1, 1, 1, 1],
+																					},
+																				},
 																			},
 																		},
 																	},
@@ -796,35 +826,6 @@ Cog =
 							},
 							Named = 
 							{
-								string Name = "Circle.003",
-							},
-							Transform = 
-							{
-								Vec3 Translation = [0, 2.5, 0],
-								Vec3 Scale = [1, 1, 1],
-								Quat Rotation = [-0.5, 0.5, -0.5, 0.5],
-							},
-							SkinnedModel = 
-							{
-								bool Visible = true,
-								bool VisibilityCulling = true,
-								bool VisibilityEvents = true,
-								bool CastShadows = true,
-								string Material = "4de020863e85bb61:DefaultMaterial",
-								string Mesh = "561ac7eed058e9c5:attack1.Circle.003",
-								Vec4 Color = [1, 1, 1, 1],
-								Vec3 BoundingCenter = [0.801113546, -1.12762713, 1.2863431],
-								Vec3 BoundingExtents = [0.167589843, 1.68718171, 0.460449398],
-							},
-						},
-						Cog = 
-						{
-							LinkId = 
-							{
-								uint Id = 34,
-							},
-							Named = 
-							{
 								string Name = "Circle.002",
 							},
 							Transform = 
@@ -850,7 +851,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 35,
+								uint Id = 34,
 							},
 							Named = 
 							{

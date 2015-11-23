@@ -319,7 +319,7 @@ class PlayerControl : ZilchComponent
         } else if(this.StringProgress == 3)
         {
             //forward step:
-            this.Owner.EntityDelayedStep.AddStep(0.1, aim*20);
+            this.Owner.EntityDelayedStep.AddStep(0.1, aim*50);
             
             //configure weapon:
             this.Weapon.BaseCooldown = 0.4;

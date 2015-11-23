@@ -14,7 +14,7 @@ class EntityAttack : ZilchComponent
     
     var Damage : Integer = 1;
     
-    var StaggerTimer : Real;
+    var StaggerTimer : Real = 0;
     
     [Property]
     var Knockback : Real = 5;
@@ -65,6 +65,12 @@ class EntityAttack : ZilchComponent
                 if(this.Cooldown < 0)
                 {
                     this.Attacking = false;
+                    
+                    //tells playercontrol that an action is finished if that's part of the entity:
+                    if(this.Owner.PlayerControl != null)
+                    {
+                        this.Owner.PlayerControl.ActionFinishedFlag = true;
+                    }
                 }
             }
         }
@@ -72,6 +78,7 @@ class EntityAttack : ZilchComponent
     
     function Attack(aim : Real3)
     {
+        //only functions if not currently staggered:
         if(this.StaggerTimer <= 0)
         {
             this.Attacking = true;

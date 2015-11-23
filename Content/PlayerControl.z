@@ -8,6 +8,7 @@ class PlayerControl : ZilchComponent
 {
 
     var MouseWasDown : Boolean = false; //used to check if the player is clicking or holding mouse down
+    var RightMouseWasDown : Boolean = false; //same as above, but for RMB
     
     //internal for movement calculations:
     var LastMovement : Real3; //last movement vector of the player
@@ -19,7 +20,7 @@ class PlayerControl : ZilchComponent
     var Weapon : EntityAttack; //contains info for doing damage
     
     var PlayerAnimation : SimpleAnimation; //player's animation
-    var PlayerAnimationGraph : AnimationGraph; //player animation graph
+    var EntityAnimationGraph : AnimationGraph; //player animation graph
     
     var StringProgress : Integer = 1; //how many hits the player is into their String
     var StringCooldown : Real = 0; //time before String resets
@@ -47,6 +48,9 @@ class PlayerControl : ZilchComponent
     [Property]
     var Attack2_3Animation : Animation;
     
+    //internal flag to make sure that the walking animation is swapped to
+    var ActionFinishedFlag : Boolean;
+    
     
     function Initialize(init : CogInitializer)
     {
@@ -62,7 +66,7 @@ class PlayerControl : ZilchComponent
         this.Weapon = this.Owner.EntityAttack;
         this.Weapon.Friendly = true;
         this.PlayerAnimation = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").SimpleAnimation;
-        this.PlayerAnimationGraph = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").AnimationGraph;
+        this.EntityAnimationGraph = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").AnimationGraph;
     }
 
     function OnLogicUpdate(event : UpdateEvent)
@@ -78,14 +82,13 @@ class PlayerControl : ZilchComponent
                 this.AltAttack();
             } else {
                 
-                this.PlayerAnimationGraph.TimeScale = 1;
+                //this.EntityAnimationGraph.TimeScale = 1;
                 
                 //blocking:
                 if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
                 {
                     //animation:
-                    this.PlayerAnimation.PlaySingle(this.BlockAnimation, AnimPlayMode.Loop);
-                    this.PlayerAnimation.Animation = this.BlockAnimation;
+                    this.CrossBlendedPlay(this.BlockAnimation, 0.1, AnimPlayMode.PlayOnce, 1);
                     
                     //internal:
                     this.Owner.EntityHealth.Blocking = true;
@@ -103,7 +106,7 @@ class PlayerControl : ZilchComponent
                 if(this.StringCooldown <= 0)
                 {
                     this.StringProgress = 1;
-                    this.StringCooldown = 0.1;
+                    this.StringCooldown = 0.3;
                 }
             }
         } else {
@@ -170,6 +173,21 @@ class PlayerControl : ZilchComponent
                 this.MouseWasDown = false;
             }
         }
+        
+        if(!this.RightMouseWasDown)
+        {
+            if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
+            {
+                this.OnRightMousePressed();
+                this.RightMouseWasDown = true;
+            }
+        } else {
+            if(!Zero.Mouse.IsButtonDown(MouseButtons.Right))
+            {
+                this.OnRightMouseReleased();
+                this.RightMouseWasDown = false;
+            }
+        }
     }
     
     /*AimAtMouse
@@ -215,18 +233,26 @@ class PlayerControl : ZilchComponent
         this.LastMovement = movement;
         
         //change to walking animation if appropriate:
-        if(this.PlayerAnimation.Animation != this.WalkAnimation && movement != Real3(0,0,0))
+        if((this.ActionFinishedFlag || wasJustStill) && movement != Real3(0,0,0))
         {
             
-            //this.PlayerAnimation.PlaySingle(Animation.KnightWalk, AnimPlayMode.Loop);
+            //deprecated:
+            /*
             this.PlayerAnimation.Animation = this.WalkAnimation;
             this.PlayerAnimation.PlaySingle(this.WalkAnimation, AnimPlayMode.Loop);
             this.PlayerAnimation.PlayMode = AnimPlayMode.Loop;
+            */
+
+            this.CrossBlendedPlay(this.WalkAnimation, 0.25, AnimPlayMode.Loop, 1);
+            this.ActionFinishedFlag = false;
+            this.EntityAnimationGraph.TimeScale = 1;
         } else {
             //idle stance if not moving
             if(movement == Real3(0,0,0))
             {
-                this.PlayerAnimation.Animation = this.IdleAnimation;
+                
+                this.CrossBlendedPlay(this.IdleAnimation, 0.25, AnimPlayMode.PlayOnce, 1);
+                //this.PlayerAnimation.Animation = this.IdleAnimation;
             }
         }
         //this.PlayerAnimation.Animation = Animation.KnightIdle;
@@ -257,9 +283,13 @@ class PlayerControl : ZilchComponent
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_1;
             this.Weapon.Knockback = 3;
             
-            //animation play:
+            /*
+            //animation play DEPRECATED:
             this.PlayerAnimation.PlaySingle(this.Attack1_1Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 1.25;
+            this.EntityAnimationGraph.TimeScale = 1.25;
+            */
+            
+            this.CrossBlendedPlay(this.Attack1_1Animation, 0.1, AnimPlayMode.PlayOnce, 1.25);
         } else if(this.StringProgress == 2)
         {
             //forward step:
@@ -272,9 +302,12 @@ class PlayerControl : ZilchComponent
             this.Weapon.Damage = 1;
             this.Weapon.Knockback = 3;
             
+            /*
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_2Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 1.25;
+            this.EntityAnimationGraph.TimeScale = 1.25;
+            */
+            this.CrossBlendedPlay(this.Attack1_2Animation, 0.1, AnimPlayMode.PlayOnce, 1.25);
         } else if(this.StringProgress == 3)
         {
             //forward step:
@@ -286,10 +319,11 @@ class PlayerControl : ZilchComponent
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_3;
             this.Weapon.Damage = 2;
             this.Weapon.Knockback = 15;
-            
+            /*
             //animation play:
             this.PlayerAnimation.PlaySingle(this.Attack1_3Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 1;
+            this.EntityAnimationGraph.TimeScale = 1;*/
+            this.CrossBlendedPlay(this.Attack1_3Animation, 0.1, AnimPlayMode.PlayOnce, 1.25);
         }
         
         this.Weapon.Attack(aim);
@@ -323,9 +357,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_1;
             this.Weapon.Knockback = 2;
             
-            //animation play:
-            this.PlayerAnimation.PlaySingle(this.Attack2_1Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 1.25;
+            this.CrossBlendedPlay(this.Attack2_1Animation, 0.1, AnimPlayMode.PlayOnce, 1.5);
         } else if(this.StringProgress == 2)
         {
             //forward step:
@@ -338,9 +370,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.Damage = 1;
             this.Weapon.Knockback = 2;
             
-            //animation play:
-            this.PlayerAnimation.PlaySingle(this.Attack2_2Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 1;
+            this.CrossBlendedPlay(this.Attack2_2Animation, 0.1, AnimPlayMode.PlayOnce, 1.5);
         } else if(this.StringProgress == 3)
         {
             //forward step:
@@ -353,9 +383,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.Damage = 2;
             this.Weapon.Knockback = 5;
             
-            //animation play:
-            this.PlayerAnimation.PlaySingle(this.Attack2_3Animation, AnimPlayMode.PlayOnce);
-            this.PlayerAnimationGraph.TimeScale = 2;
+            this.CrossBlendedPlay(this.Attack2_3Animation, 0.25, AnimPlayMode.PlayOnce, 1.25);
         }
         
         this.Weapon.Attack(aim);
@@ -383,5 +411,33 @@ class PlayerControl : ZilchComponent
     
     function OnMouseReleased()
     {
+    }
+    
+    function OnRightMouseReleased()
+    {
+        this.ActionFinishedFlag = true;
+    }
+    
+    function OnRightMousePressed()
+    {
+    }
+    
+    function CrossBlendedPlay(toAnimation : Animation, duration : Real, endPlayMode : AnimPlayMode, timeScale : Real) : AnimationNode
+    {
+        var endAnim = this.EntityAnimationGraph.CreateBasicNode(toAnimation, endPlayMode);
+        endAnim.CollapseToPoseOnFinish = true;
+        
+        var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
+        blend.From = this.EntityAnimationGraph.ActiveNode;
+        blend.To = endAnim;
+        blend.CollapseToPoseOnFinish = true;
+        blend.Duration = duration;
+        
+        blend.TimeScale = timeScale;
+        //this.EntityAnimationGraph.ActiveNode.TimeScale = timeScale;
+        //this.EntityAnimationGraph.ActiveNode = blend;
+        this.EntityAnimationGraph.ActiveNode = blend;
+        this.EntityAnimationGraph.TimeScale = timeScale;
+        return blend;
     }
 }

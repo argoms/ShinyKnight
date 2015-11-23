@@ -84,10 +84,22 @@ class ZombieAI : ZilchComponent
                     this.MovementVector = (this.AimAtTarget());
                     this.Owner.RemoveComponentByName("AutoOrientToVelocity");
                     this.AttackPauseTimer = this.PreAttackPause;
-                    this.EntityAnimation.DirectBlend(this.AttackAnimation, this.PreAttackPause, AnimPlayMode.PlayOnce);
-                    //this.EntityAnimation.PlaySingle(this.IdleAnimation, AnimPlayMode.PlayOnce);
-                    //this.Attacking = true;
-                    //Console.WriteLine(this.DistanceSQ(this.MovementVector));
+                    
+                    //create animation:
+                    
+                    var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.AttackAnimation, AnimPlayMode.PlayOnce);
+                    endAnim.CollapseToPoseOnFinish = true;
+                    
+                    var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
+                    blend.From = this.EntityAnimationGraph.ActiveNode;
+                    blend.To = endAnim;
+                    blend.Duration = this.PreAttackPause;
+                    blend.CollapseToPoseOnFinish = true;
+                    this.EntityAnimationGraph.ActiveNode = blend;
+                    
+                    //deprecated:
+                    //this.EntityAnimation.DirectBlend(this.AttackAnimation, this.PreAttackPause, AnimPlayMode.PlayOnce);
+                    
                 } else {
                     Math.Normalize(this.MovementVector);
                     this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
@@ -101,8 +113,21 @@ class ZombieAI : ZilchComponent
                 //play walk anim if attack just finished:
                 if(this.JustAttacking)
                 {
-                    this.EntityAnimationGraph.TimeScale = 1;
-                    this.EntityAnimation.PlaySingle(this.WalkAnimation, AnimPlayMode.Loop);
+                   // this.EntityAnimationGraph.TimeScale = 1;
+                    var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.WalkAnimation, AnimPlayMode.Loop);
+                    endAnim.CollapseToPoseOnFinish = true;
+                    
+                    var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
+                    blend.From = this.EntityAnimationGraph.ActiveNode;
+                    blend.To = endAnim;
+                    blend.CollapseToPoseOnFinish = true;
+                    blend.Duration = 0.25;
+                    
+                    this.EntityAnimationGraph.ActiveNode = blend;
+                    
+                    
+                    //this.EntityAnimation.DirectBlend(this.WalkAnimation, 0.25, AnimPlayMode.PlayOnce);
+                    //this.EntityAnimation.PlaySingle(this.WalkAnimation, AnimPlayMode.Loop);
                 }
             } else {
                 
@@ -116,8 +141,8 @@ class ZombieAI : ZilchComponent
                 this.Owner.RigidBody.ApplyLinearVelocity(this.MovementVector * this.LungeStrength);
                 Math.Normalize(this.MovementVector);
                 this.Weapon.Attack(this.MovementVector);
-                this.EntityAnimationGraph.TimeScale = 1;
-                this.EntityAnimation.PlaySingle(this.AttackAnimation, AnimPlayMode.PlayOnce);
+                //this.EntityAnimationGraph.TimeScale = 1;
+                //this.EntityAnimation.PlaySingle(this.AttackAnimation, AnimPlayMode.PlayOnce);
             }
         }
     }

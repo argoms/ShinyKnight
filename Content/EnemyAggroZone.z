@@ -1,0 +1,23 @@
+//for zones that trigger enemies within them to target player when they step in
+//here's the part where I should replace with event-based code in future for efficiency
+class EnemyAggroZone : ZilchComponent
+{
+    var Target : Cog;
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollision);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function OnCollision(event : CollisionEvent)
+    {
+        if(event.OtherObject.Collider.CollisionGroup == CollisionGroup.FriendlyEntity)
+        {
+            this.Target = event.OtherObject;
+        }
+    }
+}

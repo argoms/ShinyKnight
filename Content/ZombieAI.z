@@ -40,6 +40,9 @@ class ZombieAI : ZilchComponent
     [Property]
     var LungeStrength : Real = 10;
     
+    [Property]
+    var AggroZone : CogPath;
+    
     var EntityAnimation : SimpleAnimation;
     var EntityAnimationGraph : AnimationGraph;
     
@@ -193,6 +196,9 @@ class ZombieAI : ZilchComponent
             
         }
         this.TargetAcquiredFlag = (this.TargetEntity != null);
+        
+        this.TargetEntity = this.AggroZone.Cog.EnemyAggroZone.Target;
+        
     }
     
     /*
@@ -207,7 +213,7 @@ class ZombieAI : ZilchComponent
     
     function AimAtTarget() : Real3
     {
-        var targetLocation:Real3 = this.PresetTarget.Cog.Transform.Translation;
+        var targetLocation:Real3 = this.TargetEntity.Transform.Translation;//this.PresetTarget.Cog.Transform.Translation;
         var aim:Real3 = Math.Normalize(Real3(targetLocation.X-this.Owner.Transform.Translation.X, targetLocation.Y-this.Owner.Transform.Translation.Y, 0));
         this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
         return aim;

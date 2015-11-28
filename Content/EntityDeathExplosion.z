@@ -1,0 +1,17 @@
+class EntityDeathExplosion : ZilchComponent
+{
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        
+    }
+    
+    function OnKill()
+    {
+        var explosion:Cog = this.Space.CreateAtPosition(Archetype.ParticleExplosion, this.Owner.Transform.Translation);
+    }
+}

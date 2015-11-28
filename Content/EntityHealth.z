@@ -102,6 +102,10 @@ class EntityHealth : ZilchComponent
     
     function Die()
     {
+        if(this.Owner.EntityDeathExplosion != null)
+        {
+            this.Owner.EntityDeathExplosion.OnKill();
+        }
         //adjust number of enemies left in level:
         if(this.Important)
         {

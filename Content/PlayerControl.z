@@ -48,6 +48,25 @@ class PlayerControl : ZilchComponent
     [Property]
     var Attack2_3Animation : Animation;
     
+    [Property]
+    var A1_1Damage : Integer;
+    [Property]
+    var A1_2Damage : Integer;
+    [Property]
+    var A1_3Damage : Integer;
+    [Property]
+    var A2_1Damage : Integer;
+    [Property]
+    var A2_2Damage : Integer;
+    [Property]
+    var A2_3Damage : Integer;
+    
+    [Property]
+    var MoveSpeed : Real;
+    
+    [Property]
+    var Torso : CogPath;
+    
     //internal flag to make sure that the walking animation is swapped to
     var ActionFinishedFlag : Boolean;
     
@@ -107,15 +126,38 @@ class PlayerControl : ZilchComponent
                     this.AltAttackFlag = true;
                     
                     //animation:
-                    this.CrossBlendedPlay(this.BlockAnimation, 0.05, AnimPlayMode.PlayOnce, 1);
+                    //this.CrossBlendedPlay(this.BlockAnimation, 0.05, AnimPlayMode.PlayOnce, 1);
+                    var blend = this.EntityAnimationGraph.CreateSelectiveNode();
+                    var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.BlockAnimation, AnimPlayMode.PlayOnce);
+                    blend.Root = this.Torso.Cog;
+                    blend.CollapseToPoseOnFinish = true;
+                    blend.From = this.EntityAnimationGraph.ActiveNode;
+                    blend.To = endAnim;
+                    this.EntityAnimationGraph.ActiveNode = blend;
+                    this.EntityAnimationGraph.TimeScale = 0.5;
+                    
+                    /*
+                    var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
+                    blend.From = this.EntityAnimationGraph.ActiveNode;
+                    blend.To = endAnim;
+                    blend.CollapseToPoseOnFinish = true;
+                    blend.Duration = duration;
+                    
+                    blend.TimeScale = timeScale;
+                    //this.EntityAnimationGraph.ActiveNode.TimeScale = timeScale;
+                    //this.EntityAnimationGraph.ActiveNode = blend;
+                    this.EntityAnimationGraph.ActiveNode = blend;
+                    this.EntityAnimationGraph.TimeScale = timeScale;*/
                     
                     //internal:
                     this.Owner.EntityHealth.Blocking = true;
-                    this.UpdateOrientation(event.Dt, false);
+                    this.Owner.EntityMovement.MoveSpeed = this.MoveSpeed * 0.5;
+                    this.UpdateOrientation(event.Dt, true);
                     
                 } else {
                     //regular movement:
                     this.Owner.EntityHealth.Blocking = false;
+                    this.Owner.EntityMovement.MoveSpeed = this.MoveSpeed;
                     this.UpdateOrientation(event.Dt, true);
                     
                 }
@@ -294,7 +336,7 @@ class PlayerControl : ZilchComponent
         {
             //forward step:
             this.Owner.EntityDelayedStep.AddStep(0.05, aim*15);
-            this.Weapon.Damage = 1;
+            this.Weapon.Damage = this.A1_1Damage;
             
             //configure weapon:
             this.Weapon.BaseCooldown = 0.1;
@@ -318,7 +360,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseCooldown = 0.3;
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_2;
-            this.Weapon.Damage = 1;
+            this.Weapon.Damage = this.A1_2Damage;
             this.Weapon.Knockback = 3;
             
             /*
@@ -336,7 +378,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseCooldown = 0.4;
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_3;
-            this.Weapon.Damage = 2;
+            this.Weapon.Damage = this.A1_3Damage;
             this.Weapon.Knockback = 15;
             /*
             //animation play:
@@ -368,7 +410,7 @@ class PlayerControl : ZilchComponent
         {
             //forward step:
             this.Owner.EntityDelayedStep.AddStep(0.1, aim*15);
-            this.Weapon.Damage = 1;
+            this.Weapon.Damage = this.A2_1Damage;
             
             //configure weapon:
             this.Weapon.BaseCooldown = 0.1;
@@ -386,7 +428,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseCooldown = 0.1;
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_2;
-            this.Weapon.Damage = 1;
+            this.Weapon.Damage = this.A2_2Damage;
             this.Weapon.Knockback = 2;
             
             this.CrossBlendedPlay(this.Attack2_2Animation, 0.1, AnimPlayMode.PlayOnce, 1.5);
@@ -400,7 +442,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseCooldown = 0.4;
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_3;
-            this.Weapon.Damage = 2;
+            this.Weapon.Damage = this.A2_3Damage;
             this.Weapon.Knockback = 5;
             
             this.CrossBlendedPlay(this.Attack2_3Animation, 0.25, AnimPlayMode.PlayOnce, 1.25);
@@ -454,6 +496,7 @@ class PlayerControl : ZilchComponent
     {
         var endAnim = this.EntityAnimationGraph.CreateBasicNode(toAnimation, endPlayMode);
         endAnim.CollapseToPoseOnFinish = true;
+        
         
         var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
         blend.From = this.EntityAnimationGraph.ActiveNode;

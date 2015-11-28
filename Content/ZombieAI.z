@@ -185,6 +185,7 @@ class ZombieAI : ZilchComponent
             }
         } else {
             //idle state stuff, I really should split this into functions soon:
+            
             var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.IdleAnimation, AnimPlayMode.PlayOnce);
             endAnim.CollapseToPoseOnFinish = true;
             
@@ -192,7 +193,8 @@ class ZombieAI : ZilchComponent
             blend.From = this.EntityAnimationGraph.ActiveNode;
             blend.To = endAnim;
             blend.Duration = this.PreAttackPause;
-            blend.CollapseToPoseOnFinish = true;
+            blend.CollapseToPoseOnFinish = false;
+            this.EntityAnimationGraph.ActiveNode = blend;
             
         }
         this.TargetAcquiredFlag = (this.TargetEntity != null);

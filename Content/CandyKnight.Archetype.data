@@ -6,7 +6,7 @@ Cog =
 	},
 	Named = 
 	{
-		string Name = "Enemy",
+		string Name = "CandyKnight",
 	},
 	Archetyped = 
 	{
@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [-0.259892225, 13.6495199, 0],
+		Vec3 Translation = [6.5, 25.5, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [-0, 0, 1, -4.37113883e-008],
 	},
@@ -65,12 +65,13 @@ Cog =
 	},
 	EntityHealth = 
 	{
-		int Health = 10,
+		int Health = 20,
 		int StaggerDamage = 5,
 		float StaggerTimer = 1,
 		float StaggerTime = 1,
 		float MaxStamina = 50,
 		float StaminaRegenRate = 20,
+		bool ShowDamageNumbers = true,
 	},
 	ZombieAI = 
 	{
@@ -128,6 +129,9 @@ Cog =
 		},
 	},
 	EntityDelayedStep = 
+	{
+	},
+	EntityDeathExplosion = 
 	{
 	},
 	Hierarchy = 

@@ -36,6 +36,9 @@ class EntityHealth : ZilchComponent
     [Property]
     var StaminaRegenRate : Real = 20;
     
+    [Property]
+    var ShowDamageNumbers : Boolean = true;
+    
     var Stamina : Real = 0;
     function Initialize(init : CogInitializer)
     {
@@ -87,8 +90,11 @@ class EntityHealth : ZilchComponent
         }
         
         //create damage text popup:
-        var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
-        damageText.SpriteText.Text = "`damage`";
+        if(this.ShowDamageNumbers)
+        {
+            var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
+            damageText.SpriteText.Text = "`damage`";
+        }
         
         if (this.Health < 1)
         {

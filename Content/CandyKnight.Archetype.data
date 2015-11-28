@@ -110,7 +110,7 @@ Cog =
 		},
 		float PreAttackPause = 0.5,
 		string AttackTracer = "5604cc1a23aedf41:KATracer2_3",
-		float LungeStrength = 20,
+		float LungeStrength = 18,
 	},
 	EntityDelayedStep = 
 	{
@@ -135,7 +135,7 @@ Cog =
 			},
 			Sprite = 
 			{
-				bool Visible = true,
+				bool Visible = false,
 				bool VisibilityCulling = true,
 				bool VisibilityEvents = true,
 				bool CastShadows = false,

@@ -8,6 +8,10 @@ Cog =
 	{
 		string Name = "knighwalkmaya1",
 	},
+	Archetyped = 
+	{
+		string Name = "56182ba9bff2228e:knighwalkmaya1",
+	},
 	Transform = 
 	{
 		Vec3 Translation = [0, 0, 0],
@@ -20,7 +24,7 @@ Cog =
 		AnimPlayMode PlayMode = PlayOnce,
 		float TimeScale = 1,
 		string AnimationName = "4f8ebbde619389d0:DefaultAnimation",
-		uint64 DebugPreviewId = 3f7fffff3e800000,
+		uint64 DebugPreviewId = 0000000000000000,
 	},
 	SimpleAnimation = 
 	{

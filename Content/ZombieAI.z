@@ -47,6 +47,8 @@ class ZombieAI : ZilchComponent
     
     var StringCounter : Integer = 1;
     var StringCoolDown : Real = 0;
+    
+    var TargetAcquiredFlag : Boolean = false;
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -70,97 +72,127 @@ class ZombieAI : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        if(this.StringCoolDown > 0)
+        //gets the enemy walking if they were just idle:
+        if(!this.TargetAcquiredFlag && this.TargetEntity != null)
         {
-            this.StringCoolDown -= event.Dt;
-            if(this.StringCoolDown <= 0)
-            {
-                this.StringCounter = 1;
-            }
-        }
-        if(this.Owner.EntityAttack.StaggerTimer > 0)
-        {
-            this.AttackPauseTimer = -1;
-            this.JustAttacking = true;
+            var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.WalkAnimation, AnimPlayMode.Loop);
+            endAnim.CollapseToPoseOnFinish = true;
+            
+            var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
+            blend.From = this.EntityAnimationGraph.ActiveNode;
+            blend.To = endAnim;
+            blend.CollapseToPoseOnFinish = true;
+            blend.Duration = 0.25;
+            
+            this.EntityAnimationGraph.ActiveNode = blend;
         }
         
-        if(this.AttackPauseTimer <= 0)
+        if(this.TargetEntity != null)
         {
+            if(this.StringCoolDown > 0)
+            {
+                this.StringCoolDown -= event.Dt;
+                if(this.StringCoolDown <= 0)
+                {
+                    this.StringCounter = 1;
+                }
+            }
+            if(this.Owner.EntityAttack.StaggerTimer > 0)
+            {
+                this.AttackPauseTimer = -1;
+                this.JustAttacking = true;
+            }
             
-            if(!this.Weapon.Attacking)
+            if(this.AttackPauseTimer <= 0)
             {
                 
-                this.MovementVector =  this.TargetEntity.Transform.Translation - this.Owner.Transform.Translation;
-                
-                
-                
-                //play walk anim if attack just finished:
-                if(this.JustAttacking)
+                if(!this.Weapon.Attacking)
                 {
-                   // this.EntityAnimationGraph.TimeScale = 1;
-                    var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.WalkAnimation, AnimPlayMode.Loop);
-                    endAnim.CollapseToPoseOnFinish = true;
                     
-                    var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
-                    blend.From = this.EntityAnimationGraph.ActiveNode;
-                    blend.To = endAnim;
-                    blend.CollapseToPoseOnFinish = true;
-                    blend.Duration = 0.25;
-                    
-                    this.EntityAnimationGraph.ActiveNode = blend;
+                    this.MovementVector =  this.TargetEntity.Transform.Translation - this.Owner.Transform.Translation;
                     
                     
-                    //this.EntityAnimation.DirectBlend(this.WalkAnimation, 0.25, AnimPlayMode.PlayOnce);
-                    //this.EntityAnimation.PlaySingle(this.WalkAnimation, AnimPlayMode.Loop);
-                }
-                
-                if(this.DistanceSQ(this.MovementVector) <= this.AttackRange && this.StringCounter < 2)
-                {
-                    this.MovementVector = (this.AimAtTarget());
-                    //this.Owner.RemoveComponentByName("AutoOrientToVelocity");
-                    this.AttackPauseTimer = this.PreAttackPause;
                     
-                    //create animation:
-                    
-                    var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.AttackAnimation, AnimPlayMode.PlayOnce);
-                    endAnim.CollapseToPoseOnFinish = true;
-                    
-                    var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
-                    blend.From = this.EntityAnimationGraph.ActiveNode;
-                    blend.To = endAnim;
-                    blend.Duration = this.PreAttackPause;
-                    blend.CollapseToPoseOnFinish = true;
-                    this.EntityAnimationGraph.ActiveNode = blend;
-                    
-                    //deprecated:
-                    //this.EntityAnimation.DirectBlend(this.AttackAnimation, this.PreAttackPause, AnimPlayMode.PlayOnce);
-                    
-                } else {
-                    Math.Normalize(this.MovementVector);
-                    this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
-                    if(this.Owner.AutoOrientToVelocity == null)
+                    //play walk anim if attack just finished:
+                    if(this.JustAttacking)
                     {
-                        this.Owner.Orientation.LookAtDirection(this.MovementVector);
-                        //this.Owner.AddComponentByName("AutoOrientToVelocity");
+                       // this.EntityAnimationGraph.TimeScale = 1;
+                        var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.WalkAnimation, AnimPlayMode.Loop);
+                        endAnim.CollapseToPoseOnFinish = true;
+                        
+                        var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
+                        blend.From = this.EntityAnimationGraph.ActiveNode;
+                        blend.To = endAnim;
+                        blend.CollapseToPoseOnFinish = true;
+                        blend.Duration = 0.25;
+                        
+                        this.EntityAnimationGraph.ActiveNode = blend;
+                        
+                        
+                        //this.EntityAnimation.DirectBlend(this.WalkAnimation, 0.25, AnimPlayMode.PlayOnce);
+                        //this.EntityAnimation.PlaySingle(this.WalkAnimation, AnimPlayMode.Loop);
                     }
+                    
+                    if(this.DistanceSQ(this.MovementVector) <= this.AttackRange && this.StringCounter < 2)
+                    {
+                        this.MovementVector = (this.AimAtTarget());
+                        //this.Owner.RemoveComponentByName("AutoOrientToVelocity");
+                        this.AttackPauseTimer = this.PreAttackPause;
+                        
+                        //create animation:
+                        
+                        var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.AttackAnimation, AnimPlayMode.PlayOnce);
+                        endAnim.CollapseToPoseOnFinish = true;
+                        
+                        var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
+                        blend.From = this.EntityAnimationGraph.ActiveNode;
+                        blend.To = endAnim;
+                        blend.Duration = this.PreAttackPause;
+                        blend.CollapseToPoseOnFinish = true;
+                        this.EntityAnimationGraph.ActiveNode = blend;
+                        
+                        //deprecated:
+                        //this.EntityAnimation.DirectBlend(this.AttackAnimation, this.PreAttackPause, AnimPlayMode.PlayOnce);
+                        
+                    } else {
+                        Math.Normalize(this.MovementVector);
+                        this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
+                        if(this.Owner.AutoOrientToVelocity == null)
+                        {
+                            this.Owner.Orientation.LookAtDirection(this.MovementVector);
+                            //this.Owner.AddComponentByName("AutoOrientToVelocity");
+                        }
+                    }
+                    
                 }
                 
-            }
-            
-            this.JustAttacking = this.Weapon.Attacking;
-        } else {
-            this.AttackPauseTimer -= event.Dt;
-            
-            if(this.AttackPauseTimer <= 0 && this.AttackPauseTimer > -1)
-            {
+                this.JustAttacking = this.Weapon.Attacking;
+            } else {
+                this.AttackPauseTimer -= event.Dt;
                 
-                this.Owner.EntityDelayedStep.AddStep(0.1, this.MovementVector*this.LungeStrength);
-                this.StringCounter += 1;
-                this.StringCoolDown = 0.5;
-                Math.Normalize(this.MovementVector);
-                this.Weapon.Attack(this.MovementVector);
+                if(this.AttackPauseTimer <= 0 && this.AttackPauseTimer > -1)
+                {
+                    
+                    this.Owner.EntityDelayedStep.AddStep(0.1, this.MovementVector*this.LungeStrength);
+                    this.StringCounter += 1;
+                    this.StringCoolDown = 0.5;
+                    Math.Normalize(this.MovementVector);
+                    this.Weapon.Attack(this.MovementVector);
+                }
             }
+        } else {
+            //idle state stuff, I really should split this into functions soon:
+            var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.IdleAnimation, AnimPlayMode.PlayOnce);
+            endAnim.CollapseToPoseOnFinish = true;
+            
+            var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
+            blend.From = this.EntityAnimationGraph.ActiveNode;
+            blend.To = endAnim;
+            blend.Duration = this.PreAttackPause;
+            blend.CollapseToPoseOnFinish = true;
+            
         }
+        this.TargetAcquiredFlag = (this.TargetEntity != null);
     }
     
     /*

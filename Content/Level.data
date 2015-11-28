@@ -1243,12 +1243,19 @@ Level =
 			string Name = "Enemy",
 		},
 	},
-	ArchetypeInstance = 
+	Cog = 
 	{
-		string Name = "5604cd9a3e98ca89:CandyKnight",
 		LinkId = 
 		{
 			uint Id = 44,
+		},
+		Named = 
+		{
+			string Name = "Enemy",
+		},
+		Archetyped = 
+		{
+			string Name = "5604cd9a3e98ca89:CandyKnight",
 		},
 		Transform = 
 		{
@@ -1256,9 +1263,181 @@ Level =
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},
-		Named = 
+		RigidBody = 
 		{
-			string Name = "Enemy",
+			bool Static = false,
+			bool Asleep = false,
+			bool Kinematic = false,
+			bool RotationLocked = true,
+			bool Mode2D = true,
+			bool AllowSleep = true,
+			bool Inherit2DMode = true,
+			Vec3 Velocity = [0, 0, 0],
+			Vec3 AngularVelocity = [0, 0, 0],
+		},
+		EntityMovement = 
+		{
+			float MoveSpeed = 8,
+		},
+		SphereCollider = 
+		{
+			bool Ghost = false,
+			bool SendsMessages = true,
+			bool Seamless = true,
+			string MaterialName = "4de020863e872da8:DefaultPhysicsMaterial",
+			string SerializedGroupName = "56688c8255dec650:EnemyEntity",
+			Vec3 Offset = [0, 0, 0],
+			float Radius = 0.5,
+		},
+		DragEffect = 
+		{
+			bool Active = true,
+			bool WakeUpOnChange = true,
+			float Drag = 8,
+		},
+		Orientation = 
+		{
+			Vec3 GlobalUp = [0, 0, 1],
+			Vec3 UpVector = [0, 0, 1],
+			Vec3 ForwardVector = [0, 1, 0],
+			OrientationBases DefaultBases = ForwardYUpZ,
+		},
+		EntityAttack = 
+		{
+			float Knockback = 5,
+			bool Friendly = false,
+			float MinRange = 1,
+		},
+		EntityHealth = 
+		{
+			int Health = 10,
+			int StaggerDamage = 5,
+			float StaggerTimer = 1,
+			float StaggerTime = 1,
+			float MaxStamina = 50,
+			float StaminaRegenRate = 20,
+		},
+		ZombieAI = 
+		{
+			float AttackRange = 4,
+			string WalkAnimation = "56182ba8bffc5eed:knighwalkmaya1.All",
+			string AttackAnimation = "5604cab015636c76:KnightAttack2_3Maya.All",
+			string IdleAnimation = "5604b52c959cfc53:KnightIdle_Maya.All",
+			CogPath PresetTarget = 
+			{
+				string Path = ":/Player",
+				bool ErrorOnResolveToNull = false,
+				bool ErrorOnPathCantCompute = false,
+				bool ErrorOnDirectLinkFail = false,
+				bool UpdateCogOnPathChange = true,
+				bool UpdatePathOnCogChange = true,
+				bool UpdateCogOnInitialize = true,
+				bool ResolvedNullErrorOccurred = false,
+				uint ResolvedCog = 4,
+				CogPathPreference PathPreference0 = CogRelative,
+				CogPathPreference PathPreference1 = SpaceRelative,
+				CogPathPreference PathPreference2 = Absolute,
+			},
+			CogPath Mesh = 
+			{
+				string Path = "Mesh/Mesh",
+				bool ErrorOnResolveToNull = false,
+				bool ErrorOnPathCantCompute = false,
+				bool ErrorOnDirectLinkFail = false,
+				bool UpdateCogOnPathChange = true,
+				bool UpdatePathOnCogChange = true,
+				bool UpdateCogOnInitialize = true,
+				bool ResolvedNullErrorOccurred = false,
+				uint ResolvedCog = 45,
+				CogPathPreference PathPreference0 = CogRelative,
+				CogPathPreference PathPreference1 = SpaceRelative,
+				CogPathPreference PathPreference2 = Absolute,
+			},
+			float PreAttackPause = 0.5,
+			string AttackTracer = "5604cc1a23aedf41:KATracer2_3",
+			float LungeStrength = 18,
+		},
+		EntityDelayedStep = 
+		{
+		},
+		Hierarchy = 
+		{
+			Cog = 
+			{
+				LinkId = 
+				{
+					uint Id = 46,
+				},
+				Named = 
+				{
+					string Name = "Sprite",
+				},
+				Transform = 
+				{
+					Vec3 Translation = [0, 0, 0],
+					Vec3 Scale = [1, 1, 1],
+					Quat Rotation = [0, 0, 0, 1],
+				},
+				Sprite = 
+				{
+					bool Visible = false,
+					bool VisibilityCulling = true,
+					bool VisibilityEvents = true,
+					bool CastShadows = false,
+					Vec4 Color = [1, 1, 1, 1],
+					BlendMode BlendMode = Alpha,
+					SpriteGeometryMode GeometryMode = ZPlane,
+					string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
+					string SpriteSource = "5586f1922250b073:CircleBordered",
+					bool RenderMask = false,
+					bool FlipX = false,
+					bool FlipY = false,
+					bool AnimationActive = true,
+					float AnimationSpeed = 1,
+					uint StartFrame = 0,
+				},
+				Hierarchy = 
+				{
+				},
+			},
+			Cog = 
+			{
+				LinkId = 
+				{
+					uint Id = 47,
+				},
+				Named = 
+				{
+					string Name = "Mesh",
+				},
+				Transform = 
+				{
+					Vec3 Translation = [0, 0, 0],
+					Vec3 Scale = [1, 1, 1],
+					Quat Rotation = [-3.09086197e-008, 0.707106769, 0.707106769, -3.09086197e-008],
+				},
+				Hierarchy = 
+				{
+					ArchetypeInstance = 
+					{
+						string Name = "561ac7eed0504b7a:attack1",
+						LinkId = 
+						{
+							uint Id = 45,
+						},
+						Transform = 
+						{
+							Vec3 Translation = [0, 0, 0],
+							Vec3 Scale = [1, 1, 1],
+							Quat Rotation = [0, 0, 0, 1],
+						},
+						Named = 
+						{
+							string Name = "Mesh",
+						},
+					},
+				},
+			},
 		},
 	},
 	ArchetypeInstance = 
@@ -1266,7 +1445,7 @@ Level =
 		string Name = "560475b6ed17908c:Hazard",
 		LinkId = 
 		{
-			uint Id = 45,
+			uint Id = 48,
 		},
 		Transform = 
 		{
@@ -1283,7 +1462,7 @@ Level =
 	{
 		LinkId = 
 		{
-			uint Id = 46,
+			uint Id = 49,
 		},
 		Named = 
 		{

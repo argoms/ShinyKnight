@@ -51,6 +51,8 @@ class PlayerControl : ZilchComponent
     //internal flag to make sure that the walking animation is swapped to
     var ActionFinishedFlag : Boolean;
     
+    //internal flag to determine when the player does an alternate attack
+    var AltAttackFlag : Boolean;
     [Property]
     var AttackStaminaCost : Real = 20;
     
@@ -69,6 +71,7 @@ class PlayerControl : ZilchComponent
         this.Weapon.Friendly = true;
         this.PlayerAnimation = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").SimpleAnimation;
         this.EntityAnimationGraph = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").AnimationGraph;
+        this.AltAttackFlag = false;
     }
 
     function OnLogicUpdate(event : UpdateEvent)
@@ -86,8 +89,13 @@ class PlayerControl : ZilchComponent
         {
             if(Zero.Mouse.IsButtonDown(MouseButtons.Left) && this.AttackStaminaCost <= this.Owner.EntityHealth.Stamina)
             {
+                if(this.AltAttackFlag)
+                {
+                    this.AltAttack();
+                } else {
+                    this.Attack();
+                }
                 this.Owner.EntityHealth.Stamina -= this.AttackStaminaCost;
-                this.AltAttack();
             } else {
                 
                 //this.EntityAnimationGraph.TimeScale = 1;
@@ -95,6 +103,9 @@ class PlayerControl : ZilchComponent
                 //blocking:
                 if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
                 {
+                    this.StringProgress = 1;
+                    this.AltAttackFlag = true;
+                    
                     //animation:
                     this.CrossBlendedPlay(this.BlockAnimation, 0.05, AnimPlayMode.PlayOnce, 1);
                     
@@ -114,7 +125,7 @@ class PlayerControl : ZilchComponent
                 if(this.StringCooldown <= 0)
                 {
                     this.StringProgress = 1;
-                    this.StringCooldown = 0.3;
+                    this.StringCooldown = 0.5;
                 }
             }
         } else {
@@ -415,9 +426,10 @@ class PlayerControl : ZilchComponent
                 
                 if(this.Owner.EntityHealth.Blocking)
                 {
-                    this.AltAttack();
+                    //this.AltAttack();
                 } else {
                     this.Attack();
+                    this.AltAttackFlag = true;
                 }
             }
         }
@@ -425,11 +437,13 @@ class PlayerControl : ZilchComponent
     
     function OnMouseReleased()
     {
+        this.AltAttackFlag = false;
     }
     
     function OnRightMouseReleased()
     {
         this.ActionFinishedFlag = true;
+       
     }
     
     function OnRightMousePressed()

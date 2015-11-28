@@ -163,11 +163,29 @@ Level =
 			string Name = "Player",
 		},
 	},
+	ArchetypeInstance = 
+	{
+		string Name = "560789be54df28ec:DamageText",
+		LinkId = 
+		{
+			uint Id = 5,
+		},
+		Transform = 
+		{
+			Vec3 Translation = [0, 0, 0],
+			Vec3 Scale = [1, 1, 1],
+			Quat Rotation = [0, 0, 0, 1],
+		},
+		Named = 
+		{
+			string Name = "SpriteText",
+		},
+	},
 	Cog = 
 	{
 		LinkId = 
 		{
-			uint Id = 5,
+			uint Id = 6,
 		},
 		Named = 
 		{
@@ -216,7 +234,7 @@ Level =
 	{
 		LinkId = 
 		{
-			uint Id = 6,
+			uint Id = 7,
 		},
 		Named = 
 		{
@@ -265,7 +283,7 @@ Level =
 	{
 		LinkId = 
 		{
-			uint Id = 7,
+			uint Id = 8,
 		},
 		Named = 
 		{
@@ -314,7 +332,7 @@ Level =
 	{
 		LinkId = 
 		{
-			uint Id = 8,
+			uint Id = 9,
 		},
 		Named = 
 		{
@@ -350,7 +368,7 @@ Level =
 		string Name = "5604cd9a3e98ca89:CandyKnight",
 		LinkId = 
 		{
-			uint Id = 9,
+			uint Id = 10,
 		},
 		Transform = 
 		{
@@ -368,7 +386,7 @@ Level =
 		string Name = "5604cd9a3e98ca89:CandyKnight",
 		LinkId = 
 		{
-			uint Id = 10,
+			uint Id = 11,
 		},
 		Transform = 
 		{
@@ -386,7 +404,7 @@ Level =
 		string Name = "560475b6ed17908c:Hazard",
 		LinkId = 
 		{
-			uint Id = 11,
+			uint Id = 12,
 		},
 		Transform = 
 		{
@@ -403,7 +421,7 @@ Level =
 	{
 		LinkId = 
 		{
-			uint Id = 12,
+			uint Id = 13,
 		},
 		Named = 
 		{
@@ -411,7 +429,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [1.51764321, 2.10082817, 1],
+			Vec3 Translation = [1.51764321, 2.10082817, 0.100000001],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},

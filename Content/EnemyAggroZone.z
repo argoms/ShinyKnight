@@ -3,6 +3,9 @@
 class EnemyAggroZone : ZilchComponent
 {
     var Target : Cog;
+    
+    [Property]
+    var NumEnemies : Integer;
     function Initialize(init : CogInitializer)
     {
         //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -18,6 +21,15 @@ class EnemyAggroZone : ZilchComponent
         if(event.OtherObject.Collider.CollisionGroup == CollisionGroup.FriendlyEntity)
         {
             this.Target = event.OtherObject;
+        }
+    }
+    
+    function EnemyKilled()
+    {
+        --this.NumEnemies;
+        if(this.NumEnemies < 1)
+        {
+            //dunno
         }
     }
 }

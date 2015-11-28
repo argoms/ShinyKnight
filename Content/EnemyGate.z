@@ -1,0 +1,23 @@
+/*
+EnemyGate
+
+    Behavior for gates that open once all enemies in an area are killed.
+*/
+class EnemyGate : ZilchComponent
+{
+    
+    [Property]
+    var Zone : CogPath;
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Zone.Cog.EnemyAggroZone.NumEnemies < 1)
+        {
+            this.Owner.EntityHealth.TakeDamage(99999);
+        }
+    }
+}

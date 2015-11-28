@@ -66,12 +66,14 @@ Cog =
 	EntityHealth = 
 	{
 		int Health = 20,
-		int StaggerDamage = 5,
+		bool Important = true,
+		int StaggerDamage = 15,
 		float StaggerTimer = 1,
 		float StaggerTime = 1,
 		float MaxStamina = 50,
 		float StaminaRegenRate = 20,
 		bool ShowDamageNumbers = true,
+		bool CanStagger = true,
 	},
 	ZombieAI = 
 	{

@@ -11,6 +11,7 @@ class EntityHealth : ZilchComponent
     
     var RandomGenerator:Random = Random();//random number generator
     
+    [Property]
     var Important:Boolean = true; //whether or not this enemy adjusts the level's enemy counter
     
     var DamageColor : Real4 = Real4(1,1,1,1); //color of text that pops up when entity is damaged, default white
@@ -38,6 +39,9 @@ class EntityHealth : ZilchComponent
     
     [Property]
     var ShowDamageNumbers : Boolean = true;
+    
+    [Property]
+    var CanStagger : Boolean = true;
     
     var Stamina : Real = 0;
     function Initialize(init : CogInitializer)
@@ -83,7 +87,7 @@ class EntityHealth : ZilchComponent
         }
         //actually subtract health:
         this.Health -= damage;
-        this.SDCounter += 1;
+        this.SDCounter += damage;
         if(this.SDCounter >= this.StaggerDamage)
         {
             this.Stagger();
@@ -115,6 +119,10 @@ class EntityHealth : ZilchComponent
         //adjust number of enemies left in level:
         if(this.Important)
         {
+            if(this.Owner.ZombieAI != null)
+            {
+                this.Owner.ZombieAI.AggroZone.Cog.EnemyAggroZone.EnemyKilled();
+            }
             //--this.Owner.LevelSettings.LevelBehavior.EnemyCounter;
             //this.Important = false;
         }
@@ -124,13 +132,16 @@ class EntityHealth : ZilchComponent
     
     function Stagger()
     {
-        var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
-        damageText.SpriteText.Text = "   ow :(";
-        if(this.Owner.EntityAttack.Attacking)
+        if(this.CanStagger)
         {
-            //Console.WriteLine(this.Owner);
-            this.Owner.EntityAttack.Attacking = false;
+            var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
+            damageText.SpriteText.Text = "   ow :(";
+            if(this.Owner.EntityAttack.Attacking)
+            {
+                //Console.WriteLine(this.Owner);
+                this.Owner.EntityAttack.Attacking = false;
+            }
+            this.Owner.EntityAttack.StaggerTimer = this.StaggerTime;
         }
-        this.Owner.EntityAttack.StaggerTimer = this.StaggerTime;
     }
 }

@@ -28,6 +28,7 @@ class AttackTracerBehavior : ZilchComponent
         {
             event.OtherObject.EntityHealth.TakeDamage(this.Damage);
             event.OtherObject.RigidBody.ApplyLinearVelocity(this.Knockback);
+            this.Space.CreateAtPosition(Archetype.Sparks, event.FirstPoint.WorldPoint + Real3(0, 0, 1));
         }
     }
     

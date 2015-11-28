@@ -18,6 +18,11 @@ class HazardBehavior : ZilchComponent
     [Property]
     var EmitRateMultiplier : Real = 1; //useful if you want to scale up the space
     
+    [Property]
+    var AttackCooldown : Real = 0.4;
+    
+    var InternalCooldown : Real = 0;
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -37,16 +42,25 @@ class HazardBehavior : ZilchComponent
                 if(this.Active)
                 {
                     this.Owner.BoxParticleEmitter.EmitRate = 100 * this.EmitRateMultiplier;
-                    this.Owner.EntityAttack.TracerLifetime = this.ActiveTime;
-                    this.Owner.EntityAttack.Attack(Real3(0,0,0));
+                    this.Owner.EntityAttack.TracerLifetime = this.AttackCooldown;
+                    
                     this.Timer = this.ActiveTime;
                 } else {
-                    this.Owner.BoxParticleEmitter.EmitRate = 5 * this.EmitRateMultiplier;
+                    this.Owner.BoxParticleEmitter.EmitRate = 1 * this.EmitRateMultiplier;
                     this.Timer = this.CoolDown;
                 }
             }
+            if(this.Active)
+            {
+                this.InternalCooldown -= event.Dt;
+                if(this.InternalCooldown < 0.01)
+                {
+                    this.InternalCooldown = this.AttackCooldown;
+                    this.Owner.EntityAttack.Attack(Real3(0,0,0));
+                }
+            }
         } else {
-            this.Owner.BoxParticleEmitter.EmitRate = 5;
+            this.Owner.BoxParticleEmitter.EmitRate = 1;
             this.Timer = this.CoolDown;
         }
     }

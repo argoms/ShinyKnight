@@ -78,20 +78,12 @@ class ZombieAI : ZilchComponent
         //gets the enemy walking if they were just idle:
         if(!this.TargetAcquiredFlag && this.TargetEntity != null)
         {
-            var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.WalkAnimation, AnimPlayMode.Loop);
-            endAnim.CollapseToPoseOnFinish = true;
-            
-            var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
-            blend.From = this.EntityAnimationGraph.ActiveNode;
-            blend.To = endAnim;
-            blend.CollapseToPoseOnFinish = true;
-            blend.Duration = 0.25;
-            
-            this.EntityAnimationGraph.ActiveNode = blend;
+            this.PlayWalkAnimation();
         }
-        
+    
         if(this.TargetEntity != null)
         {
+            //string cooldown management, doesn't do much with existing enemies but might as well keep the functionality for future use
             if(this.StringCoolDown > 0)
             {
                 this.StringCoolDown -= event.Dt;
@@ -100,6 +92,8 @@ class ZombieAI : ZilchComponent
                     this.StringCounter = 1;
                 }
             }
+            
+            //do nothing if staggered:
             if(this.Owner.EntityAttack.StaggerTimer > 0)
             {
                 this.AttackPauseTimer = -1;
@@ -114,57 +108,23 @@ class ZombieAI : ZilchComponent
                     
                     this.MovementVector =  this.TargetEntity.Transform.Translation - this.Owner.Transform.Translation;
                     
-                    
-                    
                     //play walk anim if attack just finished:
                     if(this.JustAttacking)
                     {
                        // this.EntityAnimationGraph.TimeScale = 1;
-                        var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.WalkAnimation, AnimPlayMode.Loop);
-                        endAnim.CollapseToPoseOnFinish = true;
-                        
-                        var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
-                        blend.From = this.EntityAnimationGraph.ActiveNode;
-                        blend.To = endAnim;
-                        blend.CollapseToPoseOnFinish = true;
-                        blend.Duration = 0.25;
-                        
-                        this.EntityAnimationGraph.ActiveNode = blend;
-                        
-                        
-                        //this.EntityAnimation.DirectBlend(this.WalkAnimation, 0.25, AnimPlayMode.PlayOnce);
-                        //this.EntityAnimation.PlaySingle(this.WalkAnimation, AnimPlayMode.Loop);
+                        this.PlayWalkAnimation();
                     }
                     
+                    //if within range, begin to attack
                     if(this.DistanceSQ(this.MovementVector) <= this.AttackRange && this.StringCounter < 2)
                     {
-                        this.MovementVector = (this.AimAtTarget());
-                        //this.Owner.RemoveComponentByName("AutoOrientToVelocity");
-                        this.AttackPauseTimer = this.PreAttackPause;
-                        
-                        //create animation:
-                        
-                        var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.AttackAnimation, AnimPlayMode.PlayOnce);
-                        endAnim.CollapseToPoseOnFinish = true;
-                        
-                        var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
-                        blend.From = this.EntityAnimationGraph.ActiveNode;
-                        blend.To = endAnim;
-                        blend.Duration = this.PreAttackPause;
-                        blend.CollapseToPoseOnFinish = true;
-                        this.EntityAnimationGraph.ActiveNode = blend;
-                        
-                        //deprecated:
-                        //this.EntityAnimation.DirectBlend(this.AttackAnimation, this.PreAttackPause, AnimPlayMode.PlayOnce);
+                        this.Windup();
                         
                     } else {
+                        //otherwise, fake autoorienttovelocity in a way that doesn't do weird things when knocked back
                         Math.Normalize(this.MovementVector);
                         this.Owner.EntityMovement.Move(this.MovementVector, event.Dt);
-                        if(this.Owner.AutoOrientToVelocity == null)
-                        {
-                            this.Owner.Orientation.LookAtDirection(this.MovementVector);
-                            //this.Owner.AddComponentByName("AutoOrientToVelocity");
-                        }
+                        this.Owner.Orientation.LookAtDirection(this.MovementVector);
                     }
                     
                 }
@@ -173,34 +133,78 @@ class ZombieAI : ZilchComponent
             } else {
                 this.AttackPauseTimer -= event.Dt;
                 
+                //once windup is finished, actually attack:
                 if(this.AttackPauseTimer <= 0 && this.AttackPauseTimer > -1)
                 {
-                    
-                    this.Owner.EntityDelayedStep.AddStep(0.1, this.MovementVector*this.LungeStrength);
-                    this.StringCounter += 1;
-                    this.StringCoolDown = 0.5;
-                    Math.Normalize(this.MovementVector);
-                    this.Weapon.Attack(this.MovementVector);
+                    this.Attack();
                 }
             }
+            
         } else {
-            //idle state stuff, I really should split this into functions soon:
-            
-            var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.IdleAnimation, AnimPlayMode.PlayOnce);
-            endAnim.CollapseToPoseOnFinish = true;
-            
-            var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
-            blend.From = this.EntityAnimationGraph.ActiveNode;
-            blend.To = endAnim;
-            blend.Duration = this.PreAttackPause;
-            blend.CollapseToPoseOnFinish = false;
-            this.EntityAnimationGraph.ActiveNode = blend;
-            
+            //do idle things if there's no enemy
+            this.BeIdle();
         }
-        this.TargetAcquiredFlag = (this.TargetEntity != null);
         
+        //flag setting to check for transitions:
+        this.TargetAcquiredFlag = (this.TargetEntity != null);
         this.TargetEntity = this.AggroZone.Cog.EnemyAggroZone.Target;
         
+    }
+    
+    function BeIdle()
+    {
+        var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.IdleAnimation, AnimPlayMode.PlayOnce);
+        endAnim.CollapseToPoseOnFinish = true;
+        
+        var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
+        blend.From = this.EntityAnimationGraph.ActiveNode;
+        blend.To = endAnim;
+        blend.Duration = this.PreAttackPause;
+        blend.CollapseToPoseOnFinish = false;
+        this.EntityAnimationGraph.ActiveNode = blend;
+    }
+    
+    function Attack()
+    {
+        this.Owner.EntityDelayedStep.AddStep(0.1, this.MovementVector*this.LungeStrength);
+        this.StringCounter += 1;
+        this.StringCoolDown = 0.5;
+        Math.Normalize(this.MovementVector);
+        this.Weapon.Attack(this.MovementVector);
+    }
+    
+    /*pre-attack windup*/
+    function Windup()
+    {
+        this.MovementVector = (this.AimAtTarget());
+        //this.Owner.RemoveComponentByName("AutoOrientToVelocity");
+        this.AttackPauseTimer = this.PreAttackPause;
+        
+        //create animation:
+        
+        var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.AttackAnimation, AnimPlayMode.PlayOnce);
+        endAnim.CollapseToPoseOnFinish = true;
+        
+        var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
+        blend.From = this.EntityAnimationGraph.ActiveNode;
+        blend.To = endAnim;
+        blend.Duration = this.PreAttackPause;
+        blend.CollapseToPoseOnFinish = true;
+        this.EntityAnimationGraph.ActiveNode = blend;
+    }
+    
+    function PlayWalkAnimation()
+    {
+        var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.WalkAnimation, AnimPlayMode.Loop);
+        endAnim.CollapseToPoseOnFinish = true;
+        
+        var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
+        blend.From = this.EntityAnimationGraph.ActiveNode;
+        blend.To = endAnim;
+        blend.CollapseToPoseOnFinish = true;
+        blend.Duration = 0.25;
+        
+        this.EntityAnimationGraph.ActiveNode = blend;
     }
     
     /*

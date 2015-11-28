@@ -136,19 +136,6 @@ class PlayerControl : ZilchComponent
                     this.EntityAnimationGraph.ActiveNode = blend;
                     this.EntityAnimationGraph.TimeScale = 0.5;
                     
-                    /*
-                    var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
-                    blend.From = this.EntityAnimationGraph.ActiveNode;
-                    blend.To = endAnim;
-                    blend.CollapseToPoseOnFinish = true;
-                    blend.Duration = duration;
-                    
-                    blend.TimeScale = timeScale;
-                    //this.EntityAnimationGraph.ActiveNode.TimeScale = timeScale;
-                    //this.EntityAnimationGraph.ActiveNode = blend;
-                    this.EntityAnimationGraph.ActiveNode = blend;
-                    this.EntityAnimationGraph.TimeScale = timeScale;*/
-                    
                     //internal:
                     this.Owner.EntityHealth.Blocking = true;
                     this.Owner.EntityMovement.MoveSpeed = this.MoveSpeed * 0.5;

@@ -45,6 +45,7 @@ class ZombieAI : ZilchComponent
     
     [Property]
     var AggroZone : CogPath;
+    var AggroZoneCog : Cog;
     
     var EntityAnimation : SimpleAnimation;
     var EntityAnimationGraph : AnimationGraph;
@@ -73,6 +74,11 @@ class ZombieAI : ZilchComponent
         this.EntityAnimation = this.Mesh.Cog.SimpleAnimation;
         this.EntityAnimationGraph = this.Mesh.Cog.AnimationGraph;
         this.EntityAnimationGraph.TimeScale = 1;
+        
+        if(this.AggroZone != null)
+        {
+            this.AggroZoneCog = this.AggroZone.Cog;
+        }
         
     }
 
@@ -152,7 +158,7 @@ class ZombieAI : ZilchComponent
             
             //flag setting to check for transitions:
             this.TargetAcquiredFlag = (this.TargetEntity != null);
-            this.TargetEntity = this.AggroZone.Cog.EnemyAggroZone.Target;
+            this.TargetEntity = this.AggroZoneCog.EnemyAggroZone.Target;
         }
         
     }

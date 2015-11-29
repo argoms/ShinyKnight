@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [6.5, 25.5, 0],
+		Vec3 Translation = [0, 0, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [-0, 0, 1, -4.37113883e-008],
 	},
@@ -65,7 +65,7 @@ Cog =
 	},
 	EntityHealth = 
 	{
-		int Health = 20,
+		int Health = 32,
 		bool Important = true,
 		int StaggerDamage = 15,
 		float StaggerTimer = 1,
@@ -81,6 +81,7 @@ Cog =
 		string WalkAnimation = "56182ba8bffc5eed:knighwalkmaya1.All",
 		string AttackAnimation = "5604cab015636c76:KnightAttack2_3Maya.All",
 		string IdleAnimation = "5604b52c959cfc53:KnightIdle_Maya.All",
+		string StaggerAnimation = "560c911e7462af0c:KnightStunnedMaya.All",
 		CogPath PresetTarget = 
 		{
 			string Path = "",
@@ -124,7 +125,7 @@ Cog =
 			bool UpdatePathOnCogChange = true,
 			bool UpdateCogOnInitialize = true,
 			bool ResolvedNullErrorOccurred = false,
-			uint ResolvedCog = 3,
+			uint ResolvedCog = 4294967293,
 			CogPathPreference PathPreference0 = CogRelative,
 			CogPathPreference PathPreference1 = SpaceRelative,
 			CogPathPreference PathPreference2 = Absolute,
@@ -142,7 +143,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 4,
+				uint Id = 3,
 			},
 			Named = 
 			{
@@ -180,7 +181,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 5,
+				uint Id = 4,
 			},
 			Named = 
 			{
@@ -233,7 +234,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 6,
+								uint Id = 5,
 							},
 							Named = 
 							{
@@ -251,7 +252,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 7,
+										uint Id = 6,
 									},
 									Named = 
 									{
@@ -269,7 +270,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 8,
+												uint Id = 7,
 											},
 											Named = 
 											{
@@ -287,7 +288,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 9,
+														uint Id = 8,
 													},
 													Named = 
 													{
@@ -305,7 +306,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 10,
+																uint Id = 9,
 															},
 															Named = 
 															{
@@ -323,7 +324,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 11,
+																		uint Id = 10,
 																	},
 																	Named = 
 																	{
@@ -341,7 +342,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 12,
+																				uint Id = 11,
 																			},
 																			Named = 
 																			{
@@ -361,7 +362,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 13,
+																				uint Id = 12,
 																			},
 																			Named = 
 																			{
@@ -370,7 +371,7 @@ Cog =
 																			Transform = 
 																			{
 																				Vec3 Translation = [0.233757392, -0.569717586, -1.37133884],
-																				Vec3 Scale = [0.999999702, 0.99999994, 1.00000036],
+																				Vec3 Scale = [100, 100, 100],
 																				Quat Rotation = [-0.0493252724, -0.0493252724, 0.705384314, 0.705384314],
 																			},
 																			Model = 
@@ -379,8 +380,8 @@ Cog =
 																				bool VisibilityCulling = true,
 																				bool VisibilityEvents = true,
 																				bool CastShadows = true,
-																				string MaterialName = "4de020863e85bb61:DefaultMaterial",
-																				string MeshName = "560445b1bff1c828:knightitems.Spear",
+																				string MaterialName = "5668178c174a28b4:CandySpear",
+																				string MeshName = "560c9df8501d972e:knight_models_UV_texture.Spear",
 																				Vec4 Color = [1, 1, 1, 1],
 																			},
 																		},
@@ -390,7 +391,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 14,
+																		uint Id = 13,
 																	},
 																	Named = 
 																	{
@@ -408,7 +409,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 15,
+																				uint Id = 14,
 																			},
 																			Named = 
 																			{
@@ -433,7 +434,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 16,
+												uint Id = 15,
 											},
 											Named = 
 											{
@@ -451,7 +452,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 17,
+														uint Id = 16,
 													},
 													Named = 
 													{
@@ -469,7 +470,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 18,
+																uint Id = 17,
 															},
 															Named = 
 															{
@@ -487,7 +488,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 19,
+																		uint Id = 18,
 																	},
 																	Named = 
 																	{
@@ -505,7 +506,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 20,
+																				uint Id = 19,
 																			},
 																			Named = 
 																			{
@@ -524,7 +525,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 21,
+																		uint Id = 20,
 																	},
 																	Named = 
 																	{
@@ -542,7 +543,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 22,
+																				uint Id = 21,
 																			},
 																			Named = 
 																			{
@@ -567,7 +568,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 23,
+												uint Id = 22,
 											},
 											Named = 
 											{
@@ -585,7 +586,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 24,
+														uint Id = 23,
 													},
 													Named = 
 													{
@@ -596,6 +597,36 @@ Cog =
 														Vec3 Translation = [-9.31324018e-010, 0.108461998, 8.14616019e-009],
 														Vec3 Scale = [1, 1, 1],
 														Quat Rotation = [0, -8.42937027e-008, 0, 1],
+													},
+													Hierarchy = 
+													{
+														Cog = 
+														{
+															LinkId = 
+															{
+																uint Id = 24,
+															},
+															Named = 
+															{
+																string Name = "Helmet",
+															},
+															Transform = 
+															{
+																Vec3 Translation = [3.72530629e-009, 0.47537303, -1.49398716e-007],
+																Vec3 Scale = [100.000015, 100.000015, 100.000015],
+																Quat Rotation = [-0.707106769, -6.18172677e-008, -6.18172749e-008, 0.707106829],
+															},
+															Model = 
+															{
+																bool Visible = true,
+																bool VisibilityCulling = true,
+																bool VisibilityEvents = true,
+																bool CastShadows = true,
+																string MaterialName = "560c43bd00e14266:CandyHelm",
+																string MeshName = "560c9df8501d9728:knight_models_UV_texture.Cylinder",
+																Vec4 Color = [1, 1, 1, 1],
+															},
+														},
 													},
 												},
 											},
@@ -826,7 +857,7 @@ Cog =
 								bool VisibilityCulling = true,
 								bool VisibilityEvents = true,
 								bool CastShadows = true,
-								string Material = "4de020863e85bb61:DefaultMaterial",
+								string Material = "5668178c1749e177:Material.002",
 								string Mesh = "561ac7eed058e9cc:attack1.Circle.001",
 								Vec4 Color = [1, 1, 1, 1],
 								Vec3 BoundingCenter = [1.45117188, -0.0637774616, 6.06775284e-005],

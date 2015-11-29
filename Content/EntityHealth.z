@@ -107,7 +107,7 @@ class EntityHealth : ZilchComponent
         if (this.Health < 1)
         {
             this.Die();
-            this.Owner.Destroy();
+            
             //this.AddScore.AddToScore();
         }
         
@@ -134,7 +134,7 @@ class EntityHealth : ZilchComponent
             //this.Important = false;
         }
         
-        //explosion:
+        this.Owner.Destroy();
     }
     
     function Stagger()

@@ -47,6 +47,12 @@ class ZombieAI : ZilchComponent
     var AggroZone : CogPath;
     var AggroZoneCog : Cog;
     
+    [Property]
+    var WindupTime : Real = 0.3;
+    
+    [Property]
+    var AttackDamage : Integer = 5;
+    
     var EntityAnimation : SimpleAnimation;
     var EntityAnimationGraph : AnimationGraph;
     
@@ -65,10 +71,10 @@ class ZombieAI : ZilchComponent
         }
         this.Weapon = this.Owner.EntityAttack;
         this.Weapon.AttackCollision = this.AttackTracer;
-        this.Weapon.BaseWindup = 0.3;
+        this.Weapon.BaseWindup = this.WindupTime;
         this.Weapon.BaseCooldown = 1;
         this.Weapon.MinRange = 0.5;
-        this.Weapon.Damage = 5;
+        this.Weapon.Damage = this.AttackDamage;
     
         
         this.EntityAnimation = this.Mesh.Cog.SimpleAnimation;
@@ -165,6 +171,9 @@ class ZombieAI : ZilchComponent
             {
                 this.TargetEntity = this.AggroZoneCog.EnemyAggroZone.Target;
             }
+        } else {
+            this.AttackPauseTimer = -1;
+            this.JustAttacking = true;
         }
         
     }

@@ -10,6 +10,7 @@ class EntityAttack : ZilchComponent
     
     var BaseCooldown : Real = 0.2; //cooldown value on beginning attack
     
+    [Property]
     var BaseWindup :Real = 0.1; //windup value on beginning attack
     
     var Damage : Integer = 1;

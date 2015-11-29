@@ -81,7 +81,7 @@ class ZombieAI : ZilchComponent
             this.AggroZoneCog = this.AggroZone.Cog;
         }
         
-        this.BeIdle();
+        this.BeIdle(true);
     }
 
     function OnLogicUpdate(event : UpdateEvent)
@@ -156,7 +156,7 @@ class ZombieAI : ZilchComponent
             } else {
                 //do idle things if there's no enemy
                 
-                this.BeIdle();
+                this.BeIdle(false);
             }
             
             //flag setting to check for transitions:
@@ -166,12 +166,12 @@ class ZombieAI : ZilchComponent
         
     }
     
-    function BeIdle()
+    function BeIdle(doAnyway : Boolean)
     {
-       //if(this.TargetEntity == null && this.TargetAcquiredFlag)
-       //{
+       if((this.TargetEntity == null && this.TargetAcquiredFlag) || doAnyway)
+       {
             var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.IdleAnimation, AnimPlayMode.Loop);
-            endAnim.CollapseToPoseOnFinish = true;
+            endAnim.CollapseToPoseOnFinish = false;
             
             /*var blend = this.EntityAnimationGraph.CreateDirectBlendNode();
             blend.From = this.EntityAnimationGraph.ActiveNode;
@@ -179,7 +179,7 @@ class ZombieAI : ZilchComponent
             blend.Duration = 0.1;
             blend.CollapseToPoseOnFinish = false;*/
             this.EntityAnimationGraph.ActiveNode = endAnim;
-      //}
+      }
     }
     
     function Attack()
@@ -228,7 +228,7 @@ class ZombieAI : ZilchComponent
     function CrossBlendedPlay(toAnimation : Animation, duration : Real, endPlayMode : AnimPlayMode, timeScale : Real) : AnimationNode
     {
         var endAnim = this.EntityAnimationGraph.CreateBasicNode(toAnimation, endPlayMode);
-        endAnim.CollapseToPoseOnFinish = true;
+        endAnim.CollapseToPoseOnFinish = false;
         
         
         var blend = this.EntityAnimationGraph.CreateCrossBlendNode();

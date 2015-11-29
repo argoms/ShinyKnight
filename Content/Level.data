@@ -102,7 +102,7 @@ Level =
 		},
 		AmbientLight = 
 		{
-			Vec4 Color = [0.86500001, 0.86500001, 0.86500001, 1],
+			Vec4 Color = [0.845000029, 0.842803001, 0.790075004, 0.999899983],
 		},
 	},
 	Cog = 
@@ -117,7 +117,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [23.6296902, 49.8454132, 50],
+			Vec3 Translation = [1.9127847, 2.27035475, 13.626605],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-008, 0, 1],
 		},
@@ -125,19 +125,19 @@ Level =
 		{
 			ProjectionMode ProjectionMode = Orthographic,
 			Facing Facing = NegativeZ,
-			CameraTransparentSort TransparentSort = ZDepth,
+			CameraTransparentSort TransparentSort = ViewDepth,
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 36.7879982,
+			float Size = 18.2683754,
 		},
 		EditorCameraController = 
 		{
 			ControlMode ControlMode = ZPlane,
-			float LookDistance = 50,
+			float LookDistance = 13.6266041,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [23.6296902, 49.8454132, 1.20143238e-006],
+			Vec3 LookTarget = [1.9127847, 2.27035475, 5.04005754e-007],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -176,7 +176,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [0, 9.5, 0],
+			Vec3 Translation = [0, 0, 0],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},
@@ -330,12 +330,19 @@ Level =
 		},
 		Hierarchy = 
 		{
-			ArchetypeInstance = 
+			Cog = 
 			{
-				string Name = "560cfaa84349db1f:Tree_simple_1",
 				LinkId = 
 				{
 					uint Id = 12,
+				},
+				Named = 
+				{
+					string Name = "Tree_simple_1",
+				},
+				Archetyped = 
+				{
+					string Name = "560cfaa84349db1f:Tree_simple_1",
 				},
 				Transform = 
 				{
@@ -343,9 +350,18 @@ Level =
 					Vec3 Scale = [0.00999999978, 0.00999999978, 0.00999999978],
 					Quat Rotation = [0.707106769, 0, 0, 0.707106769],
 				},
-				Named = 
+				Model = 
 				{
-					string Name = "Tree_simple_1",
+					bool Visible = true,
+					bool VisibilityCulling = true,
+					bool VisibilityEvents = true,
+					bool CastShadows = true,
+					string MaterialName = "560cea97e1fd716e:TreeMaterial",
+					string MeshName = "560cfaa84357e65e:Tree_simple_1",
+					Vec4 Color = [1, 1, 1, 1],
+				},
+				Hierarchy = 
+				{
 				},
 			},
 			ArchetypeInstance = 
@@ -3168,7 +3184,7 @@ Level =
 			bool CastShadows = false,
 			LightType LightType = Directional,
 			Vec4 Color = [1, 0.765399933, 0.49000001, 1],
-			float Intensity = 0.969999969,
+			float Intensity = 0.0700000003,
 			float Range = 20,
 			float Falloff = 0.099999994,
 			float Angle = 45,
@@ -3415,6 +3431,33 @@ Level =
 		},
 		EntityDeathExplosion = 
 		{
+		},
+	},
+	Cog = 
+	{
+		LinkId = 
+		{
+			uint Id = 131,
+		},
+		Named = 
+		{
+			string Name = "Cube",
+		},
+		Transform = 
+		{
+			Vec3 Translation = [0, 0, -0.100000001],
+			Vec3 Scale = [1000, 1000, 0.100000001],
+			Quat Rotation = [0, 0, 0, 1],
+		},
+		Model = 
+		{
+			bool Visible = true,
+			bool VisibilityCulling = true,
+			bool VisibilityEvents = true,
+			bool CastShadows = true,
+			string MaterialName = "560ca8ceaf882eec:GroundMaterial",
+			string MeshName = "4de0354322b345ae:Cube",
+			Vec4 Color = [1, 1, 1, 1],
 		},
 	},
 },

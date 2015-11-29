@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [-1, 8.5, 0],
+		Vec3 Translation = [0, 0, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -368,56 +368,36 @@ Cog =
 																				Vec3 Scale = [1, 1, 1],
 																				Quat Rotation = [-0.0804157779, -0.0636506751, -0.00917622726, 0.994684696],
 																			},
-																			SpriteParticleSystem = 
+																		},
+																		Cog = 
+																		{
+																			LinkId = 
+																			{
+																				uint Id = 14,
+																			},
+																			Named = 
+																			{
+																				string Name = "Sword",
+																			},
+																			Archetyped = 
+																			{
+																				string Name = "560c867c3c838126:KnightsSword",
+																			},
+																			Transform = 
+																			{
+																				Vec3 Translation = [0.230000004, -0.560000002, -1.37],
+																				Vec3 Scale = [100, 100, 100],
+																				Quat Rotation = [-0.0493252724, -0.0493252724, 0.705384314, 0.705384314],
+																			},
+																			Model = 
 																			{
 																				bool Visible = true,
 																				bool VisibilityCulling = true,
 																				bool VisibilityEvents = true,
-																				bool CastShadows = false,
-																				SystemChildMode ChildMode = Independent,
-																				SystemSpace SystemSpace = LocalSpace,
-																				uint DrawOrder = 0,
-																				float WarmUpTime = 0,
-																				ParticleGeometry GeometryMode = Billboarded,
-																				ParticleRenderMode RenderMode = Blended,
-																				ParticleSortMode SortMode = Youngest,
-																				ParticleAnimation ParticleAnimation = Single,
-																				string Texture = "4fab71e8bcb7a8ce:DefaultTexture",
-																				Vec4 Tint = [1, 1, 1, 0.464999974],
-																				float VelocityScale = 1,
-																				float LengthScale = 1,
-																				float MaxParticleSize = 100,
-																				Vec3 SystemSize = [1, 1, 1],
-																			},
-																			SphericalParticleEmitter = 
-																			{
-																				bool Active = true,
-																				uint EmitCount = 0,
-																				float EmitRate = 100,
-																				float EmitVariance = 0,
-																				float Size = 0.25,
-																				float SizeVariance = 0.100000001,
-																				float Lifetime = 0.200000003,
-																				float LifetimeVariance = 0.100000001,
-																				float Spin = 0,
-																				float SpinVariance = 50,
-																				bool RandomSpin = true,
-																				float Fill = 1,
-																				float EmitterVelocityPercent = 0,
-																				Vec3 StartVelocity = [10, 0, 0],
-																				Vec3 RandomVelocity = [0.100000001, 0.100000001, 0.100000001],
-																				Vec3 TangentVelocity = [0, 0, 0],
-																				Vec3 EmitterSize = [0, 0, 0],
-																				bool FastMovingEmitter = true,
-																			},
-																			LinearParticleAnimator = 
-																			{
-																				Vec3 Force = [0, 0, 0],
-																				Vec3 RandomForce = [0, 0, 0],
-																				float Torque = 0,
-																				float Growth = 0,
-																				float Dampening = 0,
-																				Vec3 Twist = [0, 0, 0],
+																				bool CastShadows = true,
+																				string MaterialName = "560ca8ceaf886fa8:SwordMaterial",
+																				string MeshName = "560c9df8501d9731:knight_models_UV_texture.Sword",
+																				Vec4 Color = [1, 1, 1, 1],
 																			},
 																		},
 																	},
@@ -426,7 +406,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 14,
+																		uint Id = 15,
 																	},
 																	Named = 
 																	{
@@ -444,7 +424,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 15,
+																				uint Id = 16,
 																			},
 																			Named = 
 																			{
@@ -469,7 +449,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 16,
+												uint Id = 17,
 											},
 											Named = 
 											{
@@ -487,7 +467,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 17,
+														uint Id = 18,
 													},
 													Named = 
 													{
@@ -505,7 +485,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 18,
+																uint Id = 19,
 															},
 															Named = 
 															{
@@ -523,7 +503,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 19,
+																		uint Id = 20,
 																	},
 																	Named = 
 																	{
@@ -541,7 +521,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 20,
+																				uint Id = 21,
 																			},
 																			Named = 
 																			{
@@ -560,7 +540,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 21,
+																		uint Id = 22,
 																	},
 																	Named = 
 																	{
@@ -578,7 +558,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 22,
+																				uint Id = 23,
 																			},
 																			Named = 
 																			{
@@ -603,7 +583,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 23,
+												uint Id = 24,
 											},
 											Named = 
 											{
@@ -621,7 +601,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 24,
+														uint Id = 25,
 													},
 													Named = 
 													{
@@ -639,7 +619,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 25,
+																uint Id = 26,
 															},
 															Named = 
 															{
@@ -648,7 +628,7 @@ Cog =
 															Transform = 
 															{
 																Vec3 Translation = [0, 0.5, 0],
-																Vec3 Scale = [1, 1, 1],
+																Vec3 Scale = [100, 100, 100],
 																Quat Rotation = [-0.707106769, 0, 0, 0.707106769],
 															},
 															Model = 
@@ -657,8 +637,8 @@ Cog =
 																bool VisibilityCulling = true,
 																bool VisibilityEvents = true,
 																bool CastShadows = true,
-																string MaterialName = "561825f374b8546f:lambert1",
-																string MeshName = "560445b1bff1c82a:knightitems.Cylinder",
+																string MaterialName = "5668178c174a0468:KnightHelmet",
+																string MeshName = "560c9df8501d9728:knight_models_UV_texture.Cylinder",
 																Vec4 Color = [1, 1, 1, 0.935000002],
 															},
 														},
@@ -672,7 +652,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 26,
+										uint Id = 27,
 									},
 									Named = 
 									{
@@ -690,7 +670,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 27,
+												uint Id = 28,
 											},
 											Named = 
 											{
@@ -708,7 +688,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 28,
+														uint Id = 29,
 													},
 													Named = 
 													{
@@ -726,7 +706,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 29,
+																uint Id = 30,
 															},
 															Named = 
 															{
@@ -749,7 +729,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 30,
+										uint Id = 31,
 									},
 									Named = 
 									{
@@ -767,7 +747,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 31,
+												uint Id = 32,
 											},
 											Named = 
 											{
@@ -785,7 +765,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 32,
+														uint Id = 33,
 													},
 													Named = 
 													{
@@ -803,7 +783,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 33,
+																uint Id = 34,
 															},
 															Named = 
 															{
@@ -828,7 +808,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 34,
+								uint Id = 35,
 							},
 							Named = 
 							{
@@ -842,7 +822,7 @@ Cog =
 							},
 							SkinnedModel = 
 							{
-								bool Visible = true,
+								bool Visible = false,
 								bool VisibilityCulling = true,
 								bool VisibilityEvents = true,
 								bool CastShadows = true,
@@ -857,7 +837,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 35,
+								uint Id = 36,
 							},
 							Named = 
 							{
@@ -875,7 +855,7 @@ Cog =
 								bool VisibilityCulling = true,
 								bool VisibilityEvents = true,
 								bool CastShadows = true,
-								string Material = "4de020863e85bb61:DefaultMaterial",
+								string Material = "560ca8ceaf885198:babbyblue",
 								string Mesh = "561ac7eed058e9ca:attack1.Circle.002",
 								Vec4 Color = [1, 1, 1, 1],
 								Vec3 BoundingCenter = [-0.0163149238, 0.0012139678, 0],
@@ -886,7 +866,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 36,
+								uint Id = 37,
 							},
 							Named = 
 							{
@@ -896,7 +876,7 @@ Cog =
 							{
 								Vec3 Translation = [0, 2.5, 0],
 								Vec3 Scale = [1, 1, 1],
-								Quat Rotation = [-0.5, 0.5, -0.5, 0.5],
+								Quat Rotation = [0, 0, 0, 1],
 							},
 							SkinnedModel = 
 							{
@@ -904,7 +884,7 @@ Cog =
 								bool VisibilityCulling = true,
 								bool VisibilityEvents = true,
 								bool CastShadows = true,
-								string Material = "4de020863e85bb61:DefaultMaterial",
+								string Material = "560ca8ceaf885198:babbyblue",
 								string Mesh = "561ac7eed058e9cc:attack1.Circle.001",
 								Vec4 Color = [1, 1, 1, 1],
 								Vec3 BoundingCenter = [1.45117188, -0.0637774616, 6.06775284e-005],

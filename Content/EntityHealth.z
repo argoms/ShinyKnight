@@ -45,6 +45,7 @@ class EntityHealth : ZilchComponent
     [Property]
     var CanStagger : Boolean = true;
     
+    
     var Stamina : Real = 0;
     function Initialize(init : CogInitializer)
     {
@@ -91,7 +92,7 @@ class EntityHealth : ZilchComponent
         //actually subtract health:
         this.Health -= damage;
         this.SDCounter += damage;
-        if(this.SDCounter >= this.StaggerDamage)
+        if(this.SDCounter >= this.StaggerDamage || this.Stamina < 0)
         {
             this.Stagger();
         }
@@ -137,14 +138,25 @@ class EntityHealth : ZilchComponent
     {
         if(this.CanStagger)
         {
-            var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
-            damageText.SpriteText.Text = "   ow :(";
+            //var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
+            //damageText.SpriteText.Text = "   ow :(";
             if(this.Owner.EntityAttack.Attacking)
             {
                 //Console.WriteLine(this.Owner);
                 this.Owner.EntityAttack.Attacking = false;
             }
             this.Owner.EntityAttack.StaggerTimer = this.StaggerTime;
+            
+            if(this.Owner.PlayerControl != null)
+            {
+                this.Owner.PlayerControl.CrossBlendedPlay(this.Owner.PlayerControl.StunAnimation, 0.1, AnimPlayMode.PlayOnce, 1);
+                this.Owner.PlayerControl.ActionFinishedFlag = true;
+                this.Blocking = false;
+            }
+            if(this.Owner.ZombieAI != null)
+            {
+                this.Owner.ZombieAI.CrossBlendedPlay(this.Owner.ZombieAI.StaggerAnimation, 0.1, AnimPlayMode.PlayOnce, 1);
+            }
         }
     }
 }

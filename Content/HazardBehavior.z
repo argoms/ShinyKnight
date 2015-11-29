@@ -58,6 +58,8 @@ class HazardBehavior : ZilchComponent
                     this.InternalCooldown = this.AttackCooldown;
                     this.Owner.EntityAttack.Attack(Real3(0,0,0));
                 }
+            } else {
+                this.Owner.BoxParticleEmitter.EmitRate = (this.CoolDown - this.Timer) * this.EmitRateMultiplier *  (this.CoolDown - this.Timer);
             }
         } else {
             this.Owner.BoxParticleEmitter.EmitRate = 1;

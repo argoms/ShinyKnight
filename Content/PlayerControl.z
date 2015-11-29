@@ -67,6 +67,9 @@ class PlayerControl : ZilchComponent
     [Property]
     var Torso : CogPath;
     
+    [Property]
+    var StunAnimation : Animation;
+    
     //internal flag to make sure that the walking animation is swapped to
     var ActionFinishedFlag : Boolean;
     
@@ -104,7 +107,7 @@ class PlayerControl : ZilchComponent
         this.UpdateMouseInput();
         
         //update player translation:
-        if(!this.Weapon.Attacking)
+        if(!this.Weapon.Attacking && (this.Owner.EntityAttack.StaggerTimer <= 0))
         {
             if(Zero.Mouse.IsButtonDown(MouseButtons.Left) && this.AttackStaminaCost <= this.Owner.EntityHealth.Stamina)
             {

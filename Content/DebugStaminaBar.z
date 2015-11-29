@@ -13,10 +13,11 @@ class DebugStaminaBar : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        /*
         Console.Write(this.Owner.EntityHealth.Health);
         Console.Write("|");
         Console.Write(this.Owner.EntityHealth.MaxHealth);
-        Console.Write("\n");
+        Console.Write("\n");*/
         if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
         {
             this.StamBar.Cog.Sprite.Visible = true;

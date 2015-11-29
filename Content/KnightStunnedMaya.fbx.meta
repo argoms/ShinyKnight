@@ -1,0 +1,28 @@
+GeometryContent = 
+{
+	GeometryImport = 
+	{
+		bool ChangeWinding = false,
+		Vec3 Translation = [0, 0, 0],
+		Quat Rotation = [0, 0, 0, 1],
+		Vec3 Scale = [1, 1, 1],
+	},
+	AnimationBuilder = 
+	{
+		string Name = "KnightStunnedMaya",
+		uint64 ResourceId = 560c911f7451d246,
+		bool MakeAnimationSet = false,
+		ResourceCompression CompressAnimation = None,
+		string PreviewArchetype = "",
+		Array Clips = 
+		[
+			{
+				string Name = "All",
+				uint64 ResourceId = 560c911e7462af0c,
+				int StartFrame = 1,
+				int EndFrame = 120,
+				LoopingMode LoopingMode = Default,
+			},
+		],
+	},
+},

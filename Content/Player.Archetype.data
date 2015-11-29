@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [0, 0, 0],
+		Vec3 Translation = [-1, 8.5, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -41,7 +41,30 @@ Cog =
 		string Attack2_1Animation = "5604c5540b05127a:KnightAttack2_1Maya.All",
 		string Attack2_2Animation = "5604cab9178aac96:KnightAttack2_2Maya.All",
 		string Attack2_3Animation = "5604cab015636c76:KnightAttack2_3Maya.All",
-		float AttackStaminaCost = 20,
+		int A1_1Damage = 5,
+		int A1_2Damage = 4,
+		int A1_3Damage = 8,
+		int A2_1Damage = 4,
+		int A2_2Damage = 3,
+		int A2_3Damage = 7,
+		float MoveSpeed = 48,
+		CogPath Torso = 
+		{
+			string Path = "Mesh/Mesh/Armature/Torso",
+			bool ErrorOnResolveToNull = false,
+			bool ErrorOnPathCantCompute = false,
+			bool ErrorOnDirectLinkFail = false,
+			bool UpdateCogOnPathChange = true,
+			bool UpdatePathOnCogChange = true,
+			bool UpdateCogOnInitialize = true,
+			bool ResolvedNullErrorOccurred = false,
+			uint ResolvedCog = 2,
+			CogPathPreference PathPreference0 = CogRelative,
+			CogPathPreference PathPreference1 = SpaceRelative,
+			CogPathPreference PathPreference2 = Absolute,
+		},
+		string StunAnimation = "560c911e7462af0c:KnightStunnedMaya.All",
+		float AttackStaminaCost = 5,
 	},
 	EntityMovement = 
 	{
@@ -82,18 +105,51 @@ Cog =
 	},
 	EntityHealth = 
 	{
-		int Health = 100,
-		int StaggerDamage = 2,
+		int Health = 32,
+		bool Important = true,
+		int StaggerDamage = 5,
 		float StaggerTimer = 1,
-		float StaggerTime = 1,
+		float StaggerTime = 0.5,
 		float MaxStamina = 50,
 		float StaminaRegenRate = 40,
+		bool ShowDamageNumbers = true,
+		bool CanStagger = true,
 	},
 	EntityDelayedStep = 
 	{
 	},
 	DebugStaminaBar = 
 	{
+		CogPath StamBar = 
+		{
+			string Path = "TempStamBar",
+			bool ErrorOnResolveToNull = false,
+			bool ErrorOnPathCantCompute = false,
+			bool ErrorOnDirectLinkFail = false,
+			bool UpdateCogOnPathChange = true,
+			bool UpdatePathOnCogChange = true,
+			bool UpdateCogOnInitialize = true,
+			bool ResolvedNullErrorOccurred = false,
+			uint ResolvedCog = 3,
+			CogPathPreference PathPreference0 = CogRelative,
+			CogPathPreference PathPreference1 = SpaceRelative,
+			CogPathPreference PathPreference2 = Absolute,
+		},
+		CogPath HealthBar = 
+		{
+			string Path = "HealthBar",
+			bool ErrorOnResolveToNull = false,
+			bool ErrorOnPathCantCompute = false,
+			bool ErrorOnDirectLinkFail = false,
+			bool UpdateCogOnPathChange = true,
+			bool UpdatePathOnCogChange = true,
+			bool UpdateCogOnInitialize = true,
+			bool ResolvedNullErrorOccurred = false,
+			uint ResolvedCog = 4,
+			CogPathPreference PathPreference0 = CogRelative,
+			CogPathPreference PathPreference1 = SpaceRelative,
+			CogPathPreference PathPreference2 = Absolute,
+		},
 	},
 	Hierarchy = 
 	{
@@ -101,7 +157,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 2,
+				uint Id = 5,
 			},
 			Named = 
 			{
@@ -139,7 +195,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 3,
+				uint Id = 6,
 			},
 			Named = 
 			{
@@ -157,7 +213,7 @@ Cog =
 				{
 					LinkId = 
 					{
-						uint Id = 4,
+						uint Id = 7,
 					},
 					Named = 
 					{
@@ -192,7 +248,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 5,
+								uint Id = 8,
 							},
 							Named = 
 							{
@@ -210,7 +266,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 6,
+										uint Id = 2,
 									},
 									Named = 
 									{
@@ -228,7 +284,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 7,
+												uint Id = 9,
 											},
 											Named = 
 											{
@@ -246,7 +302,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 8,
+														uint Id = 10,
 													},
 													Named = 
 													{
@@ -264,7 +320,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 9,
+																uint Id = 11,
 															},
 															Named = 
 															{
@@ -282,7 +338,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 10,
+																		uint Id = 12,
 																	},
 																	Named = 
 																	{
@@ -300,7 +356,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 11,
+																				uint Id = 13,
 																			},
 																			Named = 
 																			{
@@ -370,7 +426,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 12,
+																		uint Id = 14,
 																	},
 																	Named = 
 																	{
@@ -388,7 +444,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 13,
+																				uint Id = 15,
 																			},
 																			Named = 
 																			{
@@ -413,7 +469,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 14,
+												uint Id = 16,
 											},
 											Named = 
 											{
@@ -431,7 +487,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 15,
+														uint Id = 17,
 													},
 													Named = 
 													{
@@ -449,7 +505,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 16,
+																uint Id = 18,
 															},
 															Named = 
 															{
@@ -467,7 +523,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 17,
+																		uint Id = 19,
 																	},
 																	Named = 
 																	{
@@ -485,7 +541,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 18,
+																				uint Id = 20,
 																			},
 																			Named = 
 																			{
@@ -504,7 +560,7 @@ Cog =
 																{
 																	LinkId = 
 																	{
-																		uint Id = 19,
+																		uint Id = 21,
 																	},
 																	Named = 
 																	{
@@ -522,7 +578,7 @@ Cog =
 																		{
 																			LinkId = 
 																			{
-																				uint Id = 20,
+																				uint Id = 22,
 																			},
 																			Named = 
 																			{
@@ -547,7 +603,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 21,
+												uint Id = 23,
 											},
 											Named = 
 											{
@@ -565,7 +621,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 22,
+														uint Id = 24,
 													},
 													Named = 
 													{
@@ -583,7 +639,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 23,
+																uint Id = 25,
 															},
 															Named = 
 															{
@@ -616,7 +672,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 24,
+										uint Id = 26,
 									},
 									Named = 
 									{
@@ -634,7 +690,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 25,
+												uint Id = 27,
 											},
 											Named = 
 											{
@@ -652,7 +708,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 26,
+														uint Id = 28,
 													},
 													Named = 
 													{
@@ -670,7 +726,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 27,
+																uint Id = 29,
 															},
 															Named = 
 															{
@@ -693,7 +749,7 @@ Cog =
 								{
 									LinkId = 
 									{
-										uint Id = 28,
+										uint Id = 30,
 									},
 									Named = 
 									{
@@ -711,7 +767,7 @@ Cog =
 										{
 											LinkId = 
 											{
-												uint Id = 29,
+												uint Id = 31,
 											},
 											Named = 
 											{
@@ -729,7 +785,7 @@ Cog =
 												{
 													LinkId = 
 													{
-														uint Id = 30,
+														uint Id = 32,
 													},
 													Named = 
 													{
@@ -747,7 +803,7 @@ Cog =
 														{
 															LinkId = 
 															{
-																uint Id = 31,
+																uint Id = 33,
 															},
 															Named = 
 															{
@@ -772,7 +828,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 32,
+								uint Id = 34,
 							},
 							Named = 
 							{
@@ -801,7 +857,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 33,
+								uint Id = 35,
 							},
 							Named = 
 							{
@@ -830,7 +886,7 @@ Cog =
 						{
 							LinkId = 
 							{
-								uint Id = 34,
+								uint Id = 36,
 							},
 							Named = 
 							{
@@ -863,7 +919,7 @@ Cog =
 		{
 			LinkId = 
 			{
-				uint Id = 35,
+				uint Id = 3,
 			},
 			Named = 
 			{
@@ -882,6 +938,41 @@ Cog =
 				bool VisibilityEvents = true,
 				bool CastShadows = false,
 				Vec4 Color = [0.949999928, 1, 0, 1],
+				BlendMode BlendMode = Alpha,
+				SpriteGeometryMode GeometryMode = ZPlane,
+				string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
+				string SpriteSource = "5275aa4d802dd6dc:Square",
+				bool RenderMask = false,
+				bool FlipX = false,
+				bool FlipY = false,
+				bool AnimationActive = true,
+				float AnimationSpeed = 1,
+				uint StartFrame = 0,
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 4,
+			},
+			Named = 
+			{
+				string Name = "HealthBar",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [0, 0, 5],
+				Vec3 Scale = [1, 1, 1],
+				Quat Rotation = [0, 0, 0, 1],
+			},
+			Sprite = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = false,
+				Vec4 Color = [0.0500000715, 1, 0, 1],
 				BlendMode BlendMode = Alpha,
 				SpriteGeometryMode GeometryMode = ZPlane,
 				string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",

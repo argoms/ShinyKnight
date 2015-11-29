@@ -25,6 +25,11 @@ class EntityAttack : ZilchComponent
     [Property]
     var MinRange : Real = 1; //how many units away the attack tracer is spawned
     
+    [Property]
+    var Projectile : Archetype;
+    
+    var ShootMode : String;
+    
     var AttackCollision : MultiConvexMesh = MultiConvexMesh.KATracer1_1; //the collider used for attacks
     
     var TracerLifetime : Real = 0.25;
@@ -48,20 +53,29 @@ class EntityAttack : ZilchComponent
                 {
                     //var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim);
                     //var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, this.Owner.Transform.Translation + this.Aim * this.MinRange);
-                    var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, Real3(0,1,0) * this.MinRange);
-                    //tracer.Transform.Rotation = this.Owner.Transform.Rotation;
-                    tracer.AttackTracerBehavior.Damage = this.Damage;
-                    tracer.AttackTracerBehavior.Knockback = this.Knockback * this.Aim;
-                    tracer.AttackTracerBehavior.LifeTime = this.TracerLifetime;
-                    //tracer.RigidBody.Velocity = this.Owner.RigidBody.Velocity;
-                    tracer.AttachTo(this.Owner);
-                    if(this.Friendly)
+                    
+                    if(this.ShootMode == "Melee")
                     {
-                        tracer.Collider.CollisionGroup = CollisionGroup.FriendlyProjectile;
-                    } else {
-                        tracer.Collider.CollisionGroup = CollisionGroup.EnemyProjectile;
+                        var tracer = this.Space.CreateAtPosition(Archetype.AttackTracer, Real3(0,1,0) * this.MinRange);
+                        //tracer.Transform.Rotation = this.Owner.Transform.Rotation;
+                        tracer.AttackTracerBehavior.Damage = this.Damage;
+                        tracer.AttackTracerBehavior.Knockback = this.Knockback * this.Aim;
+                        tracer.AttackTracerBehavior.LifeTime = this.TracerLifetime;
+                        //tracer.RigidBody.Velocity = this.Owner.RigidBody.Velocity;
+                        tracer.AttachTo(this.Owner);
+                        if(this.Friendly)
+                        {
+                            tracer.Collider.CollisionGroup = CollisionGroup.FriendlyProjectile;
+                        } else {
+                            tracer.Collider.CollisionGroup = CollisionGroup.EnemyProjectile;
+                        }
+                        tracer.MultiConvexMeshCollider.Mesh = this.AttackCollision;
+                    } else if(this.ShootMode == "Proj")
+                    {
+                        var bullet = this.Space.CreateAtPosition(this.Projectile, this.Owner.Transform.Translation);
+                        bullet.RigidBody.Velocity = this.Aim * bullet.ProjectileBehavior.Speed;
                     }
-                    tracer.MultiConvexMeshCollider.Mesh = this.AttackCollision;
+                    
                 }
             } else {
                 this.Cooldown -= event.Dt;
@@ -88,7 +102,17 @@ class EntityAttack : ZilchComponent
             this.Cooldown = this.BaseCooldown;
             this.Windup = this.BaseWindup;
             this.Aim = aim;
+            this.ShootMode = "Melee";
         }
         
+    }
+    
+    function ShootProjectile(aim : Real3)
+    {
+        this.Attacking = true;
+        this.Cooldown = this.BaseCooldown;
+        this.Windup = this.BaseWindup;
+        this.Aim = aim;
+        this.ShootMode = "Proj";
     }
 }

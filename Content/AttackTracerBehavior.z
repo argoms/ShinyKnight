@@ -1,8 +1,13 @@
 class AttackTracerBehavior : ZilchComponent
 {
+    [Property]
     var LifeTime : Real = 0.25;
     
+    [Property]
     var Damage : Integer = 1;
+    
+    [Property]
+    var NumTargetsHittable : Integer = 0; //maximum number of targets that the tracer can hit before it dies, 0 for infinite
     
     var Knockback : Real3 = Real3(0,0,0);
     function Initialize(init : CogInitializer)
@@ -29,6 +34,14 @@ class AttackTracerBehavior : ZilchComponent
             event.OtherObject.EntityHealth.TakeDamage(this.Damage);
             event.OtherObject.RigidBody.ApplyLinearVelocity(this.Knockback);
             this.Space.CreateAtPosition(Archetype.Sparks, event.FirstPoint.WorldPoint + Real3(0, 0, 1));
+            if(this.NumTargetsHittable != 0)
+            {
+                --this.NumTargetsHittable;
+                if(this.NumTargetsHittable < 1)
+                {
+                    this.KillSelf();
+                }
+            }
         }
     }
     

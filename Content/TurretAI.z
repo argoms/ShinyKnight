@@ -1,0 +1,47 @@
+class TurretAI : ZilchComponent
+{
+    [Property]
+    var TurretHead : CogPath;
+    
+    var TargetEntity : Cog;
+    
+    [Property]
+    var AttackSpeed : Real;
+    
+    var CooldownTimer : Real = 0;
+    
+    var AggroZoneCog : Cog;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+         //Console.WriteLine(this.AggroZoneCog);
+        if(this.TargetEntity != null)
+        {
+            this.CooldownTimer -= event.Dt;
+            if(this.CooldownTimer < 0)
+            {
+                this.Owner.EntityAttack.ShootProjectile(this.AimAtTarget());
+                this.CooldownTimer = this.AttackSpeed;
+            }
+           
+        }
+        if(this.AggroZoneCog != null)
+        {
+            this.TargetEntity = this.AggroZoneCog.EnemyAggroZone.Target;
+        }
+    }
+    
+    function AimAtTarget() : Real3
+    {
+        var targetLocation:Real3 = this.TargetEntity.Transform.Translation;//this.PresetTarget.Cog.Transform.Translation;
+        var aim:Real3 = Math.Normalize(Real3(targetLocation.X-this.Owner.Transform.Translation.X, targetLocation.Y-this.Owner.Transform.Translation.Y, 0));
+        this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
+        return aim;
+    }
+}

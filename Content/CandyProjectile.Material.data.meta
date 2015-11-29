@@ -2,7 +2,7 @@ DataContent =
 {
 	DataBuilder = 
 	{
-		string Name = "lambert1",
+		string Name = "CandyProjectile",
 		uint64 ResourceId = 561825f374b8546f,
 		string LoaderType = "Material",
 		uint Version = 0,

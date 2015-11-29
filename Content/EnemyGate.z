@@ -15,6 +15,7 @@ class EnemyGate : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        Console.WriteLine(this.Zone.Cog.EnemyAggroZone.NumEnemies);
         if(this.Zone.Cog.EnemyAggroZone.NumEnemies < 1)
         {
             this.Owner.EntityHealth.TakeDamage(99999);

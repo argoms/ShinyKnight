@@ -125,7 +125,10 @@ class EntityHealth : ZilchComponent
         {
             if(this.Owner.ZombieAI != null)
             {
-                this.Owner.ZombieAI.AggroZone.Cog.EnemyAggroZone.EnemyKilled();
+                this.Owner.ZombieAI.AggroZoneCog.EnemyAggroZone.EnemyKilled();
+            } else if(this.Owner.TurretAI != null)
+            {
+                this.Owner.TurretAI.AggroZoneCog.EnemyAggroZone.EnemyKilled();
             }
             //--this.Owner.LevelSettings.LevelBehavior.EnemyCounter;
             //this.Important = false;

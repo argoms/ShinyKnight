@@ -161,7 +161,10 @@ class ZombieAI : ZilchComponent
             
             //flag setting to check for transitions:
             this.TargetAcquiredFlag = (this.TargetEntity != null);
-            this.TargetEntity = this.AggroZoneCog.EnemyAggroZone.Target;
+            if(this.AggroZoneCog != null)
+            {
+                this.TargetEntity = this.AggroZoneCog.EnemyAggroZone.Target;
+            }
         }
         
     }

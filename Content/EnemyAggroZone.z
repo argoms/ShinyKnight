@@ -7,11 +7,14 @@ class EnemyAggroZone : ZilchComponent
     [Property]
     var NumEnemies : Integer;
     
-    var Waves : Integer;
+    [Property]
+    var SecondWaveNum : Integer;
+    
+    var Waves : Integer; //only works for 1 extra
     function Initialize(init : CogInitializer)
     {
         //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
-        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollision);
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollision);
     }
 
     function OnLogicUpdate(event : UpdateEvent)
@@ -29,6 +32,10 @@ class EnemyAggroZone : ZilchComponent
             if(event.OtherObject.ZombieAI != null)
             {
                 event.OtherObject.ZombieAI.AggroZoneCog = this.Owner;
+            } else if(event.OtherObject.TurretAI != null)
+            {
+                event.OtherObject.RigidBody.DynamicState = RigidBodyDynamicState.Static;
+                event.OtherObject.TurretAI.AggroZoneCog = this.Owner;
             }
         }
     }
@@ -36,9 +43,11 @@ class EnemyAggroZone : ZilchComponent
     function EnemyKilled()
     {
         --this.NumEnemies;
-        if(this.NumEnemies < 1)
+        Console.WriteLine(this.NumEnemies);
+        if(this.NumEnemies < 1 && this.Waves > 0)
         {
-            //dunno
+            --this.Waves;
+            this.NumEnemies = this.SecondWaveNum;
         }
     }
 }

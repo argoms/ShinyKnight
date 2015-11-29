@@ -8,9 +8,13 @@ Cog =
 	{
 		string Name = "ParticleExplosion",
 	},
+	Archetyped = 
+	{
+		string Name = "560ce973790a619d:ParticleExplosion",
+	},
 	Transform = 
 	{
-		Vec3 Translation = [-0.957382202, 0.137390867, -1.77805308e-008],
+		Vec3 Translation = [0, 0, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -24,14 +28,14 @@ Cog =
 		SystemSpace SystemSpace = WorldSpace,
 		uint DrawOrder = 0,
 		float WarmUpTime = 0,
-		ParticleGeometry GeometryMode = Billboarded,
+		ParticleGeometry GeometryMode = Beam,
 		ParticleRenderMode RenderMode = Blended,
 		ParticleSortMode SortMode = Youngest,
 		ParticleAnimation ParticleAnimation = Single,
-		string Texture = "4fab71e8bcb7a8ce:DefaultTexture",
-		Vec4 Tint = [1, 1, 1, 1],
+		string Texture = "5274db4c2e7c11f9:Circle",
+		Vec4 Tint = [0.992900014, 0.644999981, 1, 1],
 		float VelocityScale = 1,
-		float LengthScale = 1,
+		float LengthScale = 2,
 		float MaxParticleSize = 100,
 		Vec3 SystemSize = [4, 4, 4],
 	},
@@ -39,9 +43,9 @@ Cog =
 	{
 		bool Active = true,
 		uint EmitCount = 0,
-		float EmitRate = 5000,
+		float EmitRate = 8000,
 		float EmitVariance = 0,
-		float Size = 0.200000003,
+		float Size = 0.100000001,
 		float SizeVariance = 0.100000001,
 		float Lifetime = 0.400000006,
 		float LifetimeVariance = 0.100000001,

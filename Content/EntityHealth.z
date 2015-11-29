@@ -9,6 +9,8 @@ class EntityHealth : ZilchComponent
     [Property]
     var Health:Integer = 5; //kills object if health hits 0
     
+    var MaxHealth : Integer;
+    
     var RandomGenerator:Random = Random();//random number generator
     
     [Property]
@@ -48,6 +50,7 @@ class EntityHealth : ZilchComponent
     {
         //this.Health *= this.LevelSettings.LevelBehavior.Difficulty;
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        this.MaxHealth = this.Health;
     }
 
     function OnLogicUpdate(event : UpdateEvent)

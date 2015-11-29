@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [6.5, 32.5, 0],
+		Vec3 Translation = [0, 0, 0],
 		Vec3 Scale = [3, 3, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -28,7 +28,7 @@ Cog =
 		SystemSpace SystemSpace = CameraSpace,
 		uint DrawOrder = 0,
 		float WarmUpTime = 0,
-		ParticleGeometry GeometryMode = FaceVelocity,
+		ParticleGeometry GeometryMode = Beam,
 		ParticleRenderMode RenderMode = Blended,
 		ParticleSortMode SortMode = Sorted,
 		ParticleAnimation ParticleAnimation = Single,

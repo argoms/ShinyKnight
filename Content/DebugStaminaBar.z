@@ -1,15 +1,37 @@
 /*TEMPORARY*/
 class DebugStaminaBar : ZilchComponent
 {
-    var Bar : Cog;
+    [Property]
+    var StamBar : CogPath;
+    [Property]
+    var HealthBar : CogPath;
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
-        this.Bar = this.Owner.FindChildByName("TempStamBar");
+    
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        this.Bar.Transform.Scale = Real3(this.Owner.EntityHealth.Stamina / 100,0.1,1);
+        Console.Write(this.Owner.EntityHealth.Health);
+        Console.Write("|");
+        Console.Write(this.Owner.EntityHealth.MaxHealth);
+        Console.Write("\n");
+        if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
+        {
+            this.StamBar.Cog.Sprite.Visible = true;
+        } else {
+            this.StamBar.Cog.Sprite.Visible = false;
+        }
+        
+        this.StamBar.Cog.Transform.Scale = Real3(this.Owner.EntityHealth.Stamina as Real / this.Owner.EntityHealth.MaxStamina as Real
+                                                    , 0.1, 1);
+        this.StamBar.Cog.Transform.Translation = Real3(0.5 * (this.Owner.EntityHealth.Stamina as Real / this.Owner.EntityHealth.MaxStamina as Real) - 0.5
+                                                , 0, 5.1);
+                                                
+        this.HealthBar.Cog.Transform.Scale = Real3(this.Owner.EntityHealth.Health as Real / this.Owner.EntityHealth.MaxHealth as Real
+                                                    , 0.1, 1);
+        this.HealthBar.Cog.Transform.Translation = Real3(0.5 * (this.Owner.EntityHealth.Health as Real / this.Owner.EntityHealth.MaxHealth as Real) - 0.5
+                                                    , 0, 5);
     }
 }

@@ -21,7 +21,6 @@ class EnemyGate : ZilchComponent
         
         if((this.Zone.Cog.EnemyAggroZone.Wave > this.WaveNumber))
         {
-            Console.WriteLine("a");
             this.Owner.EntityHealth.TakeDamage(99999);
         }
     }

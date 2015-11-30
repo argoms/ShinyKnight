@@ -21,19 +21,25 @@ class TurretAI : ZilchComponent
     function OnLogicUpdate(event : UpdateEvent)
     {
          //Console.WriteLine(this.AggroZoneCog);
-        if(this.TargetEntity != null)
+        if(this.TargetEntity != null && this.Owner.EntityAttack.StaggerTimer <= 0)
         {
             this.CooldownTimer -= event.Dt;
+            var windupRatio = this.CooldownTimer / this.AttackSpeed;
+            this.TurretHead.Cog.Transform.Scale = Real3(0.5, 0.5, 1.5 - (windupRatio / 2));
             if(this.CooldownTimer < 0)
             {
                 this.Owner.EntityAttack.ShootProjectile(this.AimAtTarget());
                 this.CooldownTimer = this.AttackSpeed;
             }
            
+        } else {
+            this.CooldownTimer = this.AttackSpeed;
+            this.TurretHead.Cog.Transform.Scale = Real3(0.5, 0.5, 0.1);
         }
         if(this.AggroZoneCog != null)
         {
             this.TargetEntity = this.AggroZoneCog.EnemyAggroZone.Target;
+            
         }
     }
     

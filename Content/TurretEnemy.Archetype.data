@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [12.1424627, 46.9461594, 0],
+		Vec3 Translation = [0, 0, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -34,7 +34,7 @@ Cog =
 	{
 		int Health = 20,
 		bool Important = true,
-		int StaggerDamage = 2,
+		int StaggerDamage = 10,
 		float StaggerTimer = 1,
 		float StaggerTime = 1,
 		float MaxStamina = 50,
@@ -82,6 +82,7 @@ Cog =
 	},
 	EntityAttack = 
 	{
+		float BaseWindup = 0.100000001,
 		float Knockback = 5,
 		bool Friendly = false,
 		float MinRange = 0,
@@ -91,7 +92,7 @@ Cog =
 	{
 		CogPath TurretHead = 
 		{
-			string Path = "",
+			string Path = "Shooty",
 			bool ErrorOnResolveToNull = false,
 			bool ErrorOnPathCantCompute = false,
 			bool ErrorOnDirectLinkFail = false,
@@ -99,7 +100,7 @@ Cog =
 			bool UpdatePathOnCogChange = true,
 			bool UpdateCogOnInitialize = true,
 			bool ResolvedNullErrorOccurred = false,
-			uint ResolvedCog = 4294967293,
+			uint ResolvedCog = 2,
 			CogPathPreference PathPreference0 = CogRelative,
 			CogPathPreference PathPreference1 = SpaceRelative,
 			CogPathPreference PathPreference2 = Absolute,
@@ -116,7 +117,7 @@ Cog =
 			},
 			Named = 
 			{
-				string Name = "Cube",
+				string Name = "Shooty",
 			},
 			Transform = 
 			{

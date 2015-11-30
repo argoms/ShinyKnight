@@ -5,6 +5,13 @@ Material =
 		float SpecularExponent = 128,
 		float SpecularScalar = 1,
 	},
+	Transparency = 
+	{
+		MaterialBlendMode BlendMode = Additive,
+	},
+	Refractivity = 
+	{
+	},
 	TextureDiffuse = 
 	{
 		string DiffuseTexture = "560c86e62140ad16:Sword",

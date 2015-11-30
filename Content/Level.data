@@ -117,7 +117,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [7.28778124, 28.9081326, 13.626605],
+			Vec3 Translation = [4.8822298, 4.54630518, 13.6266041],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-008, 0, 1],
 		},
@@ -129,7 +129,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 10.0259113,
+			float Size = 20.189703,
 		},
 		EditorCameraController = 
 		{
@@ -137,7 +137,7 @@ Level =
 			float LookDistance = 13.6266041,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [7.28778124, 28.9081326, 4.87768432e-007],
+			Vec3 LookTarget = [4.8822298, 4.54630518, 3.8261868e-007],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -176,7 +176,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [12.1181536, 43.1943207, 0],
+			Vec3 Translation = [0, -0.5, 0],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},
@@ -9158,7 +9158,7 @@ Level =
 				},
 				Sprite = 
 				{
-					bool Visible = true,
+					bool Visible = false,
 					bool VisibilityCulling = true,
 					bool VisibilityEvents = true,
 					bool CastShadows = false,
@@ -9273,13 +9273,13 @@ Level =
 				},
 				Sprite = 
 				{
-					bool Visible = true,
+					bool Visible = false,
 					bool VisibilityCulling = true,
 					bool VisibilityEvents = true,
 					bool CastShadows = false,
 					Vec4 Color = [0.588235319, 0.329411775, 0.329411775, 1],
 					BlendMode BlendMode = None,
-					SpriteGeometryMode GeometryMode = ViewPlane,
+					SpriteGeometryMode GeometryMode = ZPlane,
 					string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
 					string SpriteSource = "5275aa4d802dd6dc:Square",
 					bool RenderMask = false,
@@ -9388,7 +9388,7 @@ Level =
 				},
 				Sprite = 
 				{
-					bool Visible = true,
+					bool Visible = false,
 					bool VisibilityCulling = true,
 					bool VisibilityEvents = true,
 					bool CastShadows = false,
@@ -9503,7 +9503,7 @@ Level =
 				},
 				Sprite = 
 				{
-					bool Visible = true,
+					bool Visible = false,
 					bool VisibilityCulling = true,
 					bool VisibilityEvents = true,
 					bool CastShadows = false,
@@ -9733,7 +9733,7 @@ Level =
 				},
 				Sprite = 
 				{
-					bool Visible = true,
+					bool Visible = false,
 					bool VisibilityCulling = true,
 					bool VisibilityEvents = true,
 					bool CastShadows = false,

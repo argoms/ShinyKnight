@@ -8,9 +8,19 @@ class EnemyAggroZone : ZilchComponent
     var NumEnemies : Integer;
     
     [Property]
-    var SecondWaveNum : Integer;
+    var SecondWaveNum : Integer = 0;
     
-    var Waves : Integer; //only works for 1 extra
+    [Property]
+    var ThirdWaveNum : Integer = 0;
+    
+    [Property]
+    var FourthWaveNum : Integer = 0;
+     
+     
+     //Can't use this because you can't make arrays properties anymore? D:
+    var WaveNumbers : Array[Integer] = new Array[Integer]();
+    
+    var Wave : Integer = 1; //only works for 1 extra
     function Initialize(init : CogInitializer)
     {
         //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -43,11 +53,19 @@ class EnemyAggroZone : ZilchComponent
     function EnemyKilled()
     {
         --this.NumEnemies;
-        Console.WriteLine(this.NumEnemies);
-        if(this.NumEnemies < 1 && this.Waves > 0)
+        if(this.NumEnemies < 1)
         {
-            --this.Waves;
-            this.NumEnemies = this.SecondWaveNum;
+            ++this.Wave;
+            if(this.Wave == 2)
+            {
+                this.NumEnemies = this.SecondWaveNum;
+            } else if(this.Wave == 3)
+            {
+                this.NumEnemies = this.ThirdWaveNum;
+            } else if(this.Wave == 4)
+            {
+                this.NumEnemies = this.FourthWaveNum;
+            }
         }
     }
 }

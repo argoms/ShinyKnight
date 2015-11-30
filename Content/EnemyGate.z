@@ -8,6 +8,9 @@ class EnemyGate : ZilchComponent
     
     [Property]
     var Zone : CogPath;
+    
+    [Property]
+    var WaveNumber : Integer = 1;
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -15,9 +18,10 @@ class EnemyGate : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        Console.WriteLine(this.Zone.Cog.EnemyAggroZone.NumEnemies);
-        if(this.Zone.Cog.EnemyAggroZone.NumEnemies < 1)
+        
+        if((this.Zone.Cog.EnemyAggroZone.Wave > this.WaveNumber))
         {
+            Console.WriteLine("a");
             this.Owner.EntityHealth.TakeDamage(99999);
         }
     }

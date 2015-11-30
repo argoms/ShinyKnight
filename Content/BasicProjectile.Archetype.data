@@ -63,6 +63,7 @@ Cog =
 		float LifeTime = 2,
 		int Damage = 4,
 		int NumTargetsHittable = 1,
+		bool KillOnTouchAnything = true,
 	},
 	ProjectileBehavior = 
 	{

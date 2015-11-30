@@ -9,6 +9,9 @@ class AttackTracerBehavior : ZilchComponent
     [Property]
     var NumTargetsHittable : Integer = 0; //maximum number of targets that the tracer can hit before it dies, 0 for infinite
     
+    [Property]
+    var KillOnTouchAnything : Boolean = false; //kill projectile if it hits walls instead of just enemies?
+    
     var Knockback : Real3 = Real3(0,0,0);
     function Initialize(init : CogInitializer)
     {
@@ -18,7 +21,7 @@ class AttackTracerBehavior : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        this.Owner.Collider.DebugDraw();
+        //this.Owner.Collider.DebugDraw();
         this.LifeTime -= event.Dt;
         if(this.LifeTime < 0)
         {
@@ -42,6 +45,11 @@ class AttackTracerBehavior : ZilchComponent
                     this.KillSelf();
                 }
             }
+        }
+        if(this.KillOnTouchAnything && event.OtherObject.EnemyAggroZone == null)
+        {
+            //Console.WriteLine(event.OtherObject);
+            this.KillSelf();
         }
     }
     

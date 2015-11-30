@@ -14,7 +14,7 @@ Cog =
 	},
 	Transform = 
 	{
-		Vec3 Translation = [0, 0, 0],
+		Vec3 Translation = [13, 44.5, 0],
 		Vec3 Scale = [1, 1, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
@@ -99,9 +99,11 @@ Cog =
 	},
 	EntityAttack = 
 	{
+		float BaseWindup = 0.100000001,
 		float Knockback = 5,
 		bool Friendly = true,
 		float MinRange = 1,
+		string Projectile = "",
 	},
 	EntityHealth = 
 	{

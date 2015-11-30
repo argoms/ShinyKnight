@@ -70,6 +70,10 @@ class PlayerControl : ZilchComponent
     [Property]
     var StunAnimation : Animation;
     
+    var CheckpointLocation : Real3;
+    
+    var CheckpointCog : Cog;
+    
     //internal flag to make sure that the walking animation is swapped to
     var ActionFinishedFlag : Boolean;
     

@@ -1,0 +1,34 @@
+class CheckpointBehavior : ZilchComponent
+{
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnHit);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function OnHit(event : CollisionEvent)
+    {
+        if(event.OtherObject.PlayerControl != null)
+        {
+            if(event.OtherObject.PlayerControl.CheckpointCog == this.Owner)
+            {
+                var text : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(-2,0,5));
+                text.SpriteText.Text = "Welcome back!!";
+                
+            } else {
+                var text : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(-1.5,0,5));
+                text.SpriteText.Text = "Checkpoint!";
+            }
+            
+            event.OtherObject.PlayerControl.CheckpointLocation = event.OtherObject.Transform.Translation;
+            event.OtherObject.EntityHealth.Health = event.OtherObject.EntityHealth.MaxHealth;
+            event.OtherObject.PlayerControl.CheckpointCog = this.Owner;
+
+            
+        }
+    }
+}

@@ -134,7 +134,13 @@ class EntityHealth : ZilchComponent
             //this.Important = false;
         }
         
-        this.Owner.Destroy();
+        if(this.Owner.PlayerControl != null)
+        {
+            this.Health = this.MaxHealth;
+            this.Owner.Transform.Translation = this.Owner.PlayerControl.CheckpointLocation;
+        } else {
+            this.Owner.Destroy();
+        }
     }
     
     function Stagger()

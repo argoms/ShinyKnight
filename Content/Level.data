@@ -117,7 +117,7 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [4.95809269, 6.68825436, 13.6266041],
+			Vec3 Translation = [6.10796738, 6.39785814, 13.6266041],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [-0, -1.09278471e-008, 0, 1],
 		},
@@ -129,7 +129,7 @@ Level =
 			float FieldOfView = 45,
 			float NearPlane = 0.5,
 			float FarPlane = 500,
-			float Size = 30.1194496,
+			float Size = 27.2532139,
 		},
 		EditorCameraController = 
 		{
@@ -137,7 +137,7 @@ Level =
 			float LookDistance = 13.6266041,
 			float VerticalAngle = 0,
 			float HorizontalAngle = 0,
-			Vec3 LookTarget = [4.95809269, 6.68825436, 3.85935095e-007],
+			Vec3 LookTarget = [6.10796738, 6.39785814, 4.36197524e-007],
 			float MoveSensitivity = 1,
 		},
 		EditorRenderer = 
@@ -15926,23 +15926,35 @@ Level =
 		},
 		Transform = 
 		{
-			Vec3 Translation = [10, 10, 12],
+			Vec3 Translation = [20.5, 13.5, 1],
 			Vec3 Scale = [1, 1, 1],
 			Quat Rotation = [0, 0, 0, 1],
 		},
 		Light = 
 		{
-			bool Visible = false,
+			bool Visible = true,
 			bool VisibilityCulling = true,
 			bool VisibilityEvents = true,
 			bool CastShadows = false,
 			LightType LightType = Directional,
-			Vec4 Color = [1, 1, 1, 1],
-			float Intensity = 0.0299999993,
-			float Range = 20,
+			Vec4 Color = [0.590000033, 0.525100052, 0.525100052, 1],
+			float Intensity = 0.099999994,
+			float Range = 100,
 			float Falloff = 0.099999994,
 			float Angle = 45,
 			float Size = 20,
+		},
+		Shadow = 
+		{
+			bool Active = true,
+			Quality Quality = HighQuality,
+			ShadowMapping ShadowMapping = Cascaded,
+			ShadowSoftening ShadowSoftening = Pcf3x3,
+			Vec4 Color = [0, 0, 0, 1],
+			float NormalOffsetBias = 0.0500000007,
+			float MinFrustumDepth = 1000,
+			float SplitPlaneDistribution = 0.800000012,
+			bool ShowCascadeColors = false,
 		},
 	},
 	Cog = 

@@ -3,6 +3,9 @@ Material =
 	Lambert = 
 	{
 	},
+	Refractivity = 
+	{
+	},
 	ColorDiffuse = 
 	{
 		Vec4 DiffuseColor = [0.545024991, 0.791004539, 0.845000029, 1],

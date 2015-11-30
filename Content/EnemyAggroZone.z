@@ -41,11 +41,17 @@ class EnemyAggroZone : ZilchComponent
         {
             if(event.OtherObject.ZombieAI != null)
             {
-                event.OtherObject.ZombieAI.AggroZoneCog = this.Owner;
+                if(event.OtherObject.ZombieAI.AggroZoneCog == null)
+                {
+                    event.OtherObject.ZombieAI.AggroZoneCog = this.Owner;
+                }
             } else if(event.OtherObject.TurretAI != null)
             {
-                event.OtherObject.RigidBody.DynamicState = RigidBodyDynamicState.Static;
-                event.OtherObject.TurretAI.AggroZoneCog = this.Owner;
+                if(event.OtherObject.TurretAI.AggroZoneCog == null)
+                {
+                    event.OtherObject.RigidBody.DynamicState = RigidBodyDynamicState.Static;
+                    event.OtherObject.TurretAI.AggroZoneCog = this.Owner;
+                }
             }
         }
     }

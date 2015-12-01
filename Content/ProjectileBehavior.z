@@ -1,8 +1,13 @@
+/*
+ProjectileBehavior
+@James/Argoms
+    Basic behavior for all projectiles. Doesn't really do much in the prototype.
+*/
 class ProjectileBehavior : ZilchComponent
 {
     
     [Property]
-    var Speed : Real;
+    var Speed : Real; //starting speed of projectile
     
     function Initialize(init : CogInitializer)
     {

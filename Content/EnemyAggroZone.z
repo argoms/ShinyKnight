@@ -1,47 +1,52 @@
-//for zones that trigger enemies within them to target player when they step in
-//here's the part where I should replace with event-based code in future for efficiency
+/*
+EnemyAggroZone
+@James/Argoms
+    For zones that trigger enemies within them to target player when they step in.
+*/
 class EnemyAggroZone : ZilchComponent
 {
-    var Target : Cog;
+    var Target : Cog; //target object (player upon entering region, null otherwise)
     
     [Property]
-    var NumEnemies : Integer;
+    var NumEnemies : Integer; //number of enemies in the first wave
     
     [Property]
-    var SecondWaveNum : Integer = 0;
+    var SecondWaveNum : Integer = 0; //number of enemies in the second wave
     
     [Property]
-    var ThirdWaveNum : Integer = 0;
+    var ThirdWaveNum : Integer = 0; //number of enemies in the third wave
     
     [Property]
-    var FourthWaveNum : Integer = 0;
+    var FourthWaveNum : Integer = 0; //number of enemies in the fourth wave
      
      
      //Can't use this because you can't make arrays properties anymore? D:
-    var WaveNumbers : Array[Integer] = new Array[Integer]();
+    //var WaveNumbers : Array[Integer] = new Array[Integer]();
     
-    var Wave : Integer = 1; //only works for 1 extra
+    var Wave : Integer = 1; //Wave counter, used for opening of gates after a wave is cleared
+    
     function Initialize(init : CogInitializer)
     {
-        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
         Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollision);
     }
-
-    function OnLogicUpdate(event : UpdateEvent)
-    {
-    }
     
+    /*
+    OnCollision
+        Enemies within the zone are assigned to it (and chase the zone's target).
+        The player will be assigned as the zone's target upon entering it.
+    */
     function OnCollision(event : CollisionEvent)
     {
-        if(event.OtherObject.Collider.CollisionGroup == CollisionGroup.FriendlyEntity)
+        if(event.OtherObject.Collider.CollisionGroup == CollisionGroup.FriendlyEntity) //make target player upon them entering the area
         {
             this.Target = event.OtherObject;
         }
-        if(event.OtherObject.Collider.CollisionGroup == CollisionGroup.EnemyEntity)
+        
+        if(event.OtherObject.Collider.CollisionGroup == CollisionGroup.EnemyEntity) //assign enemies within the area this object as their zone
         {
             if(event.OtherObject.ZombieAI != null)
             {
-                if(event.OtherObject.ZombieAI.AggroZoneCog == null)
+                if(event.OtherObject.ZombieAI.AggroZoneCog == null) 
                 {
                     event.OtherObject.ZombieAI.AggroZoneCog = this.Owner;
                 }
@@ -56,10 +61,15 @@ class EnemyAggroZone : ZilchComponent
         }
     }
     
+    /*
+    EnemyKilled
+        Called by enemies once their health reaches zero, modifies relevant wave/enemy counters.
+    */
     function EnemyKilled()
     {
         --this.NumEnemies;
-        if(this.NumEnemies < 1)
+        
+        if(this.NumEnemies < 1) //if a wave is clear, increase wave counter and change number of enemies active accordingly
         {
             ++this.Wave;
             if(this.Wave == 2)

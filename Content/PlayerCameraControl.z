@@ -1,7 +1,14 @@
+/*
+PlayerCameraControl
+@James/Argoms
+    Behavior for the ingame camera (hovers above player at a slight angle).
+*/
 class PlayerCameraControl : ZilchComponent
 {
-    var MyPlayer:Cog;
-    var MySprite:Cog;
+    var MyPlayer:Cog; //player cog
+    
+    //var MySprite:Cog;
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -10,7 +17,7 @@ class PlayerCameraControl : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
+        //constantly update camera location:
         this.Owner.Transform.Translation = this.MyPlayer.Transform.Translation + Real3(0,-5,20);
-        //this.Owner.Orientation.LookAtDirectionWithUp(Real3(0,0,1), Real3(0,1,0));
     }
 }

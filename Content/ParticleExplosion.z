@@ -1,7 +1,12 @@
+/*
+ParticleExplosion
+@James/Argoms
+    Behavior for particle explosions (particle systems that generate a bunch of particles once);
+*/
 class ParticleExplosion : ZilchComponent
 {
-    var Lifetime:Real = 2;
-    var InitialTimer:Real;
+    var Lifetime:Real = 2; //time before being destroyed
+    var InitialTimer:Real; //time before particles stop generating
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -10,12 +15,14 @@ class ParticleExplosion : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        if(this.Lifetime < this.InitialTimer)
+        //sets the particle emitter's emit rate to 0 after 1 frame
+        if(this.Lifetime < this.InitialTimer) 
         {
             this.Owner.SphericalParticleEmitter.EmitRate = 0;
         }
         this.Lifetime -= event.Dt;
         
+        //destroy self after lifetime seconds have passed
         if(this.Lifetime < 0)
         {
             this.Owner.Destroy();

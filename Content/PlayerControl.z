@@ -2,7 +2,7 @@
 PlayerControl
 @James/Argoms
     
-    Player-specific control script
+    Player-specific control script. Handles player input & animation for attacking, blocking, movement
 */
 class PlayerControl : ZilchComponent
 {
@@ -27,13 +27,13 @@ class PlayerControl : ZilchComponent
     
     //animations:
     [Property]
-    var WalkAnimation : Animation;
+    var WalkAnimation : Animation; 
     [Property]
-    var IdleAnimation  : Animation;
+    var IdleAnimation  : Animation; 
     [Property]
-    var BlockAnimation : Animation;
+    var BlockAnimation : Animation; 
     
-    
+    //animations for attack string 1:
     [Property]
     var Attack1_1Animation : Animation;
     [Property]
@@ -41,6 +41,7 @@ class PlayerControl : ZilchComponent
     [Property]
     var Attack1_3Animation : Animation;
     
+    //animations for attack string 2:
     [Property]
     var Attack2_1Animation : Animation;
     [Property]
@@ -48,6 +49,7 @@ class PlayerControl : ZilchComponent
     [Property]
     var Attack2_3Animation : Animation;
     
+    //damage values for corresponding attacks:
     [Property]
     var A1_1Damage : Integer;
     [Property]
@@ -62,25 +64,26 @@ class PlayerControl : ZilchComponent
     var A2_3Damage : Integer;
     
     [Property]
-    var MoveSpeed : Real;
+    var MoveSpeed : Real; //player movement speed while not blocking
     
     [Property]
-    var Torso : CogPath;
+    var Torso : CogPath; //player torso bone
     
     [Property]
-    var StunAnimation : Animation;
+    var StunAnimation : Animation; //player animation while staggered
     
-    var CheckpointLocation : Real3;
+    var CheckpointLocation : Real3; //location of last checkpoint touched
     
-    var CheckpointCog : Cog;
+    var CheckpointCog : Cog; //last checkpoint touched cog
     
     //internal flag to make sure that the walking animation is swapped to
     var ActionFinishedFlag : Boolean;
     
     //internal flag to determine when the player does an alternate attack
     var AltAttackFlag : Boolean;
+    
     [Property]
-    var AttackStaminaCost : Real = 20;
+    var AttackStaminaCost : Real = 5; //stamina cost per attack
     
     function Initialize(init : CogInitializer)
     {
@@ -88,11 +91,11 @@ class PlayerControl : ZilchComponent
         
         //set up player's camera
         var camera = this.Space.Create(Archetype.PlayerCamera);
-        camera.PlayerCameraControl.MySprite = this.Owner.FindChildByName("Sprite");
+        //camera.PlayerCameraControl.MySprite = this.Owner.FindChildByName("Sprite");
         camera.PlayerCameraControl.MyPlayer = this.Owner;
         this.LevelSettings.CameraViewport.Camera = camera;
         
-        //set up player's attacking:
+        //set up player's attacking behavior & animations:
         this.Weapon = this.Owner.EntityAttack;
         this.Weapon.Friendly = true;
         this.PlayerAnimation = this.Owner.FindChildByName("Mesh").FindChildByName("Mesh").SimpleAnimation;
@@ -102,38 +105,31 @@ class PlayerControl : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        //temporary for lack of hud:
-        //Console.WriteLine(this.Owner.EntityHealth.Stamina);
-        
-        
-        
         //update mouse state:
         this.UpdateMouseInput();
         
-        //update player translation:
+        
         if(!this.Weapon.Attacking && (this.Owner.EntityAttack.StaggerTimer <= 0))
         {
-            if(Zero.Mouse.IsButtonDown(MouseButtons.Left) && this.AttackStaminaCost <= this.Owner.EntityHealth.Stamina)
+            if(Zero.Mouse.IsButtonDown(MouseButtons.Left) && this.AttackStaminaCost <= this.Owner.EntityHealth.Stamina)//perform attack if mouse is down
             {
-                if(this.AltAttackFlag)
+                if(this.AltAttackFlag) //alt attack flag is enabled while mouse is not released
                 {
                     this.AltAttack();
-                } else {
+                } else { //do regular attack string otherwise
                     this.Attack();
                 }
+                //decrease stamina according to cost:
                 this.Owner.EntityHealth.Stamina -= this.AttackStaminaCost;
             } else {
-                
-                //this.EntityAnimationGraph.TimeScale = 1;
                 
                 //blocking:
                 if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
                 {
-                    this.StringProgress = 1;
-                    this.AltAttackFlag = true;
+                    this.StringProgress = 1; //reset string progres while blocking
+                    this.AltAttackFlag = true; //first attack from second string is used by attacking while blocking
                     
-                    //animation:
-                    //this.CrossBlendedPlay(this.BlockAnimation, 0.05, AnimPlayMode.PlayOnce, 1);
+                    //animation, only affects torso and above so legs can still move:
                     var blend = this.EntityAnimationGraph.CreateSelectiveNode();
                     var endAnim = this.EntityAnimationGraph.CreateBasicNode(this.BlockAnimation, AnimPlayMode.PlayOnce);
                     blend.Root = this.Torso.Cog;
@@ -145,7 +141,7 @@ class PlayerControl : ZilchComponent
                     
                     //internal:
                     this.Owner.EntityHealth.Blocking = true;
-                    this.Owner.EntityMovement.MoveSpeed = this.MoveSpeed * 0.5;
+                    this.Owner.EntityMovement.MoveSpeed = this.MoveSpeed * 0.5; //reduce movement speed while blocking
                     this.UpdateOrientation(event.Dt, true);
                     
                 } else {
@@ -156,7 +152,7 @@ class PlayerControl : ZilchComponent
                     
                 }
                 
-                //string counter reset:
+                //string counter reset after a given time period has passed:
                 this.StringCooldown -= event.Dt;
                 if(this.StringCooldown <= 0)
                 {
@@ -173,12 +169,13 @@ class PlayerControl : ZilchComponent
     UpdateOrientation
         handles the direction that the player is facing in
         changemovement determienes whether or not the player can actually move
+        dt is delta time
     */
     function UpdateOrientation(dt : Real, changeMovement : Boolean)
     {
         if(changeMovement)
         {
-            if(Zero.Mouse.RawMovement != Real2(0,0))
+            if(Zero.Mouse.RawMovement != Real2(0,0)) //look towards mouse if mouse was moved
             {
                 this.FollowMouse = true;
                 if(this.Owner.AutoOrientToVelocity != null)
@@ -186,21 +183,21 @@ class PlayerControl : ZilchComponent
                     this.Owner.RemoveComponentByName("AutoOrientToVelocity");
                 }
             }
-            if(this.UpdateMovement(dt))
+            
+            if(this.UpdateMovement(dt)) //auto orient to velocity if the mouse hasn't been moved
             {
                 
                 this.FollowMouse =false;
-                //Console.WriteLine("potato");
                 if(this.Owner.AutoOrientToVelocity == null)
                 {
                     
                     this.Owner.AddComponentByName("AutoOrientToVelocity");
                 }
             } 
+            
             if(this.FollowMouse)
             {
                 this.AimAtMouse();
-                //Console.WriteLine(this.Owner.Orientation.WorldForward);
             }
         } else {
             this.AimAtMouse();
@@ -213,7 +210,7 @@ class PlayerControl : ZilchComponent
     */
     function UpdateMouseInput()
     {
-        
+        //left mouse:
         if(!this.MouseWasDown)
         {
             if(Zero.Mouse.IsButtonDown(MouseButtons.Left))
@@ -229,6 +226,7 @@ class PlayerControl : ZilchComponent
             }
         }
         
+        //right mouse:
         if(!this.RightMouseWasDown)
         {
             if(Zero.Mouse.IsButtonDown(MouseButtons.Right))
@@ -247,7 +245,7 @@ class PlayerControl : ZilchComponent
     
     /*AimAtMouse
         Points player towards mouse
-        returns direction
+        returns direction as real3
     */
     function AimAtMouse() : Real3
     {
@@ -257,6 +255,7 @@ class PlayerControl : ZilchComponent
         this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
         return aim;
     }
+    
     /*
     UpdateMovement
         calculates movement vector based on key input, applies to EntityMovement
@@ -265,6 +264,7 @@ class PlayerControl : ZilchComponent
     function UpdateMovement(dt : Real) : Boolean
     {
         var movement:Real3 = Real3(0, 0, 0); //gets movement direction
+        //update movement:
         if(Zero.Keyboard.KeyIsDown(Keys.A))
         {
             movement += Real3 (-1, 0, 0);
@@ -281,6 +281,8 @@ class PlayerControl : ZilchComponent
         {
             movement += Real3 (0, -1, 0);
         }
+        
+        //move player after normalizing movement vector:
         Math.Normalize(movement);
         this.Owner.EntityMovement.Move(movement, dt);
         
@@ -310,9 +312,8 @@ class PlayerControl : ZilchComponent
                 //this.PlayerAnimation.Animation = this.IdleAnimation;
             }
         }
-        //this.PlayerAnimation.Animation = Animation.KnightIdle;
         
-        return movement != Real3(0,0,0) && wasJustStill;// && this.MovementStopTest != Real3(0,0,0);
+        return movement != Real3(0,0,0) && wasJustStill;
         
     }
     
@@ -325,7 +326,7 @@ class PlayerControl : ZilchComponent
         
         var aim : Real3 = this.AimAtMouse();
         
-        this.PlayerAnimation.Animation = null;
+        //do attack according to StringProgress (1 = do attack 1 in string, 2 = do attack 2 etc.)
         if(this.StringProgress == 1)
         {
             //forward step:
@@ -338,12 +339,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_1;
             this.Weapon.Knockback = 3;
             
-            /*
-            //animation play DEPRECATED:
-            this.PlayerAnimation.PlaySingle(this.Attack1_1Animation, AnimPlayMode.PlayOnce);
-            this.EntityAnimationGraph.TimeScale = 1.25;
-            */
-            
+            //play animation:
             this.CrossBlendedPlay(this.Attack1_1Animation, 0.1, AnimPlayMode.PlayOnce, 1.25);
         } else if(this.StringProgress == 2)
         {
@@ -357,11 +353,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.Damage = this.A1_2Damage;
             this.Weapon.Knockback = 3;
             
-            /*
-            //animation play:
-            this.PlayerAnimation.PlaySingle(this.Attack1_2Animation, AnimPlayMode.PlayOnce);
-            this.EntityAnimationGraph.TimeScale = 1.25;
-            */
+            //play animation:
             this.CrossBlendedPlay(this.Attack1_2Animation, 0.1, AnimPlayMode.PlayOnce, 1.25);
         } else if(this.StringProgress == 3)
         {
@@ -373,33 +365,33 @@ class PlayerControl : ZilchComponent
             this.Weapon.BaseWindup = 0.1;
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer1_3;
             this.Weapon.Damage = this.A1_3Damage;
+            
             this.Weapon.Knockback = 15;
-            /*
-            //animation play:
-            this.PlayerAnimation.PlaySingle(this.Attack1_3Animation, AnimPlayMode.PlayOnce);
-            this.EntityAnimationGraph.TimeScale = 1;*/
+            //play animation:
             this.CrossBlendedPlay(this.Attack1_3Animation, 0.1, AnimPlayMode.PlayOnce, 1.25);
         }
         
+        //attacks with EntityAttack component
         this.Weapon.Attack(aim);
         
+        //increases string counter
         this.StringProgress += 1;
         if(this.StringProgress > 3)
         {
             this.StringProgress = 1;
         }
-        //this.PlayerAnimation.PlayMode = AnimPlayMode.PlayOnce;
     }
     
     /*
     AltAttack
         Player's alternate attack combo
+        Used when the player holds down mouse 1 instead of clicking per attack
     */
     function AltAttack()
     {
         var aim : Real3= this.AimAtMouse();
         
-        this.PlayerAnimation.Animation = null;
+        //do attack according to StringProgress (1 = do attack 1 in string, 2 = do attack 2 etc.)
         if(this.StringProgress == 1)
         {
             //forward step:
@@ -412,6 +404,7 @@ class PlayerControl : ZilchComponent
             this.Weapon.AttackCollision = MultiConvexMesh.KATracer2_1;
             this.Weapon.Knockback = 2;
             
+            //play animation:
             this.CrossBlendedPlay(this.Attack2_1Animation, 0.1, AnimPlayMode.PlayOnce, 1.5);
         } else if(this.StringProgress == 2)
         {
@@ -425,11 +418,11 @@ class PlayerControl : ZilchComponent
             this.Weapon.Damage = this.A2_2Damage;
             this.Weapon.Knockback = 2;
             
+            //play animation:
             this.CrossBlendedPlay(this.Attack2_2Animation, 0.1, AnimPlayMode.PlayOnce, 1.5);
         } else if(this.StringProgress == 3)
         {
             //forward step:
-            //this.Owner.RigidBody.ApplyLinearVelocity(aim*50);
             this.Owner.EntityDelayedStep.AddStep(0.1, aim*64);
             
             //configure weapon:
@@ -439,11 +432,13 @@ class PlayerControl : ZilchComponent
             this.Weapon.Damage = this.A2_3Damage;
             this.Weapon.Knockback = 5;
             
+            //play animation:
             this.CrossBlendedPlay(this.Attack2_3Animation, 0.25, AnimPlayMode.PlayOnce, 1.25);
         }
         
         this.Weapon.Attack(aim);
         
+        //increase attack string counter:
         this.StringProgress += 1;
         if(this.StringProgress > 3)
         {
@@ -452,6 +447,10 @@ class PlayerControl : ZilchComponent
         //this.PlayerAnimation.PlayMode = AnimPlayMode.PlayOnce;
     }
     
+    /*
+    OnMousePressed  
+        Called when left mouse is pressed
+    */
     function OnMousePressed()
     {
         if(!this.Weapon.Attacking)
@@ -471,27 +470,51 @@ class PlayerControl : ZilchComponent
         }
     }
     
+    /*
+    OnMouseReleased
+        Called when left mouse is released
+    */
     function OnMouseReleased()
     {
+        //releasing means that your next attack will be a regular attack instead of an alternate string
         this.AltAttackFlag = false;
     }
     
+    /*
+    OnRightMouseReleased
+        Called when right mouse is released
+    */
     function OnRightMouseReleased()
     {
         this.ActionFinishedFlag = true;
        
     }
     
+    /*
+    OnRightMousePressed
+        Called when right mouse is pressed
+    */
     function OnRightMousePressed()
     {
     }
     
+    /*
+    CrossBlendedPlay
+        Plays a cross blended animation starting with the current animation and ending with the given animation
+        toAnimation - end animation to change to
+        duration    - time that the animation blend takes
+        endPlayMode - playmode of the final animation
+        timeScale   - timescale of the final animation
+        
+        returns the player's new animation node
+    */
     function CrossBlendedPlay(toAnimation : Animation, duration : Real, endPlayMode : AnimPlayMode, timeScale : Real) : AnimationNode
     {
+        //create a basic node for the final animation
         var endAnim = this.EntityAnimationGraph.CreateBasicNode(toAnimation, endPlayMode);
         endAnim.CollapseToPoseOnFinish = true;
         
-        
+        //create a cross blend node linking the current and final animation
         var blend = this.EntityAnimationGraph.CreateCrossBlendNode();
         blend.From = this.EntityAnimationGraph.ActiveNode;
         blend.To = endAnim;
@@ -499,10 +522,11 @@ class PlayerControl : ZilchComponent
         blend.Duration = duration;
         
         blend.TimeScale = timeScale;
-        //this.EntityAnimationGraph.ActiveNode.TimeScale = timeScale;
-        //this.EntityAnimationGraph.ActiveNode = blend;
+        
+        //set the current animation node to the newly created node & set timescale:
         this.EntityAnimationGraph.ActiveNode = blend;
         this.EntityAnimationGraph.TimeScale = timeScale;
+        
         return blend;
     }
 }

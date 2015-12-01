@@ -1,19 +1,25 @@
+/*
+CheckpointBehavior
+@James/Argoms
+    Component attached to checkpoints. Checkpoints save the player location and fully heal the player on collision, and the player
+    is teleported to the most recently touched checkpoint on death.
+*/
 class CheckpointBehavior : ZilchComponent
 {
     function Initialize(init : CogInitializer)
     {
-        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
         Zero.Connect(this.Owner, Events.CollisionStarted, this.OnHit);
     }
-
-    function OnLogicUpdate(event : UpdateEvent)
-    {
-    }
     
+    /*
+    OnHit
+        Called when something collides with the checkpoint.
+    */
     function OnHit(event : CollisionEvent)
     {
-        if(event.OtherObject.PlayerControl != null)
+        if(event.OtherObject.PlayerControl != null) //checks if the other object is a player
         {
+            //create relevant text popup depending on if this is the first time the player touched this checkpoint:
             if(event.OtherObject.PlayerControl.CheckpointCog == this.Owner)
             {
                 var text : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(-2,0,5));
@@ -24,6 +30,7 @@ class CheckpointBehavior : ZilchComponent
                 text.SpriteText.Text = "Checkpoint!";
             }
             
+            //set player internal checkpoint info & heal player:
             event.OtherObject.PlayerControl.CheckpointLocation = event.OtherObject.Transform.Translation;
             event.OtherObject.EntityHealth.Health = event.OtherObject.EntityHealth.MaxHealth;
             event.OtherObject.PlayerControl.CheckpointCog = this.Owner;

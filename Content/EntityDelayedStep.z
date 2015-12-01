@@ -1,14 +1,18 @@
 /*
 EntityDelayedStep
-
-    functionality for having an entity move after a given amount of time
-    generally used for attacks to sync movement with the step instead of have it at the start of the animation
+@James/Argoms
+    Functionality for having an entity move after a given amount of time.
+    Generally used for attacks to sync movement with the step instead of have it at the start of the animation
 */
 class EntityDelayedStep : ZilchComponent
 {
-    var Timer : Real;
-    var Active : Boolean;
-    var Force : Real3;
+    [Dependency] //requires EntityAttack to function
+    var EntityAttack : EntityAttack;
+    
+    var Timer : Real; //delay before step is triggered
+    var Active : Boolean; //whether or not the component should step
+    var Force : Real3; //step force (well, velocity)
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -16,20 +20,27 @@ class EntityDelayedStep : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        if(this.Active)
+        if(this.Active) //only works if active
         {
             this.Timer -= event.Dt;
             if(this.Timer <= 0)
             {
+                //apply velocity only if the entity is not staggered
                 if(this.Owner.EntityAttack.StaggerTimer <= 0)
                 {
                     this.Owner.RigidBody.ApplyLinearVelocity(this.Force);
                 }
+                
+                //after stepping, set active to false again:
                 this.Active = false;
             }
         }
     }
     
+    /*
+    AddStep
+        Called by other components. This component does nothing until told to by this function.
+    */
     function AddStep(delay : Real, force : Real3)
     {
         this.Timer = delay;

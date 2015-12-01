@@ -1,27 +1,33 @@
+/*
+HazardBehavior
+@James/Argoms
+    Behavior for hazards that alternate between being dangerous and safe to walk over, generating particles to visually represent these states.
+*/
 class HazardBehavior : ZilchComponent
 {
     [Property]
-    var ActiveTime : Real = 1;
+    var ActiveTime : Real = 1; //amount of time that the hazard stays active before going dormant
     
     [Property]
-    var CoolDown : Real = 1;
+    var CoolDown : Real = 1; //amount of time that the hazard stays dormant before going active
     
     [Property]
-    var Damage : Integer = 2;
+    var Damage : Integer = 2; //amount of damage that the hazard does per tick
     
-    var Timer : Real = 0;
-    var Active : Boolean = false;
+    var Timer : Real = 0; //internal timer
     
-    [Property]
-    var Enabled : Boolean = true;
+    var Active : Boolean = false; //whether the hazard is active or dormant
     
     [Property]
-    var EmitRateMultiplier : Real = 1; //useful if you want to scale up the space
+    var Enabled : Boolean = true; //whether or not the hazard is active at all (including counting down while dormant)
     
     [Property]
-    var AttackCooldown : Real = 0.4;
+    var EmitRateMultiplier : Real = 1; //multiplies the number of particles generated, useful if you want to scale up the space, 1 is for a 1x1 sized box
     
-    var InternalCooldown : Real = 0;
+    [Property]
+    var AttackCooldown : Real = 0.4; //time between damage ticks of hazard
+    
+    var InternalCooldown : Real = 0; //internal timer
     
     function Initialize(init : CogInitializer)
     {
@@ -33,25 +39,29 @@ class HazardBehavior : ZilchComponent
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        if(this.Enabled)
+        if(this.Enabled) //if enabled is false, hazard does nothing
         {
             this.Timer -= event.Dt;
+            
             if(this.Timer <= 0)
             {
-                this.Active = !this.Active;
+                this.Active = !this.Active; //inverts active state once timer reaches 0
                 if(this.Active)
                 {
+                    //more particle generation when activated
                     this.Owner.BoxParticleEmitter.EmitRate = 100 * this.EmitRateMultiplier;
                     this.Owner.EntityAttack.TracerLifetime = this.AttackCooldown;
-                    
                     this.Timer = this.ActiveTime;
                 } else {
-                    this.Owner.BoxParticleEmitter.EmitRate = 1 * this.EmitRateMultiplier;
+                    //less particle generation when dormant
+                    this.Owner.BoxParticleEmitter.EmitRate = (this.CoolDown - this.Timer) * this.EmitRateMultiplier *  (this.CoolDown - this.Timer);
                     this.Timer = this.CoolDown;
                 }
             }
+            
             if(this.Active)
             {
+                //constantly create new damage area at <InternalCooldown> second intervals
                 this.InternalCooldown -= event.Dt;
                 if(this.InternalCooldown < 0.01)
                 {
@@ -59,6 +69,7 @@ class HazardBehavior : ZilchComponent
                     this.Owner.EntityAttack.Attack(Real3(0,0,0));
                 }
             } else {
+                //if not active, lower particle generation
                 this.Owner.BoxParticleEmitter.EmitRate = (this.CoolDown - this.Timer) * this.EmitRateMultiplier *  (this.CoolDown - this.Timer);
             }
         } else {

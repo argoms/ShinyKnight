@@ -1,15 +1,13 @@
 Material = 
 {
-	Phong = 
+	Lambert = 
 	{
-		float SpecularExponent = 16,
-		float SpecularScalar = 0.25,
 	},
-	TextureDiffuse = 
+	Refractivity = 
 	{
-		string DiffuseTexture = "4fab71e8bcb7a8ce:DefaultTexture",
-		Vec2 DiffuseScroll = [0, 0],
-		Vec2 DiffuseTiling = [1, 1],
-		Vec2 DiffuseOffset = [0, 0],
+	},
+	ColorDiffuse = 
+	{
+		Vec4 DiffuseColor = [0.894999981, 0.51910001, 0.51910001, 1],
 	},
 },

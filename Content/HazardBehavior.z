@@ -1,22 +1,37 @@
+/*
+HazardBehavior
+@James/Argoms
+    Behavior for hazards that alternate between being dangerous and safe to walk over, generating particles to visually represent these states.
+*/
 class HazardBehavior : ZilchComponent
 {
+    //Sound to make when active
     [Property]
-    var ActiveTime : Real = 1;
+    var SoundEffect : SoundCue = SoundCue.Fire_hazards;
     
     [Property]
-    var CoolDown : Real = 1;
+    var ActiveTime : Real = 1; //amount of time that the hazard stays active before going dormant
     
     [Property]
-    var Damage : Integer = 2;
-    
-    var Timer : Real = 0;
-    var Active : Boolean = false;
+    var CoolDown : Real = 1; //amount of time that the hazard stays dormant before going active
     
     [Property]
-    var Enabled : Boolean = true;
+    var Damage : Integer = 2; //amount of damage that the hazard does per tick
+    
+    var Timer : Real = 0; //internal timer
+    
+    var Active : Boolean = false; //whether the hazard is active or dormant
     
     [Property]
-    var EmitRateMultiplier : Real = 1; //useful if you want to scale up the space
+    var Enabled : Boolean = true; //whether or not the hazard is active at all (including counting down while dormant)
+    
+    [Property]
+    var EmitRateMultiplier : Real = 1; //multiplies the number of particles generated, useful if you want to scale up the space, 1 is for a 1x1 sized box
+    
+    [Property]
+    var AttackCooldown : Real = 0.4; //time between damage ticks of hazard
+    
+    var InternalCooldown : Real = 0; //internal timer
     
     function Initialize(init : CogInitializer)
     {
@@ -24,29 +39,52 @@ class HazardBehavior : ZilchComponent
         this.Owner.EntityAttack.AttackCollision = MultiConvexMesh.Square;
         this.Owner.EntityAttack.MinRange = 0;
         this.Owner.EntityAttack.Damage = this.Damage;
+        
+        //If this doesn't have a sound emitter, attach one
+        if (this.Owner.SoundEmitWrapper == null) this.Owner.AddComponentByName("SoundEmitWrapper");
+        this.Owner.SoundEmitWrapper.Positional = true;
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        if(this.Enabled)
+        if(this.Enabled) //if enabled is false, hazard does nothing
         {
             this.Timer -= event.Dt;
+            
             if(this.Timer <= 0)
             {
-                this.Active = !this.Active;
+                this.Active = !this.Active; //inverts active state once timer reaches 0
                 if(this.Active)
                 {
+                    //more particle generation when activated
                     this.Owner.BoxParticleEmitter.EmitRate = 100 * this.EmitRateMultiplier;
-                    this.Owner.EntityAttack.TracerLifetime = this.ActiveTime;
-                    this.Owner.EntityAttack.Attack(Real3(0,0,0));
+                    this.Owner.EntityAttack.TracerLifetime = this.AttackCooldown;
                     this.Timer = this.ActiveTime;
+                    
+                    //Play the sound effect
+                    this.Owner.SoundEmitWrapper.PlayCue(this.SoundEffect);
                 } else {
-                    this.Owner.BoxParticleEmitter.EmitRate = 5 * this.EmitRateMultiplier;
+                    //less particle generation when dormant
+                    this.Owner.BoxParticleEmitter.EmitRate = (this.CoolDown - this.Timer) * this.EmitRateMultiplier *  (this.CoolDown - this.Timer);
                     this.Timer = this.CoolDown;
                 }
             }
+            
+            if(this.Active)
+            {
+                //constantly create new damage area at <InternalCooldown> second intervals
+                this.InternalCooldown -= event.Dt;
+                if(this.InternalCooldown < 0.01)
+                {
+                    this.InternalCooldown = this.AttackCooldown;
+                    this.Owner.EntityAttack.Attack(Real3(0,0,0));
+                }
+            } else {
+                //if not active, lower particle generation
+                this.Owner.BoxParticleEmitter.EmitRate = (this.CoolDown - this.Timer) * this.EmitRateMultiplier *  (this.CoolDown - this.Timer);
+            }
         } else {
-            this.Owner.BoxParticleEmitter.EmitRate = 5;
+            this.Owner.BoxParticleEmitter.EmitRate = 1;
             this.Timer = this.CoolDown;
         }
     }

@@ -1,0 +1,50 @@
+/*
+CheckpointBehavior
+@James/Argoms
+    Component attached to checkpoints. Checkpoints save the player location and fully heal the player on collision, and the player
+    is teleported to the most recently touched checkpoint on death.
+*/
+class CheckpointBehavior : ZilchComponent
+{
+    //Sound to play when activated
+    [Property]
+    var SoundEffect : SoundCue = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnHit);
+        
+        //If there isn't a sound emitter, attach one
+        if (this.Owner.SoundEmitWrapper == null) this.Owner.AddComponentByName("SoundEmitWrapper");
+        this.Owner.SoundEmitWrapper.Positional = true;
+    }
+    
+    /*
+    OnHit
+        Called when something collides with the checkpoint.
+    */
+    function OnHit(event : CollisionEvent)
+    {
+        if(event.OtherObject.PlayerControl != null) //checks if the other object is a player
+        {
+            //create relevant text popup depending on if this is the first time the player touched this checkpoint:
+            if(event.OtherObject.PlayerControl.CheckpointCog == this.Owner)
+            {
+                var text : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(-2,0,5));
+                text.SpriteText.Text = "Welcome back!!";
+                
+            } else {
+                var text : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(-1.5,0,5));
+                text.SpriteText.Text = "Checkpoint!";
+            }
+            
+            //set player internal checkpoint info & heal player:
+            event.OtherObject.PlayerControl.CheckpointLocation = event.OtherObject.Transform.Translation;
+            event.OtherObject.EntityHealth.Health = event.OtherObject.EntityHealth.MaxHealth;
+            event.OtherObject.PlayerControl.CheckpointCog = this.Owner;
+
+            //Play checkpoint sound, if applicable
+            if (this.SoundEffect != null) this.Owner.SoundEmitWrapper.PlayCue(this.SoundEffect);
+        }
+    }
+}

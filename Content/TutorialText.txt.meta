@@ -1,0 +1,15 @@
+TextContent = 
+{
+	TextBuilder = 
+	{
+		string Name = "TutorialText",
+		uint64 ResourceId = 56aad806917d4c38,
+	},
+	ContentTags = 
+	{
+		Array Tags = 
+		[
+			"ShinyKnight_title",
+		],
+	},
+},

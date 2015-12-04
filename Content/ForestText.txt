@@ -1,0 +1,4 @@
+The forest is too dark ahead.
+You cannot go any further at this time.
+
+Press R to return to title screen.

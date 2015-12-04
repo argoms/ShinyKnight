@@ -1,0 +1,35 @@
+/*
+EnemyGate
+@James/Argoms
+    Behavior for gates that open once all enemies in an area are killed.
+   
+    
+*/
+class EnemyGate : ZilchComponent
+{
+    
+    [Property]
+    var Zone : CogPath; //cogpath to the zone object this gate is attached to
+    
+    [Property]
+    var WaveNumber : Integer = 1; //after the zone completes this wave, the gate opens
+    
+    //Requires EntityHealth to function 
+    //(the gate is basically an attackable object with massive amounts of health that kills itself after a given cue).
+    [Dependency] 
+    var EntityHealth : EntityHealth; 
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        
+        if((this.Zone.Cog.EnemyAggroZone.Wave > this.WaveNumber)) //if the wave is past, kill self (by doing a ton of damage)
+        {
+            this.Owner.EntityHealth.TakeDamage(99999);
+        }
+    }
+}

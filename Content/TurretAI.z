@@ -1,0 +1,78 @@
+/*
+TurretAI
+@James/Argoms
+    Handles turret enemy specific behavior. Includes attacking & visual feedback of the turret charging up.
+*/
+class TurretAI : ZilchComponent
+{
+    //Sound made when shooting
+    [Property]
+    var ShootSound : SoundCue = SoundCue.DefaultCue;
+    
+    
+    [Property]
+    var TurretHead : CogPath; //path to the head of the turret
+    
+    var TargetEntity : Cog; //target of the turret (player or null)
+    
+    [Property]
+    var AttackSpeed : Real; //attack speed of the turret
+    
+    var CooldownTimer : Real = 0; //internal timer for the delay between attacks
+    
+    var AggroZoneCog : Cog; //cog containing EnemyAggroZone, the designated zone for this enemy
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        //If there isn't a sound emitter, attach one
+        if (this.Owner.SoundEmitWrapper == null) this.Owner.AddComponentByName("SoundEmitWrapper");
+        this.Owner.SoundEmitWrapper.Positional = true;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+         
+        if(this.TargetEntity != null && this.Owner.EntityAttack.StaggerTimer <= 0) //if not staggered and a target exists...
+        {
+            //reduce dooldown:
+            this.CooldownTimer -= event.Dt;
+            
+            //change turret size to reflect progress towards full charge:
+            var windupRatio = this.CooldownTimer / this.AttackSpeed;
+            this.TurretHead.Cog.Transform.Scale = Real3(0.5, 0.5, 1.5 - (windupRatio / 2));
+            
+            if(this.CooldownTimer < 0) //attack once cooldown has passed
+            {
+                this.Owner.EntityAttack.ShootProjectile(this.AimAtTarget());
+                this.CooldownTimer = this.AttackSpeed;
+                
+                this.Owner.SoundEmitWrapper.PlayCue(this.ShootSound);
+            }
+           
+        } else {
+            //if stunned (or idle), adjust turret scale to be smaller
+            this.CooldownTimer = this.AttackSpeed;
+            this.TurretHead.Cog.Transform.Scale = Real3(0.5, 0.5, 0.1);
+        }
+        
+        if(this.AggroZoneCog != null) //set target if the zone has one
+        {
+            this.TargetEntity = this.AggroZoneCog.EnemyAggroZone.Target;
+            
+        }
+    }
+    
+    /*
+    AimAtTarget
+        Looks towards TargetEntity and returns the direction vector from doing so.
+    */
+    function AimAtTarget() : Real3
+    {
+        var targetLocation:Real3 = this.TargetEntity.Transform.Translation;
+        var aim:Real3 = Math.Normalize(Real3(targetLocation.X-this.Owner.Transform.Translation.X, targetLocation.Y-this.Owner.Transform.Translation.Y, 0));
+        this.Owner.Orientation.LookAtDirectionWithUp(aim, Real3(0,0,1));
+        return aim;
+    }
+}

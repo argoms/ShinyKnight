@@ -1,0 +1,15 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "SoundEmitWrapper",
+		uint64 ResourceId = 56a92850510961f7,
+	},
+	ContentTags = 
+	{
+		Array Tags = 
+		[
+			"ShinyKnight_title",
+		],
+	},
+},

@@ -1,0 +1,15 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "TitleStuff",
+		uint64 ResourceId = 56aa01fd6c6835e6,
+	},
+	ContentTags = 
+	{
+		Array Tags = 
+		[
+			"ShinyKnight_title",
+		],
+	},
+},

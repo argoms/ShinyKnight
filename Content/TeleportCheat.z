@@ -1,0 +1,34 @@
+//Matt Chasengnou
+//
+//class : TeleportCheat
+//descr : Allows player to skip to specific position in level.
+class TeleportCheat : ZilchComponent
+{
+    //The key to press
+    [Property]
+    var Button : Keys;
+    
+    //The position to teleport to
+    [Property]
+    var Position : Real3;
+    
+    //The player's transform
+    var PlayerTransform : Transform;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        //Get the player's transform
+        this.PlayerTransform = this.Space.FindObjectByName("Player").Transform;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        //If the key is pressed, teleport the player
+        if (Zero.Keyboard.KeyIsPressed(this.Button))
+        {
+            this.PlayerTransform.WorldTranslation = this.Position;
+        }
+    }
+}

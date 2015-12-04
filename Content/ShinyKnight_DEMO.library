@@ -1,0 +1,7 @@
+ContentLibrary = 
+{
+	string Name = "ShinyKnight_DEMO",
+	uint64 LibraryId = 56a87d50fc79745b,
+	string SourceControlType = "",
+	bool ReadOnly = false,
+},

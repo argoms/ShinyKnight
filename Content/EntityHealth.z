@@ -1,16 +1,20 @@
 /*
-    EnemyHealth
-    @James/Argoms
+EnemyHealth
+@James/Argoms
     
-    Component managing health points of enemies. Shamelesly stolen from dave.
+    Component managing health, stamina, and stagger information of entities.
 */
 class EntityHealth : ZilchComponent
 {
+    
     [Property]
     var Health:Integer = 5; //kills object if health hits 0
     
+    var MaxHealth : Integer; //maximum health of entity
+    
     var RandomGenerator:Random = Random();//random number generator
     
+    [Property]
     var Important:Boolean = true; //whether or not this enemy adjusts the level's enemy counter
     
     var DamageColor : Real4 = Real4(1,1,1,1); //color of text that pops up when entity is damaged, default white
@@ -28,27 +32,42 @@ class EntityHealth : ZilchComponent
     
     var STCounter : Real = 0; //internal counter for stagger timing
     
-    var Blocking : Boolean;
+    var Blocking : Boolean; //whether or not the entity is currently blocking
     
     [Property]
-    var MaxStamina : Real= 50;
+    var MaxStamina : Real = 50; //maximum stamina 
     
     [Property]
-    var StaminaRegenRate : Real = 20;
+    var StaminaRegenRate : Real = 20; //rate that stamina regens in units per second
     
-    var Stamina : Real = 0;
+    [Property]
+    var ShowDamageNumbers : Boolean = true; //whether or not hitting this entity creates damage text
+    
+    [Property]
+    var CanStagger : Boolean = true; //whether or not this entity can be staggered
+    
+    
+    var Stamina : Real = 0; //current stamina
+    
     function Initialize(init : CogInitializer)
     {
         //this.Health *= this.LevelSettings.LevelBehavior.Difficulty;
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        this.MaxHealth = this.Health;
+        
+        //We need a hurt sound maker. If we don't have one, attach it now.
+        if (this.Owner.MakeHurtSounds == null) this.Owner.AddComponentByName("MakeHurtSounds");
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
         
-        if(this.SDCounter > 0)
+        if(this.SDCounter > 0) //if entity has taken damage recently, store how much damage is taken
         {
+            //increase timer
             this.STCounter += event.Dt;
+            
+            //once timer reaches StaggerTimer, the damage is reset
             if(this.STCounter > this.StaggerTimer)
             {
                 this.SDCounter = 0;
@@ -56,6 +75,7 @@ class EntityHealth : ZilchComponent
             }
         }
         
+        //constantly regenrate stamina:
         if(this.Stamina < this.MaxStamina)
         {
             this.Stamina += (event.Dt * this.StaminaRegenRate);
@@ -66,61 +86,110 @@ class EntityHealth : ZilchComponent
         }
     }
     
-    function TakeDamage(damage : Integer) //called when taking damage
+    /*
+    TakeDamage
+        Called when taking damage
+    */
+    function TakeDamage(damage : Integer) 
     {
-        if(this.Owner.AutoOrientToVelocity != null)
+        
+        if(this.Blocking) //if blocking, no damage is done
         {
-            //this.Owner.RemoveComponentByName("AutoOrientToVelocity");
-        }
-        if(this.Blocking)
-        {
-            this.Stamina -= damage * 8;
+            this.Stamina -= damage * 8; //decrease stamina according to damagea
             damage = 0;
             
         }
+        
+        //Else if not blocking, then make hurt sound
+        else this.Owner.MakeHurtSounds.MakeHurtSound();
+        
         //actually subtract health:
         this.Health -= damage;
-        this.SDCounter += 1;
-        if(this.SDCounter >= this.StaggerDamage)
+        this.SDCounter += damage;
+        
+        if(this.SDCounter >= this.StaggerDamage || this.Stamina < 0) //if the damage threshold in the past period of time is exceeded, stagger the entity
         {
             this.Stagger();
         }
         
         //create damage text popup:
-        var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
-        damageText.SpriteText.Text = "`damage`";
+        if(this.ShowDamageNumbers)
+        {
+            var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
+            damageText.SpriteText.Text = "`damage`";
+        }
+        
         
         if (this.Health < 1)
         {
             this.Die();
-            this.Owner.Destroy();
-            //this.AddScore.AddToScore();
         }
-        
-        //Console.WriteLine(this.Health);
     }
     
+    /*
+    Die
+        Called when health is less than 1. Handles death explosions, checkpoint respawns etc.
+    */
     function Die()
     {
-        //adjust number of enemies left in level:
-        if(this.Important)
+        //create death explosion if relevant:
+        if(this.Owner.EntityDeathExplosion != null)
         {
-            //--this.Owner.LevelSettings.LevelBehavior.EnemyCounter;
-            //this.Important = false;
+            this.Owner.EntityDeathExplosion.OnKill();
         }
         
-        //explosion:
+        //adjust number of enemies left in the zone (for enemies):
+        if(this.Important)
+        {
+            if(this.Owner.ZombieAI != null)
+            {
+                this.Owner.ZombieAI.AggroZoneCog.EnemyAggroZone.EnemyKilled();
+            } else if(this.Owner.TurretAI != null)
+            {
+                this.Owner.TurretAI.AggroZoneCog.EnemyAggroZone.EnemyKilled();
+            }
+        }
+        
+        //if dead entity is a player teleports them back to last checkpoint. Destroys entity otherwise.
+        if(this.Owner.PlayerControl != null)
+        {
+            this.Health = this.MaxHealth;
+            this.Owner.Transform.Translation = this.Owner.PlayerControl.CheckpointLocation;
+        } else {
+            this.Owner.Destroy();
+        }
+        
+        //play the death scream
+        this.Owner.MakeHurtSounds.ScreamWhenKilled();
     }
     
+    /*
+    Stagger
+        Called when the entity is staggered (took more than a certain amount of damage in a given amount of time)
+    */
     function Stagger()
     {
-        var damageText : Cog = this.Space.CreateAtPosition(Archetype.DamageText, this.Owner.Transform.Translation + Real3(0,0,5));
-        damageText.SpriteText.Text = "   ow :(";
-        if(this.Owner.EntityAttack.Attacking)
+        if(this.CanStagger) //checks if eneity can be staggered before doing anything
         {
-            //Console.WriteLine(this.Owner);
-            this.Owner.EntityAttack.Attacking = false;
+            if(this.Owner.EntityAttack.Attacking) //cancel the entity's attack if one was in progress
+            {
+                this.Owner.EntityAttack.Attacking = false;
+            }
+            
+            
+            this.Owner.EntityAttack.StaggerTimer = this.StaggerTime; //update EntityAttack component's stagger timer
+            
+            if(this.Owner.PlayerControl != null) //for players, play the relevant stagger animation
+            {
+                this.Owner.PlayerControl.CrossBlendedPlay(this.Owner.PlayerControl.StunAnimation, 0.1, AnimPlayMode.PlayOnce, 1);
+                this.Owner.PlayerControl.ActionFinishedFlag = true;
+                this.Blocking = false;
+            }
+            
+            if(this.Owner.ZombieAI != null) //for zombieAI enemies, play the relevant stagger animation
+            {
+                this.Owner.ZombieAI.CrossBlendedPlay(this.Owner.ZombieAI.StaggerAnimation, 0.1, AnimPlayMode.PlayOnce, 1);
+            }
         }
-        this.Owner.EntityAttack.StaggerTimer = this.StaggerTime;
     }
 }

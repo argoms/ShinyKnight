@@ -1,0 +1,57 @@
+//Matt Chasengnou
+//
+//class : SoundEmitWrapper
+//descr : Wrapper for the SoundEmitter on an object
+class SoundEmitWrapper : ZilchComponent
+{
+    /////////////////////////// - MEMBERS - ////////////////////////////////////////////
+    
+    //Is the sound positional?
+    [Property]
+    var Positional : Boolean = true;
+    
+    //The maximum number of times to use the current sound emitter.
+    [Property]
+    var MaxPlayCount : Integer = 10;
+    
+    //The number of sounds played on the current sound emitter
+    var PlayCount : Integer = 0;
+    
+    ////////////////////////// - FUNCTIONS - /////////////////////////////////////////////////
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        //Ensures that this object has a sound emitter
+        if (this.Owner.SoundEmitter == null) this.Owner.AddComponentByName("SoundEmitter");
+        
+        this.Owner.SoundEmitter.Positional = this.Positional;
+    }
+    
+    
+    //function OnLogicUpdate(event : UpdateEvent)
+    //{
+    //}
+    
+    //function    : PlayCue
+    //description : Plays a sound on the sound emitter.
+    //parameters  : sound is the soundcue to play.
+    //output      : No returns.
+    function PlayCue(sound : SoundCue)
+    {
+        //If our sound emitter is no longer good, replace it.
+        if (this.PlayCount >= this.MaxPlayCount)
+        {
+            this.Owner.RemoveComponentByName("SoundEmitter");
+            this.Owner.AddComponentByName("SoundEmitter");
+            this.Owner.SoundEmitter.Positional = this.Positional;
+        }
+        
+        //Play the sound
+        this.Owner.SoundEmitter.PlayCue(sound);
+        
+        //Increment the play count
+        this.PlayCount += 1;
+    }
+}

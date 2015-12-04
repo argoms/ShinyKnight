@@ -8,6 +8,10 @@ Cog =
 	{
 		string Name = "Tree_simple_1",
 	},
+	Archetyped = 
+	{
+		string Name = "560cfaa84349db1f:Tree_simple_1",
+	},
 	Transform = 
 	{
 		Vec3 Translation = [0, 0, 0],
@@ -21,10 +25,10 @@ Cog =
 		bool VisibilityEvents = true,
 		bool CastShadows = true,
 		string MaterialName = "5668178c1749bc4f:Material",
-		string MeshName = "56ad1aeda7bc41b2:Tree_simple_1",
+		string MeshName = "560cfaa84357e65e:Tree_simple_1",
 		Vec4 Color = [1, 1, 1, 1],
 	},
-	ConvexMeshCollider = 
+	MeshCollider = 
 	{
 		bool Ghost = false,
 		bool SendsMessages = true,
@@ -32,7 +36,10 @@ Cog =
 		string MaterialName = "4de020863e872da8:DefaultPhysicsMaterial",
 		string SerializedGroupName = "4e740859314e5515:DefaultGroup",
 		Vec3 Offset = [0, 0, 0],
-		string MeshName = "56ad1aeda7bc41bd:Tree_simple_1",
+		string PhysicsMeshName = "560cfaa84357e663:Tree_simple_1",
+		bool DrawEdges = true,
+		bool DrawFaces = false,
+		bool DrawFaceNormals = false,
 	},
 	Hierarchy = 
 	{
@@ -48,7 +55,7 @@ Cog =
 			},
 			Transform = 
 			{
-				Vec3 Translation = [4.07625008, 5.90386009, -1.00545001],
+				Vec3 Translation = [407.625, 590.385986, -100.544998],
 				Vec3 Scale = [100, 100, 100],
 				Quat Rotation = [-0.570947349, 0.27217117, 0.755880475, 0.1690761],
 			},
@@ -65,7 +72,7 @@ Cog =
 			},
 			Transform = 
 			{
-				Vec3 Translation = [7.48113012, 5.34366989, 6.50763988],
+				Vec3 Translation = [748.112976, 534.367004, 650.763977],
 				Vec3 Scale = [100, 100, 100],
 				Quat Rotation = [-0.0892817155, -0.358067065, 0.210611045, 0.905240178],
 			},

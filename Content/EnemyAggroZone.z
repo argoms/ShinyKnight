@@ -1,0 +1,87 @@
+/*
+EnemyAggroZone
+@James/Argoms
+    For zones that trigger enemies within them to target player when they step in.
+*/
+class EnemyAggroZone : ZilchComponent
+{
+    var Target : Cog; //target object (player upon entering region, null otherwise)
+    
+    [Property]
+    var NumEnemies : Integer; //number of enemies in the first wave
+    
+    [Property]
+    var SecondWaveNum : Integer = 0; //number of enemies in the second wave
+    
+    [Property]
+    var ThirdWaveNum : Integer = 0; //number of enemies in the third wave
+    
+    [Property]
+    var FourthWaveNum : Integer = 0; //number of enemies in the fourth wave
+     
+     
+     //Can't use this because you can't make arrays properties anymore? D:
+    //var WaveNumbers : Array[Integer] = new Array[Integer]();
+    
+    var Wave : Integer = 1; //Wave counter, used for opening of gates after a wave is cleared
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollision);
+    }
+    
+    /*
+    OnCollision
+        Enemies within the zone are assigned to it (and chase the zone's target).
+        The player will be assigned as the zone's target upon entering it.
+    */
+    function OnCollision(event : CollisionEvent)
+    {
+        if(event.OtherObject.Collider.CollisionGroup == CollisionGroup.FriendlyEntity) //make target player upon them entering the area
+        {
+            this.Target = event.OtherObject;
+        }
+        
+        if(event.OtherObject.Collider.CollisionGroup == CollisionGroup.EnemyEntity) //assign enemies within the area this object as their zone
+        {
+            if(event.OtherObject.ZombieAI != null)
+            {
+                if(event.OtherObject.ZombieAI.AggroZoneCog == null) 
+                {
+                    event.OtherObject.ZombieAI.AggroZoneCog = this.Owner;
+                }
+            } else if(event.OtherObject.TurretAI != null)
+            {
+                if(event.OtherObject.TurretAI.AggroZoneCog == null)
+                {
+                    event.OtherObject.RigidBody.DynamicState = RigidBodyDynamicState.Static;
+                    event.OtherObject.TurretAI.AggroZoneCog = this.Owner;
+                }
+            }
+        }
+    }
+    
+    /*
+    EnemyKilled
+        Called by enemies once their health reaches zero, modifies relevant wave/enemy counters.
+    */
+    function EnemyKilled()
+    {
+        --this.NumEnemies;
+        
+        if(this.NumEnemies < 1) //if a wave is clear, increase wave counter and change number of enemies active accordingly
+        {
+            ++this.Wave;
+            if(this.Wave == 2)
+            {
+                this.NumEnemies = this.SecondWaveNum;
+            } else if(this.Wave == 3)
+            {
+                this.NumEnemies = this.ThirdWaveNum;
+            } else if(this.Wave == 4)
+            {
+                this.NumEnemies = this.FourthWaveNum;
+            }
+        }
+    }
+}

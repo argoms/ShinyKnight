@@ -1,0 +1,638 @@
+Cog = 
+{
+	LinkId = 
+	{
+		uint Id = 1,
+	},
+	Named = 
+	{
+		string Name = "CakeMoveMaya",
+	},
+	Archetyped = 
+	{
+		string Name = "560c9c5d4049d3d5:CakeMoveMaya",
+	},
+	Transform = 
+	{
+		Vec3 Translation = [0, 0, 0],
+		Vec3 Scale = [1, 1, 1],
+		Quat Rotation = [0, 0, 0, 1],
+	},
+	AnimationGraph = 
+	{
+		bool Active = true,
+		AnimPlayMode PlayMode = PlayOnce,
+		float TimeScale = 1,
+		string AnimationName = "4f8ebbde619389d0:DefaultAnimation",
+		uint64 DebugPreviewId = 2e69746c754d6c65,
+	},
+	SimpleAnimation = 
+	{
+		string AnimationName = "560c9c5d40526e25:CakeMoveMaya.All",
+		AnimPlayMode PlayMode = PlayOnce,
+	},
+	Hierarchy = 
+	{
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 2,
+			},
+			Named = 
+			{
+				string Name = "Cake_rig",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [0, 0, 21.4578991],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, 0, 0, 0.707106769],
+			},
+			Hierarchy = 
+			{
+				Cog = 
+				{
+					LinkId = 
+					{
+						uint Id = 3,
+					},
+					Named = 
+					{
+						string Name = "Root",
+					},
+					Transform = 
+					{
+						Vec3 Translation = [-6.66130003e-017, 1.49012003e-008, 2.18924999],
+						Vec3 Scale = [1, 1, 1],
+						Quat Rotation = [-0.5, -0.5, 0.5, 0.5],
+					},
+					Hierarchy = 
+					{
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 4,
+							},
+							Named = 
+							{
+								string Name = "Arm_upper.l",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [7.56277018e-007, 0.403079987, -1.17999995],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [0.175759941, 0.598686755, -0.459481835, 0.632106781],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 5,
+									},
+									Named = 
+									{
+										string Name = "Arm_lower.l",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [-1.01734003e-007, 1.09396005, 6.92820024e-008],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [-0.670090139, 0.0240210034, -0.106444024, 0.73421514],
+									},
+									Hierarchy = 
+									{
+										Cog = 
+										{
+											LinkId = 
+											{
+												uint Id = 6,
+											},
+											Named = 
+											{
+												string Name = "Hand.l",
+											},
+											Transform = 
+											{
+												Vec3 Translation = [5.62741e-008, 0.724587023, 9.24073973e-008],
+												Vec3 Scale = [1, 1, 1],
+												Quat Rotation = [0.0904287994, -0.00502737984, -0.150269002, 0.98448801],
+											},
+											Hierarchy = 
+											{
+												Cog = 
+												{
+													LinkId = 
+													{
+														uint Id = 7,
+													},
+													Named = 
+													{
+														string Name = "Hand.l_end",
+													},
+													Transform = 
+													{
+														Vec3 Translation = [-1.11395998e-007, 0.602642, -1.00615001e-008],
+														Vec3 Scale = [1, 1, 1],
+														Quat Rotation = [-5.55111976e-017, 6.93889018e-018, 1.56124997e-017, 1],
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 8,
+							},
+							Named = 
+							{
+								string Name = "Leg_upper.l",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [2.45422996e-007, 0.963666975, -0.550000012],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [-0.276021868, 0.51971674, 0.0798678696, 0.804566622],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 9,
+									},
+									Named = 
+									{
+										string Name = "Leg_lower.l",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [-2.12738005e-008, 0.541034997, 3.75443987e-009],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [0.445002049, -0.0384960026, 0.290606022, 0.846191108],
+									},
+									Hierarchy = 
+									{
+										Cog = 
+										{
+											LinkId = 
+											{
+												uint Id = 10,
+											},
+											Named = 
+											{
+												string Name = "Foot.l",
+											},
+											Transform = 
+											{
+												Vec3 Translation = [2.30922996e-008, 0.788554013, -7.89362975e-009],
+												Vec3 Scale = [1, 1, 1],
+												Quat Rotation = [-0.269397855, -0.580092728, 0.744942605, 0.189677894],
+											},
+											Hierarchy = 
+											{
+												Cog = 
+												{
+													LinkId = 
+													{
+														uint Id = 11,
+													},
+													Named = 
+													{
+														string Name = "Foot.l_end",
+													},
+													Transform = 
+													{
+														Vec3 Translation = [-1.32381004e-008, 0.390776008, -3.32104015e-008],
+														Vec3 Scale = [1, 1, 1],
+														Quat Rotation = [9.62964972e-034, 3.46944993e-017, -2.77555988e-017, 1],
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 12,
+							},
+							Named = 
+							{
+								string Name = "Arm_upper.r",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [-8.90373997e-007, 0.403079987, 1.17999995],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [-0.00831609219, 0.32111305, 0.505460143, 0.800829113],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 13,
+									},
+									Named = 
+									{
+										string Name = "Arm_lower.r",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [9.7737697e-008, 1.09396005, 9.07065001e-008],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [-0.51637876, -0.148057923, -0.193868905, 0.820881605],
+									},
+									Hierarchy = 
+									{
+										Cog = 
+										{
+											LinkId = 
+											{
+												uint Id = 14,
+											},
+											Named = 
+											{
+												string Name = "Hand.r",
+											},
+											Transform = 
+											{
+												Vec3 Translation = [1.31446001e-007, 0.724587023, 1.78153996e-007],
+												Vec3 Scale = [1, 1, 1],
+												Quat Rotation = [-0.00881855935, 0.0267219972, -0.299379975, 0.953718901],
+											},
+											Hierarchy = 
+											{
+												Cog = 
+												{
+													LinkId = 
+													{
+														uint Id = 15,
+													},
+													Named = 
+													{
+														string Name = "Hand.r_end",
+													},
+													Transform = 
+													{
+														Vec3 Translation = [2.94299003e-008, 0.602642, 8.26737008e-008],
+														Vec3 Scale = [1, 1, 1],
+														Quat Rotation = [2.32452999e-016, -5.55111976e-017, -1.31838997e-016, 1],
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 16,
+							},
+							Named = 
+							{
+								string Name = "Leg_upper.r",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [-5.22084008e-007, 0.963666975, 0.550000012],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [0.208911017, 0.638839066, 0.0442566052, 0.739109039],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 17,
+									},
+									Named = 
+									{
+										string Name = "Leg_lower.r",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [-3.99689988e-008, 0.541034997, -7.96953969e-009],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [0.576673865, 0.135050967, -0.254171938, 0.764594793],
+									},
+									Hierarchy = 
+									{
+										Cog = 
+										{
+											LinkId = 
+											{
+												uint Id = 18,
+											},
+											Named = 
+											{
+												string Name = "Foot.r",
+											},
+											Transform = 
+											{
+												Vec3 Translation = [-5.43630989e-008, 0.788554013, -6.4700501e-008],
+												Vec3 Scale = [1, 1, 1],
+												Quat Rotation = [-0.0431284979, -0.527125955, 0.840650916, 0.116550989],
+											},
+											Hierarchy = 
+											{
+												Cog = 
+												{
+													LinkId = 
+													{
+														uint Id = 19,
+													},
+													Named = 
+													{
+														string Name = "Foot.r_end",
+													},
+													Transform = 
+													{
+														Vec3 Translation = [-2.68245e-008, 0.390776008, 5.35548992e-008],
+														Vec3 Scale = [1, 1, 1],
+														Quat Rotation = [1.66533004e-016, -1.94289003e-016, -8.32667004e-017, 1],
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						Cog = 
+						{
+							LinkId = 
+							{
+								uint Id = 20,
+							},
+							Named = 
+							{
+								string Name = "Jaw",
+							},
+							Transform = 
+							{
+								Vec3 Translation = [-1.07380998e-007, 0.603079975, -1.18144006e-013],
+								Vec3 Scale = [1, 1, 1],
+								Quat Rotation = [0.394424856, -0.586880744, 0.394424856, 0.586880744],
+							},
+							Hierarchy = 
+							{
+								Cog = 
+								{
+									LinkId = 
+									{
+										uint Id = 21,
+									},
+									Named = 
+									{
+										string Name = "Jaw_end",
+									},
+									Transform = 
+									{
+										Vec3 Translation = [1.46648005e-016, 0.899999976, 3.21692006e-008],
+										Vec3 Scale = [1, 1, 1],
+										Quat Rotation = [2.77555988e-017, -1.32348993e-023, 3.67341985e-040, 1],
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 22,
+			},
+			Named = 
+			{
+				string Name = "Candle.006",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-11.6717997, 261.178986, 78.1174011],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, -0, 0, 0.707106769],
+			},
+			Model = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string MaterialName = "56a906fd5cb3fd82:Material.006",
+				string MeshName = "560c9c5d40526a15:CakeMoveMaya.Candle.006",
+				Vec4 Color = [1, 1, 1, 1],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 23,
+			},
+			Named = 
+			{
+				string Name = "Candle.005",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [46.0057983, 261.178986, 54.4905014],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, -0, 0, 0.707106769],
+			},
+			Model = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string MaterialName = "56a906fd5cb3fd82:Material.006",
+				string MeshName = "560c9c5d40526a1a:CakeMoveMaya.Candle.005",
+				Vec4 Color = [1, 1, 1, 1],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 24,
+			},
+			Named = 
+			{
+				string Name = "Candle.004",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [3.61624002, 261.178986, 15.5754995],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, -0, 0, 0.707106769],
+			},
+			Model = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string MaterialName = "56a906fd5cb3fd82:Material.006",
+				string MeshName = "560c9c5d40526a1c:CakeMoveMaya.Candle.004",
+				Vec4 Color = [1, 1, 1, 1],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 25,
+			},
+			Named = 
+			{
+				string Name = "Candle.003",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-40.8580017, 261.178986, 41.2872009],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, -0, 0, 0.707106769],
+			},
+			Model = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string MaterialName = "56a906fd5cb3fd82:Material.006",
+				string MeshName = "560c9c5d40526a1e:CakeMoveMaya.Candle.003",
+				Vec4 Color = [1, 1, 1, 1],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 26,
+			},
+			Named = 
+			{
+				string Name = "Candle.002",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-48.5019989, 261.178986, -3.88200998],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, -0, 0, 0.707106769],
+			},
+			Model = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string MaterialName = "56a906fd5cb3fd82:Material.006",
+				string MeshName = "560c9c5d40526a20:CakeMoveMaya.Candle.002",
+				Vec4 Color = [1, 1, 1, 1],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 27,
+			},
+			Named = 
+			{
+				string Name = "Candle.001",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [-4.72268009, 261.178986, -36.5428009],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, -0, 0, 0.707106769],
+			},
+			Model = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string MaterialName = "56a906fd5cb3fd82:Material.006",
+				string MeshName = "560c9c5d40526a22:CakeMoveMaya.Candle.001",
+				Vec4 Color = [1, 1, 1, 1],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 28,
+			},
+			Named = 
+			{
+				string Name = "Candle",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [55.0396004, 261.178986, -20.5599003],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, -0, 0, 0.707106769],
+			},
+			Model = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string MaterialName = "56a906fd5cb3fd82:Material.006",
+				string MeshName = "560c9c5d40526a24:CakeMoveMaya.Candle",
+				Vec4 Color = [1, 1, 1, 1],
+			},
+		},
+		Cog = 
+		{
+			LinkId = 
+			{
+				uint Id = 29,
+			},
+			Named = 
+			{
+				string Name = "Cake_Model",
+			},
+			Transform = 
+			{
+				Vec3 Translation = [0, 0, 21.4578991],
+				Vec3 Scale = [100, 100, 100],
+				Quat Rotation = [-0.707106769, -0, 0, 0.707106769],
+			},
+			Model = 
+			{
+				bool Visible = true,
+				bool VisibilityCulling = true,
+				bool VisibilityEvents = true,
+				bool CastShadows = true,
+				string MaterialName = "",
+				string MeshName = "560c9c5d40526a26:CakeMoveMaya.Cake_Model",
+				Vec4 Color = [1, 1, 1, 1],
+			},
+		},
+	},
+},

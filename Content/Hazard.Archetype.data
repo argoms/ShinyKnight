@@ -8,10 +8,14 @@ Cog =
 	{
 		string Name = "Hazard",
 	},
+	Archetyped = 
+	{
+		string Name = "560475b6ed17908c:Hazard",
+	},
 	Transform = 
 	{
-		Vec3 Translation = [0.516130447, -4.49602222, 0],
-		Vec3 Scale = [1, 1, 1],
+		Vec3 Translation = [6.5, 34.5, 0],
+		Vec3 Scale = [3, 3, 1],
 		Quat Rotation = [0, 0, 0, 1],
 	},
 	SpriteParticleSystem = 
@@ -42,7 +46,7 @@ Cog =
 		float Torque = 5,
 		float Growth = -1,
 		float Dampening = 0,
-		Vec3 Twist = [0, 0, 32],
+		Vec3 Twist = [0, 0, 0],
 	},
 	BoxParticleEmitter = 
 	{
@@ -62,7 +66,7 @@ Cog =
 		Vec3 StartVelocity = [0, 0, 10],
 		Vec3 RandomVelocity = [2, 2, 2],
 		Vec3 TangentVelocity = [0, 0, 0],
-		Vec3 EmitterSize = [0.25, 0.25, 1],
+		Vec3 EmitterSize = [2.25, 2.25, 0],
 		bool FastMovingEmitter = false,
 	},
 	Sprite = 
@@ -73,7 +77,7 @@ Cog =
 		bool CastShadows = false,
 		Vec4 Color = [1, 1, 1, 0.420000017],
 		BlendMode BlendMode = None,
-		SpriteGeometryMode GeometryMode = ViewPlane,
+		SpriteGeometryMode GeometryMode = ZPlane,
 		string SpriteLayer = "52ad5fa30d7fcd50:DefaultSpriteLayer",
 		string SpriteSource = "5275aa4d802dd6dc:Square",
 		bool RenderMask = false,
@@ -99,9 +103,11 @@ Cog =
 	},
 	HazardBehavior = 
 	{
-		float ActiveTime = 5,
-		float CoolDown = 5,
-		int Damage = 2,
+		float ActiveTime = 1,
+		float CoolDown = 2,
+		int Damage = 5,
 		bool Enabled = true,
+		float EmitRateMultiplier = 9,
+		float AttackCooldown = 0.600000024,
 	},
 },

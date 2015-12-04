@@ -3,7 +3,7 @@ ImageContent =
 	TextureBuilder = 
 	{
 		string Name = "Tree",
-		uint64 ResourceId = 56ad1caee6257be7,
+		uint64 ResourceId = 560cfa944bd36228,
 		BuilderTextureType TextureType = Texture2D,
 		RgbUsage RgbUsage = Color,
 		AlphaUsage AlphaUsage = Transparency,

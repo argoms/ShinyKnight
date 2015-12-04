@@ -1,0 +1,23 @@
+/*
+EntityDeathExplosion
+@James/Argoms
+    Attach to entities in order to create a particle explosion.
+*/
+class EntityDeathExplosion : ZilchComponent
+{
+    [Dependency]//requires entityhealth to function, OnKill is called by EntityHealth's OnKill
+    var EntityHealth : EntityHealth;
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+    
+    /*
+    OnKill
+        Create a particle explosion cog at position.
+    */
+    function OnKill()
+    {
+        var explosion:Cog = this.Space.CreateAtPosition(Archetype.ParticleExplosion, this.Owner.Transform.Translation);
+    }
+}

@@ -1,0 +1,12 @@
+CONTROLS
+
+WASD to move
+Mouse to look/aim
+Left click to attack
+Right click to guard
+
+CHEATS
+1,2,3,4 to warp to checkpoints
+R to return to title
+
+PRESS V TO EXIT

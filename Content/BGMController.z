@@ -1,0 +1,70 @@
+class BGMController : ZilchComponent
+{
+    
+    //Flag sets music to on or off
+    var MusicPlaying : Boolean = true;
+    
+    //Music to play for the level
+    [Property]
+    var LevelMusic : SoundCue;
+    
+    //How loud the music should play
+    [Property]
+    var MusicVolume : Real = 1;
+    
+    //How fast to fade in the music.
+    //This value will be a scalar multiplied by delta time for each frame's volume increase.
+    [Property]
+    var MusicFadeInSpeed : Real = 0.1;
+    
+    //How fast to fade out the music.
+    //This value will be a scalar multiplied by delta time for each frame's volume increase.
+    [Property]
+    var MusicFadeOutSpeed : Real = 0.5;
+    
+    
+    //Requires a handler for sound
+    [Dependency]
+    var SoundEmitter: SoundEmitter;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        //Set the sound emitter
+        this.SoundEmitter.Volume = 0.1;
+        this.SoundEmitter.Positional = false;
+        
+        this.MusicPlaying = true;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        this.FadeInMusic(event.Dt, this.MusicPlaying);
+    }
+    
+    //function    : FadeInMusic
+    //description : Fades in our out the title music
+    //parameters  : deltaTime is time since last frame
+    //              fadeIn is option to fade in or fade out
+    //output      : No returns.
+    function FadeInMusic(deltaTime : Real, fadeIn : Boolean)
+    {
+        //If fading in and the music is not at default volume, raise the volume
+        if (fadeIn && this.SoundEmitter.Volume < this.MusicVolume)
+        {
+            //Increase the volume to max within the fade in time
+            this.SoundEmitter.Volume += this.MusicVolume * deltaTime * this.MusicFadeInSpeed;
+            
+            if (this.SoundEmitter.Volume > this.MusicVolume) this.SoundEmitter.Volume = this.MusicVolume;
+        }
+         //Else, fade out the music
+        else if (this.SoundEmitter.Volume > 0)
+        {
+            //Decrease the volume to 0 within the fade in time
+            this.SoundEmitter.Volume -= this.MusicVolume * deltaTime * this.MusicFadeOutSpeed;
+            
+            if (this.SoundEmitter.Volume < 0) this.SoundEmitter.Volume = 0;
+        }
+    }
+}

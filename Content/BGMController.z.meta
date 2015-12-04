@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "BGMController",
+		uint64 ResourceId = 56a8c86928a0900f,
+	},
+},

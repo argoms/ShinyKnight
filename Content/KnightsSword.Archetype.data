@@ -1,0 +1,31 @@
+Cog = 
+{
+	LinkId = 
+	{
+		uint Id = 1,
+	},
+	Named = 
+	{
+		string Name = "knight_models_UV_texture.Sword",
+	},
+	Archetyped = 
+	{
+		string Name = "560c867c3c838126:KnightsSword",
+	},
+	Transform = 
+	{
+		Vec3 Translation = [-1.70902896, 0, 0],
+		Vec3 Scale = [1, 1, 1],
+		Quat Rotation = [0, 0, 0, 1],
+	},
+	Model = 
+	{
+		bool Visible = true,
+		bool VisibilityCulling = true,
+		bool VisibilityEvents = true,
+		bool CastShadows = true,
+		string MaterialName = "560ca8ceaf886fa8:SwordMaterial",
+		string MeshName = "560c9df8501d9731:knight_models_UV_texture.Sword",
+		Vec4 Color = [1, 1, 1, 1],
+	},
+},

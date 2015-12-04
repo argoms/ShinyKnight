@@ -3,7 +3,7 @@ DataContent =
 	DataBuilder = 
 	{
 		string Name = "Material.003",
-		uint64 ResourceId = 5668178c174a0468,
+		uint64 ResourceId = 56a906fd5cb15c75,
 		string LoaderType = "Material",
 		uint Version = 0,
 		bool ShowInEditor = true,

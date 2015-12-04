@@ -1,0 +1,14 @@
+Material = 
+{
+	Lambert = 
+	{
+	},
+	Transparency = 
+	{
+		MaterialBlendMode BlendMode = Additive,
+	},
+	ColorDiffuse = 
+	{
+		Vec4 DiffuseColor = [0.564999998, 0.327841282, 0.240125, 1],
+	},
+},

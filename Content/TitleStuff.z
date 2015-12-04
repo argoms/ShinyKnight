@@ -1,0 +1,527 @@
+//Matt Chasengnou
+//
+//class : TitleStuff
+//descr : Does stuff for title screen.
+class TitleStuff : ZilchComponent
+{
+    ///////////////////// - DATA MEMBERS - ///////////////////////////////////////////
+    
+    //The game's starting level
+    [Property]
+    var StartLevel : Level;
+    
+    //Time to wait until loading game level
+    [Property]
+    var GameStartDelay : Real = 3;
+    
+    
+    //Key to return to title options
+    [Property]
+    var TitleButton : Keys = Keys.W;
+    
+    //Key to display the tutorial
+    [Property]
+    var TutorialButton : Keys = Keys.T;
+    
+    //Key to display credits
+    [Property]
+    var CreditsButton : Keys = Keys.C;
+    
+    //Key to start game
+    [Property]
+    var StartButton : Keys = Keys.S;
+    
+    //Clock for our main update loop
+    var Clock : Real = 0;
+    
+    
+    //Music to play on splash/title screen
+    [Property]
+    var TitleMusic : SoundCue;
+    
+    //How loud the music should be
+    [Property]
+    var MusicVolume : Real = 1;
+    
+    //How fast the music fades in.
+    //This value is scaled with delta time when calculating volume increase.
+    [Property]
+    var MusicFadeInSpeed : Real = 0.1;
+    
+    //How fast the music fades out.
+    //This value is scaled with delta time when calculating volume increase.
+    [Property]
+    var MusicFadeOutSpeed : Real = 0.5;
+    
+    //The sound to play when confirming an option
+    [Property]
+    var ConfirmSound : SoundCue = SoundCue.DefaultCue;
+    
+    //The sound to play when cancelling
+    [Property]
+    var CancelSound : SoundCue = SoundCue.DefaultCue;
+    
+    //The sound to play when starting a new game
+    [Property]
+    var StartupSound : SoundCue = SoundCue.DefaultCue;
+    
+    //Where our title music is coming from.
+    var BGM : SoundEmitter;
+    
+    //Sound effect maker
+    var SFX : SoundEmitWrapper;
+    
+    
+    //The sprite representing the splash screen
+    var SplashScreen : Sprite;
+    
+    //The amount of time to display the splash screen
+    [Property]
+    var SplashDisplayTime : Real = 5;
+    
+    //How fast to fade the splash screen.
+    //This value is scaled with delta time when calculating alpha changes.
+    [Property]
+    var SplashFadeSpeed : Real = 0.3;
+    
+    
+    //The sprite to introduce our team
+    var TeamScreen : Sprite;
+    
+    //The amount of time to display the team screen
+    [Property]
+    var TeamDisplayTime : Real = 5;
+    
+    //How fast to fade the team screen.
+    //This value is scaled with delta time when calculating alpha changes.
+    [Property]
+    var TeamFadeSpeed : Real = 0.3;
+    
+    
+    //The sprite for the title screen
+    var TitleScreen : Sprite;
+    
+    //How long to wait before displaying the title screen
+    [Property]
+    var TitleDisplayDelay : Real = 13;
+    
+    //How fast to fade the title screen.
+    //This value is scaled with delta time when calculating alpha changes.
+    [Property]
+    var TitleFadeSpeed : Real = 0.6;
+    
+    
+    //Particle effects for the title
+    var ParticleSystem : SpriteParticleSystem;
+    
+    //Time to start the particle system
+    [Property]
+    var ParticleDelayTime : Real = 11;
+    
+    //How fast to fade the particle system.
+    //This value is scaled with delta time when calculating alpha changes.
+    [Property]
+    var ParticleFadeInSpeed : Real = 0.5;
+    
+    
+    //Option messages on the title screen
+    var TitleOptions : Array[SpriteText] = Array[SpriteText]();
+    
+    //The sprite text for our credits
+    var CreditsMessages : SpriteText;
+    
+    //The sprite text for the tutorial
+    var TutorialMessages : SpriteText;
+    
+    //How fast to fade text.
+    //This value is scaled with delta time when calculating alpha changes.
+    [Property]
+    var TextFadeSpeed : Real = 1;
+    
+    
+    //Flag to start the game
+    var StartGame : Boolean = false;
+    
+    //Flag to play music
+    var PlayMusic : Boolean = true;
+    
+    //Flags for transitioning screens
+    var ShowSplash : Boolean = true;
+    var ShowTeam : Boolean = false;
+    var ShowTitle : Boolean = false;
+    
+    //Flag for turning on particle system
+    var ShowParticle : Boolean = false;
+    
+    //Flag for showing text
+    var ShowTitleOptions : Boolean = false;
+    var ShowCredits : Boolean = false;
+    var ShowTutorial : Boolean = false;
+    
+    //Turns on/off player input
+    var InputEnabled : Boolean = false;
+    
+    //Turns on/off the clock
+    var UseClock : Boolean = true;
+    
+    
+    /////////////////////////////// - FUNCTIONS - /////////////////////////////////////
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        //Get out sound emitters
+        this.BGM = this.Space.FindObjectByName("Music").SoundEmitter;
+        this.SFX = this.Space.FindObjectByName("SoundEffects").SoundEmitWrapper;
+        
+        //Initially set the BGM
+        this.BGM.Volume = 0.15;
+        this.BGM.PlayCue(this.TitleMusic);
+        
+        //Get the screen sprites
+        this.SplashScreen = this.Space.FindObjectByName("SplashScreen").Sprite;
+        this.TeamScreen = this.Space.FindObjectByName("TeamScreen").Sprite;
+        this.TitleScreen = this.Space.FindObjectByName("TitleScreen").Sprite;
+        
+        //Set the splash screen
+        var color = this.SplashScreen.Color;
+        color.W = 0;
+        this.SplashScreen.Color = color;
+        
+        //Set the team screen
+        color = this.TeamScreen.Color;
+        color.W = 0;
+        this.TeamScreen.Color = color;
+        
+        //Set the title screen
+        color = this.TitleScreen.Color;
+        color.W = 0;
+        this.TitleScreen.Color = color;
+        
+        //Get the particle system
+        this.ParticleSystem = this.Space.FindObjectByName("TitleParticles").SpriteParticleSystem;
+        
+        //Set the particle system
+        color = this.ParticleSystem.Tint;
+        color.W = 0;
+        this.ParticleSystem.Tint = color;
+        
+        //Get the message info
+        this.TitleOptions.Add(this.Space.FindObjectByName("StartOption").SpriteText);
+        this.TitleOptions.Add(this.Space.FindObjectByName("TutorialOption").SpriteText);
+        this.TitleOptions.Add(this.Space.FindObjectByName("CreditsOption").SpriteText);
+        
+        this.CreditsMessages = this.Space.FindObjectByName("CreditsText").SpriteText;
+        this.TutorialMessages = this.Space.FindObjectByName("TutorialText").SpriteText;
+        
+        //Set title option messages
+        for (var i = 0; i < this.TitleOptions.Count; i += 1)
+        {
+            color = this.TitleOptions[i].Color;
+            color.W = 0;
+            this.TitleOptions[i].Color = color;
+        }
+        
+        //Set credits
+        color = this.CreditsMessages.Color;
+        color.W = 0;
+        this.CreditsMessages.Color = color;
+        
+        //Set tutorial messages
+        color = this.TutorialMessages.Color;
+        color.W = 0;
+        this.TutorialMessages.Color = color;
+    }
+    
+    
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        // - CLOCK CHECKING - //
+        // - Setting flags that rely on the clock - //
+        
+        //Stuff to display the title
+        if (this.UseClock)
+        {
+            //Count time if we haven't got to the title yet
+            if (!this.ShowTitle) this.Clock += event.Dt;
+            
+            //If we are past time for showing the splash screen, set flag to transition to team screen.
+            if (this.Clock >= this.SplashDisplayTime)
+            {
+                this.ShowSplash = false;
+                this.ShowTeam = true;
+            }
+            
+            //If we are past time for showing team screen, set flag for transition
+            if (this.Clock >= this.TeamDisplayTime + this.SplashDisplayTime)
+            {
+                this.ShowTeam = false;
+            }
+            
+            //If it is time to turn on the particle system, set flag for activation
+            if (this.Clock >= this.ParticleDelayTime) this.ShowParticle = true;
+            
+            //If it is time to show the title, set flags and reset the clock.
+            //Also enable input at this time.
+            if (this.Clock >= this.TitleDisplayDelay) 
+            {
+                this.ShowTitle = true;
+                this.ShowTitleOptions = true;
+                
+                //Enable input
+                this.InputEnabled = true;
+                
+                //Turn off the clock
+                this.UseClock = false;
+            }
+        }
+        
+        //Stuff to start game
+        if (this.StartGame)
+        {
+            //Count the time
+            this.Clock += event.Dt;
+            
+            //If it is time to start the game, load the level
+            if (this.Clock >= this.GameStartDelay) this.Space.LoadLevel(this.StartLevel);
+        }
+        
+        
+        // - INPUT HANDLING AND PROCESSING - //
+        // - Processes information from input. Handle only if input is enabled - //
+        
+        //If the start button is pressed, set flags for loading game level.
+        if (Zero.Keyboard.KeyIsPressed(this.StartButton) && this.InputEnabled)
+        {
+            //If we're in the title, start the game.
+            if (this.ShowTitle)
+            {
+                this.StartGame = true;
+                this.ShowTitle = false;
+                this.ShowTitleOptions = false;
+                this.ShowParticle = false;
+                this.PlayMusic = false;
+                
+                this.Clock = 0;
+                
+                this.SFX.PlayCue(this.StartupSound);
+            }
+        }
+        
+        
+        //If the tutorial key is pressed, handle it
+        if (Zero.Keyboard.KeyIsPressed(this.TutorialButton))
+        {
+            //If input is enabled, keep going.
+            if (this.InputEnabled)
+            {
+                //If we're in the title, show the tutorial
+                if (this.ShowTitleOptions)
+                {
+                    this.ShowTutorial = true;
+                    this.ShowTitle = false;
+                    this.ShowTitleOptions = false;
+                    this.ShowCredits = false;
+                    
+                    this.SFX.PlayCue(this.ConfirmSound);
+                }
+                //Else if we're in the tutorial screen, exit
+                else if (this.ShowTutorial)
+                {
+                    this.ShowTitle = true;
+                    this.ShowTitleOptions = true;
+                    this.ShowTutorial = false;
+                    this.ShowCredits = false;
+                    //this.ShowSplash = false;
+                    //this.ShowTeam = false;
+                    
+                    this.SFX.PlayCue(this.CancelSound);
+                }
+            }
+        }
+        
+        //If the credits key is pressed, handle it
+        if (Zero.Keyboard.KeyIsPressed(this.CreditsButton))
+        {
+            //If input is enabled, keep going.
+            if (this.InputEnabled)
+            {
+                //If we're in the title, show the credits
+                if (this.ShowTitleOptions)
+                {
+                    this.ShowCredits = true;
+                    this.ShowTitle = false;
+                    this.ShowTitleOptions = false;
+                    this.ShowTutorial = false;
+                    
+                    this.SFX.PlayCue(this.ConfirmSound);
+                }
+                //Else if we're in the credits screen, exit
+                else if (this.ShowCredits)
+                {
+                    this.ShowTitle = true;
+                    this.ShowTitleOptions = true;
+                    this.ShowTutorial = false;
+                    this.ShowCredits = false;
+                    //this.ShowSplash = false;
+                    //this.ShowTeam = false;
+                    
+                    this.SFX.PlayCue(this.CancelSound);
+                }
+            }
+        }
+        
+        // - EXECUTION - //
+        // - Now that all pre-processing is done, do stuff
+        
+        //Fade in the music if playing it, else fade out
+        this.FadeInMusic(event.Dt, this.PlayMusic);
+        
+        //Fade in splash screen if displaying it, else fade out.
+        this.FadeScreen(this.SplashScreen, event.Dt, this.ShowSplash, this.SplashFadeSpeed);
+        
+        //Fade in team screen if displaying it, else fade out
+        this.FadeScreen(this.TeamScreen, event.Dt, this.ShowTeam, this.TeamFadeSpeed);
+        
+        //Fade in title screen if displaying it, else fade out.
+        this.FadeScreen(this.TitleScreen, event.Dt, this.ShowTitle, this.TitleFadeSpeed);
+        
+        //Fade in title options text if displaying it, else fade out.
+        for (var i = 0; i < this.TitleOptions.Count; i += 1)
+        {
+            this.FadeText(this.TitleOptions[i], event.Dt, this.ShowTitleOptions, this.TextFadeSpeed);
+        }
+        
+        //Fade in tutorial text if displaying it, else fade out.
+        this.FadeText(this.TutorialMessages, event.Dt, this.ShowTutorial, this.TextFadeSpeed);
+        
+        //Fade in credits if displaying it, else fade out.
+        this.FadeText(this.CreditsMessages, event.Dt, this.ShowCredits, this.TextFadeSpeed);
+        
+        //Fade in particle system if displaying it, else fade out
+        this.FadeInParticles(event.Dt, this.ShowParticle);
+        
+    }
+    
+    
+    //////////////// - HELPER FUNCTIONS - /////////////////////////////////////////////
+    
+    //function    : FadeInMusic
+    //description : Fades in our out the title music
+    //parameters  : deltaTime is time since last frame
+    //              fadeIn is option to fade in or fade out
+    //output      : No returns.
+    function FadeInMusic(deltaTime : Real, fadeIn : Boolean)
+    {
+        //If fading in and the music is not at default volume, raise the volume
+        if (fadeIn && this.BGM.Volume < this.MusicVolume)
+        {
+            //Increase the volume to max within the fade in time
+            this.BGM.Volume += this.MusicVolume * deltaTime * this.MusicFadeInSpeed;
+        }
+         //Else, fade out the music
+        else if (this.BGM.Volume > 0)
+        {
+            //Increase the volume to max within the fade in time
+            this.BGM.Volume -= this.MusicVolume * deltaTime * this.MusicFadeOutSpeed;
+            
+            if (this.BGM.Volume < 0) this.BGM.Volume = 0;
+        }
+    }
+    
+    //function    : FadeScreen
+    //description : Fades in or out a "screen" sprite through alpha
+    //parameters  : screen is the sprite to fade in or out
+    //              deltaTime is time since last frame
+    //              fadeIn is option to fade in or fade out (true fades in)
+    //              t is the time factor to fade in or out
+    //output      : No returns
+    function FadeScreen(screen : Sprite, deltaTime : Real, fadeIn : Boolean, t : Real)
+    {
+        //Get the color information of the sprite
+        var color = screen.Color;
+        
+        //If fading in and the alpha of the image is not 1, raise the alpha
+        if (fadeIn && color.W < 1)
+        {
+            color.W += deltaTime * t;
+            
+            if (color.W > 1) color.W = 1;
+            
+            screen.Color = color;
+        }
+        //If fading out and the alpha is not 0, decrease the alpha
+        else if (!fadeIn && color.W > 0)
+        {
+            color.W -= deltaTime * t;
+            
+            if (color.W < 0) color.W = 0;
+            
+            screen.Color = color;
+        }
+    }
+    
+    //function    : FadeText
+    //description : Fades in or out a spritetext through alpha
+    //parameters  : text is the spritetext to fade in or out
+    //              deltaTime is time since last frame
+    //              fadeIn is option to fade in or fade out (true fades in)
+    //              t is the time factor to fade in or out
+    //output      : No returns
+    function FadeText(text : SpriteText, deltaTime : Real, fadeIn : Boolean, t : Real)
+    {
+        //Get the color information of the sprite
+        var color = text.Color;
+        
+        //If fading in and the alpha of the image is not 1, raise the alpha
+        if (fadeIn && color.W < 1)
+        {
+            color.W += deltaTime * t;
+            
+            if (color.W > 1) color.W = 1;
+            
+            text.Color = color;
+        }
+        //If fading out and the alpha is not 0, decrease the alpha
+        else if (!fadeIn && color.W > 0)
+        {
+            color.W -= deltaTime * t;
+            
+            if (color.W < 0) color.W = 0;
+            
+            text.Color = color;
+        }
+    }
+    
+    //function    : FadeInParticles
+    //description : Fades in or out a particle system through alpha
+    //parameters  : deltaTime is time since last frame
+    //              fadeIn is flag to fade in or out
+    //output      : No returns
+    function FadeInParticles(deltaTime : Real, fadeIn : Boolean)
+    {
+        //Get the color information of the particle system
+        var color = this.ParticleSystem.Tint;
+        
+        //If fading in and the alpha of the particle system is not 1, raise the alpha
+        if (fadeIn && color.W < 1)
+        {
+            color.W += deltaTime * this.ParticleFadeInSpeed;
+            
+            if (color.W > 1) color.W = 1;
+            
+            this.ParticleSystem.Tint = color;
+        }
+        //Else if fading out, reduce the alpha
+        else if (color.W > 0)
+        {
+            color.W -= deltaTime * this.ParticleFadeInSpeed;
+            
+            if (color.W < 0) color.W = 0;
+            
+            this.ParticleSystem.Tint = color;
+        }
+    }
+    
+}

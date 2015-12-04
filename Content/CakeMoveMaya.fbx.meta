@@ -1,0 +1,75 @@
+GeometryContent = 
+{
+	GeneratedArchetype = 
+	{
+		uint64 ResourceId = 560c9c5d4049d3d5,
+	},
+	GeometryImport = 
+	{
+		bool ChangeWinding = false,
+		Vec3 Translation = [0, 0, 0],
+		Quat Rotation = [0, 0, 0, 1],
+		Vec3 Scale = [1, 1, 1],
+	},
+	MeshBuilder = 
+	{
+		Array Meshes = 
+		[
+			{
+				string Name = "CakeMoveMaya.Candle.006",
+				uint64 ResourceId = 560c9c5d40526a15,
+			},
+			{
+				string Name = "CakeMoveMaya.Candle.005",
+				uint64 ResourceId = 560c9c5d40526a1a,
+			},
+			{
+				string Name = "CakeMoveMaya.Candle.004",
+				uint64 ResourceId = 560c9c5d40526a1c,
+			},
+			{
+				string Name = "CakeMoveMaya.Candle.003",
+				uint64 ResourceId = 560c9c5d40526a1e,
+			},
+			{
+				string Name = "CakeMoveMaya.Candle.002",
+				uint64 ResourceId = 560c9c5d40526a20,
+			},
+			{
+				string Name = "CakeMoveMaya.Candle.001",
+				uint64 ResourceId = 560c9c5d40526a22,
+			},
+			{
+				string Name = "CakeMoveMaya.Candle",
+				uint64 ResourceId = 560c9c5d40526a24,
+			},
+			{
+				string Name = "CakeMoveMaya.Cake_Model",
+				uint64 ResourceId = 560c9c5d40526a26,
+			},
+		],
+		MeshMode MeshMode = Multi,
+		ResourceCompression CompressMesh = None,
+		Generation Normals = Import,
+		Generation Tangents = Import,
+		float SmoothingAngle = 60,
+	},
+	AnimationBuilder = 
+	{
+		string Name = "CakeMoveMaya",
+		uint64 ResourceId = 560c9c5d4049d3d3,
+		bool MakeAnimationSet = false,
+		ResourceCompression CompressAnimation = None,
+		string PreviewArchetype = "",
+		Array Clips = 
+		[
+			{
+				string Name = "All",
+				uint64 ResourceId = 560c9c5d40526e25,
+				int StartFrame = 0,
+				int EndFrame = 30,
+				LoopingMode LoopingMode = Default,
+			},
+		],
+	},
+},

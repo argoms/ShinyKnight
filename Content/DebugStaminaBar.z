@@ -1,15 +1,41 @@
-/*TEMPORARY*/
+/*
+DebugStaminaBar
+@James/Argoms
+    (temporary) behavior managing the player's health/stamina HUD. 
+    Was meant to be replaced, but time constraints and priorities mean it's sticking around for submission time.
+*/
 class DebugStaminaBar : ZilchComponent
 {
-    var Bar : Cog;
+    [Property]
+    var StamBar : CogPath; //path to stamina bar object
+    [Property]
+    var HealthBar : CogPath; //path to health bar object
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
-        this.Bar = this.Owner.FindChildByName("TempStamBar");
+    
     }
 
     function OnLogicUpdate(event : UpdateEvent)
     {
-        this.Bar.Transform.Scale = Real3(this.Owner.EntityHealth.Stamina / 100,0.1,1);
+        
+        if(Zero.Mouse.IsButtonDown(MouseButtons.Right)) //show stamina bar if player is blocking:
+        {
+            this.StamBar.Cog.Sprite.Visible = true;
+        } else {
+            this.StamBar.Cog.Sprite.Visible = false;
+        }
+        
+        //scale stamina & health bars to represent percentages of their max, and translate them so their left end is always in the same spot:
+        this.StamBar.Cog.Transform.Scale = Real3(this.Owner.EntityHealth.Stamina as Real / this.Owner.EntityHealth.MaxStamina as Real
+                                                    , 0.1, 1);
+        this.StamBar.Cog.Transform.Translation = Real3(0.5 * (this.Owner.EntityHealth.Stamina as Real / this.Owner.EntityHealth.MaxStamina as Real) - 0.5
+                                                , 0, 5.1);
+                                                
+        this.HealthBar.Cog.Transform.Scale = Real3(this.Owner.EntityHealth.Health as Real / this.Owner.EntityHealth.MaxHealth as Real
+                                                    , 0.1, 1);
+        this.HealthBar.Cog.Transform.Translation = Real3(0.5 * (this.Owner.EntityHealth.Health as Real / this.Owner.EntityHealth.MaxHealth as Real) - 0.5
+                                                    , 0, 5);
     }
 }

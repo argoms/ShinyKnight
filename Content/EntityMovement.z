@@ -1,15 +1,25 @@
+/*
+EntityMovement
+@James/Argoms
+    Basic movement behavior for entities.
+*/
 class EntityMovement : ZilchComponent
 {
     [Property]
-    var MoveSpeed:Real = 16;
+    var MoveSpeed:Real = 16; //movement speed, note that some behaviors (eg. PlayerControl) override this
     
     function Initialize(init : CogInitializer)
     {
         
     }
     
+    /*
+    Move
+        Move entity in direction given by movement real3, amount given by a delta time input.
+    */
     function Move(movement : Real3, dt : Real)
     {
+        //apply movement if not staggered
         if(this.Owner.EntityAttack.StaggerTimer <= 0)
         {
             this.Owner.RigidBody.ApplyLinearVelocity(movement*dt*this.MoveSpeed);

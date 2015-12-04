@@ -1,13 +1,14 @@
 /*
-    DamageTextBehavior
-    @James/Argoms
+DamageTextBehavior
+@James/Argoms
     
     Component controlling the damage numbers that pop up when an object is hit.
 */
 class DamageTextBehavior : ZilchComponent
 {
-    var TimePassed:Real = 0;
-    var Text:String = "";
+    var TimePassed:Real = 0; //internal time counter
+    var Text:String = ""; //text that the object displays
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);

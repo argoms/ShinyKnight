@@ -1,0 +1,18 @@
+AudioContent = 
+{
+	SoundBuilder = 
+	{
+		string Name = "Theme_3",
+		uint64 ResourceId = 56aa012f98a3a6ad,
+		bool Compressed = true,
+		uint Quality = 100,
+		SoundLoadType LoadType = Decompress,
+	},
+	ContentTags = 
+	{
+		Array Tags = 
+		[
+			"ShinyKnight_title",
+		],
+	},
+},

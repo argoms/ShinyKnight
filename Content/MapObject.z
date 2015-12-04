@@ -1,3 +1,8 @@
+/*
+MapObject
+    The game originally was planned to have procedural map generation. It was moved to a stretch goal and did not make the deadline. 
+    None of this code is used in the game.
+*/
 class MapObject
 {
     var Type:Integer;

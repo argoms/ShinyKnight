@@ -1,0 +1,8 @@
+TextContent = 
+{
+	TextBuilder = 
+	{
+		string Name = "ForestText",
+		uint64 ResourceId = 56972d274ff9fd30,
+	},
+},

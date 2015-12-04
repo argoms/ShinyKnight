@@ -1,0 +1,73 @@
+//Matt Chasengnou
+//
+//class : MakeHurtSounds
+//descr : Used by other components to make sounds when hurt.
+class MakeHurtSounds : ZilchComponent
+{
+    ////////////// - MEMBERS - ///////////////////////////////////
+    
+    //Sounds to make when hurt
+    var Hurts : Array[SoundCue] = Array[SoundCue]();
+    
+    [Property]
+    var Hurt1 : SoundCue = null;
+    [Property]
+    var Hurt2 : SoundCue = null;
+    [Property]
+    var Hurt3 : SoundCue = null;
+    
+    //Sound representing attack hitting target
+    [Property]
+    var HitSound : SoundCue = null;
+    
+    //Sound to make when killed
+    [Property]
+    var DeathScream : SoundCue = null; 
+    
+    //To randomize the sound played
+    var RNG : Random = Random();
+    
+    /////////////// - FUNCTIONS - ///////////////////////////////////////////
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        //If we don't have a sound emitter, put one on this object
+        if (this.Owner.SoundEmitWrapper == null) this.Owner.AddComponentByName("SoundEmitWrapper");
+        this.Owner.SoundEmitWrapper.Positional = true;
+        
+        //Put sounds into the hurt sound array
+        this.Hurts.Add(this.Hurt1);  //First sound is added so array has minimum size of 1
+        if (this.Hurt2 != SoundCue.DefaultCue) this.Hurts.Add(this.Hurt2);
+        if (this.Hurt3 != SoundCue.DefaultCue) this.Hurts.Add(this.Hurt3);
+    }
+    
+    
+    //function OnLogicUpdate(event : UpdateEvent)
+    //{
+    //}
+    
+    //function    : MakeHurtSound
+    //description : Plays a hurt sound.
+    //parameters  : No inputs.
+    //output      : No returns.
+    function MakeHurtSound()
+    {
+        //Play a random hurt sound
+        //this.Owner.SoundEmitWrapper.PlayCue(this.HitSound);
+        this.Owner.SoundEmitWrapper.PlayCue(this.Hurts[this.RNG.RangeExclusiveMax(0, this.Hurts.Count)]);
+    }
+    
+    //function    : ScreamWhenKilled
+    //description : Plays a death scream.
+    //parameters  : No inputs.
+    //output      : No returns.
+    function ScreamWhenKilled()
+    {
+        //Play the death scream
+        //this.LevelSettings.SoundEmitWrapper.PlayCue(this.HitSound);
+        this.LevelSettings.SoundEmitWrapper.PlayCue(this.DeathScream);
+    }
+    
+}

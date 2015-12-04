@@ -2,14 +2,14 @@ GeometryContent =
 {
 	GeneratedArchetype = 
 	{
-		uint64 ResourceId = 56ad1aeda7b890dd,
+		uint64 ResourceId = 560cfaa84349db1f,
 	},
 	GeometryImport = 
 	{
 		bool ChangeWinding = false,
 		Vec3 Translation = [0, 0, 0],
 		Quat Rotation = [0, 0, 0, 1],
-		Vec3 Scale = [0.01, 0.01, 0.01],
+		Vec3 Scale = [1, 1, 1],
 	},
 	MeshBuilder = 
 	{
@@ -17,7 +17,7 @@ GeometryContent =
 		[
 			{
 				string Name = "Tree_simple_1",
-				uint64 ResourceId = 56ad1aeda7bc41b2,
+				uint64 ResourceId = 560cfaa84357e65e,
 			},
 		],
 		MeshMode MeshMode = Single,
@@ -32,11 +32,11 @@ GeometryContent =
 		[
 			{
 				string Name = "Tree_simple_1",
-				uint64 ResourceId = 56ad1aeda7bc41bd,
+				uint64 ResourceId = 560cfaa84357e663,
 			},
 		],
 		bool MakeConvex = false,
 		bool OnlyUseMarkedCollision = false,
-		PhysicsMeshType MeshBuilt = ConvexMesh,
+		PhysicsMeshType MeshBuilt = GenericMesh,
 	},
 },

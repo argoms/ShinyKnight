@@ -1,0 +1,24 @@
+Cog = 
+{
+	LinkId = 
+	{
+		uint Id = 1,
+	},
+	Named = 
+	{
+		string Name = "DefaultTile",
+	},
+	Archetyped = 
+	{
+		string Name = "560cd15fc9d52a42:BreakableTile",
+	},
+	Transform = 
+	{
+		Vec3 Translation = [0, 0, 0],
+		Vec3 Scale = [1, 1, 1],
+		Quat Rotation = [0, 0, 0, 1],
+	},
+	BreakableBoxTile = 
+	{
+	},
+},

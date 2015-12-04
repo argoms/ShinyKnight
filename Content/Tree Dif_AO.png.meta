@@ -3,7 +3,7 @@ ImageContent =
 	TextureBuilder = 
 	{
 		string Name = "Tree Dif_AO",
-		uint64 ResourceId = 56ad1ad8a18ada4a,
+		uint64 ResourceId = 560cc588ea8e2e0a,
 		BuilderTextureType TextureType = Texture2D,
 		RgbUsage RgbUsage = Color,
 		AlphaUsage AlphaUsage = Transparency,

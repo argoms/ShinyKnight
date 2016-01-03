@@ -1,0 +1,36 @@
+//Matt Chasengnou
+//
+//class : FollowTarget
+//descr : Makes object follow a target
+class FollowTarget : ZilchComponent
+{
+    //Path to the target
+    [Property]
+    var Target : CogPath;
+    
+    //Transform of target
+    var TargetTransform : Transform;
+    
+    //Offset from the target
+    [Property]
+    var Offset : Real3 = Real3.Zero;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        this.TargetTransform = this.Target.Cog.Transform;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+            //Get the target position
+            var position = this.TargetTransform.WorldTranslation;
+            
+            //Apply offset
+            position += this.Offset;
+            
+            //Set this object's position
+            this.Owner.Transform.WorldTranslation = position;
+    }
+}

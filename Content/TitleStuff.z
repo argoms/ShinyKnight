@@ -6,6 +6,12 @@ class TitleStuff : ZilchComponent
 {
     ///////////////////// - DATA MEMBERS - ///////////////////////////////////////////
     
+    //If we are starting the game for the first time
+    var GameNotPlayedYet : Boolean;
+    
+    //If this screen has started yet
+    var ThisStarted : Boolean = false;
+    
     //The game's starting level
     [Property]
     var StartLevel : Level;
@@ -171,6 +177,9 @@ class TitleStuff : ZilchComponent
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
         
+        //Get our game started status from the game manager
+        this.GameNotPlayedYet = !this.GameSession.GameManager.GameStarted;
+        
         //Get out sound emitters
         this.BGM = this.Space.FindObjectByName("Music").SoundEmitter;
         this.SFX = this.Space.FindObjectByName("SoundEffects").SoundEmitWrapper;
@@ -241,7 +250,7 @@ class TitleStuff : ZilchComponent
         // - Setting flags that rely on the clock - //
         
         //Stuff to display the title
-        if (this.UseClock)
+        if (this.GameNotPlayedYet && this.UseClock)
         {
             //Count time if we haven't got to the title yet
             if (!this.ShowTitle) this.Clock += event.Dt;
@@ -274,7 +283,24 @@ class TitleStuff : ZilchComponent
                 
                 //Turn off the clock
                 this.UseClock = false;
+                
             }
+        }
+        
+        //If the game has already started, show the title stuff only
+        else if (!this.ThisStarted)
+        {
+            this.ShowSplash = false;
+            this.ShowTeam = false;
+            this.ShowTitle = true;
+            this.ShowTitleOptions = true;
+            this.ShowCredits = false;
+            this.ShowTutorial = false;
+            this.ShowParticle = true;
+            
+            this.InputEnabled = true;
+            
+            this.ThisStarted = true;
         }
         
         //Stuff to start game
@@ -306,6 +332,9 @@ class TitleStuff : ZilchComponent
                 this.Clock = 0;
                 
                 this.SFX.PlayCue(this.StartupSound);
+                
+                //set the game manager's flag
+                this.GameSession.GameManager.GameStarted = true;
             }
         }
         

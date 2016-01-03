@@ -1,0 +1,56 @@
+//Matt Chasengnou
+//
+//class : TransportZone
+//descr : Moves the player from one level to another when touched
+class TransportZone : ZilchComponent
+{
+    //Level to load
+    [Property]
+    var TargetLevel : Level;
+    
+    //Time to fade out of level
+    [Property]
+    var Time : Real = 3;
+    
+    //Vector to multiply fade out color by
+    var Vector1 : Real4 = Real4(1, 1, 1, 1);
+    
+    //Time counter
+    var Clock : Real = 0;
+    
+    //Whether to load the next area or not
+    var Start : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.CollisionEnter);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        //If flag is set, transition to next level
+        if (this.Start)
+        {
+            //Fade out the screen
+            var color = this.LevelSettings.AmbientLight.Color;
+            color -= this.Vector1 * event.Dt / this.Time;
+            if (color.X < 0) color = Real4.Zero;
+            color.W = 1;
+            this.LevelSettings.AmbientLight.Color = color;
+            
+            //Count time
+            this.Clock += event.Dt;
+            
+            //If enough time has passed, load the next level
+            if (this.Clock >= this.Time) this.Space.LoadLevel(this.TargetLevel);
+        }
+    }
+    
+    function CollisionEnter(event: CollisionEvent)
+    {
+        //If we collide with the player, set the start flag
+        if (event.OtherObject.Name == "Player") this.Start = true;
+    }
+}

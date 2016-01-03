@@ -9,6 +9,8 @@ class DamageTextBehavior : ZilchComponent
     var TimePassed:Real = 0; //internal time counter
     var Text:String = ""; //text that the object displays
     
+    var RNG : Random = Random(); //Randomizes the velocity of the text
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -19,8 +21,13 @@ class DamageTextBehavior : ZilchComponent
         //increment timer:
         this.TimePassed += event.Dt;
         
+        //////////// - NEEDS FIX IN FUTURE - /////////////////////
         //fade and move upwards:
-        this.Owner.Transform.Translation += Real3(0, 0.005*(2-this.TimePassed), 0);
+        var position = this.Owner.Transform.Translation;
+        position.X += this.RNG.Range(0, 0.005*(2-this.TimePassed));
+        position.Y += this.RNG.Range(0, 0.005*(2-this.TimePassed));
+        position.Z += this.RNG.Range(0, 0.005*(2-this.TimePassed));
+        this.Owner.Transform.Translation = position;
         this.Owner.SpriteText.Color -= Real4(0, 0, 0, 0.25)*event.Dt;
         
         //kill self if lifetime exceeded:

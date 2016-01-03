@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "TransportZone",
+		uint64 ResourceId = 56952b818f004acd,
+	},
+},

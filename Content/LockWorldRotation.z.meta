@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "LockWorldRotation",
+		uint64 ResourceId = 5696d11e99a3f009,
+	},
+},

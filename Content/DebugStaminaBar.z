@@ -11,6 +11,16 @@ class DebugStaminaBar : ZilchComponent
     [Property]
     var HealthBar : CogPath; //path to health bar object
     
+    //Offset for status bars
+    [Property]
+    var StamOffset : Real3 = Real3.Zero;
+    [Property]
+    var HealthOffset : Real3 = Real3.Zero;
+    
+    //The max size of the bars
+    [Property]
+    var Size : Real3;
+    
     function Initialize(init : CogInitializer)
     {
         Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
@@ -29,13 +39,19 @@ class DebugStaminaBar : ZilchComponent
         
         //scale stamina & health bars to represent percentages of their max, and translate them so their left end is always in the same spot:
         this.StamBar.Cog.Transform.Scale = Real3(this.Owner.EntityHealth.Stamina as Real / this.Owner.EntityHealth.MaxStamina as Real
-                                                    , 0.1, 1);
+                                                    , 0.2, 1) * this.Size;
         this.StamBar.Cog.Transform.Translation = Real3(0.5 * (this.Owner.EntityHealth.Stamina as Real / this.Owner.EntityHealth.MaxStamina as Real) - 0.5
                                                 , 0, 5.1);
+        var position = this.StamBar.Cog.Transform.WorldTranslation;
+        position += this.StamOffset;
+        this.StamBar.Cog.Transform.WorldTranslation = position;
                                                 
         this.HealthBar.Cog.Transform.Scale = Real3(this.Owner.EntityHealth.Health as Real / this.Owner.EntityHealth.MaxHealth as Real
-                                                    , 0.1, 1);
+                                                    , 0.2, 1) * this.Size;
         this.HealthBar.Cog.Transform.Translation = Real3(0.5 * (this.Owner.EntityHealth.Health as Real / this.Owner.EntityHealth.MaxHealth as Real) - 0.5
                                                     , 0, 5);
+        position = this.HealthBar.Cog.Transform.WorldTranslation;
+        position += this.HealthOffset;
+        this.HealthBar.Cog.Transform.WorldTranslation = position;
     }
 }

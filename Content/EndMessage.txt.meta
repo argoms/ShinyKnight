@@ -1,0 +1,8 @@
+TextContent = 
+{
+	TextBuilder = 
+	{
+		string Name = "EndMessage",
+		uint64 ResourceId = 569569ac78e9b7e9,
+	},
+},

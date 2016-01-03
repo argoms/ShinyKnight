@@ -1,0 +1,21 @@
+//Matt Chasengnou
+//
+//class : GameManager
+//descr : Manages the game states and variables
+class GameManager : ZilchComponent
+{
+    //If the game has already been started up
+    var GameStarted : Boolean = false;
+    
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    
+}
